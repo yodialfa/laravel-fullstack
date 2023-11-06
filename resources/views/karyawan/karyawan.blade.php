@@ -32,7 +32,15 @@
                             Username
                         </th>
                         <th scope="col" class="px-6 py-3">
+                            Role
+                        </th>
+                        <th scope="col" class="px-6 py-3">
                             <span class="sr-only">Edit</span>
+                            Edit
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            <span class="sr-only">Hapus</span>
+                            Hapus
                         </th>
                     </tr>
                 </thead>
@@ -65,11 +73,29 @@
                             {{-- <script>console.log({{ dd($karyawan) }})</script> --}}
                             <h1>{{ optional($karyawan->user)->username ?? 'N/A' }}</h1>
                             {{-- <h1>{{ $karyawan->user->username }}</h1> --}}
+                        </td>
+                        <td class="px-6 py-4">
+                            <h1>{{ $karyawan->user->role }}</h1>
+                        </td>
+                        @if ($karyawan->user->role === 'admin')
+                            <td>
 
-                        </td>
-                        <td class="px-6 py-4 text-right">
-                            <a href="{{ route('karyawan.update', $karyawan->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                        </td>
+                            </td>
+                            <td>
+                            </td>
+                        @else
+                            <td class="px-6 py-4 text-right">
+                                <a href="{{ route('karyawan.update', $karyawan->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <form action="{{ route('karyawan.hapus', $karyawan->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
+
+                                </form>
+                            </td>
+                        @endif
                     </tr>
                     @endforeach
 

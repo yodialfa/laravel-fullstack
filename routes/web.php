@@ -35,6 +35,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/karyawan', [KaryawanController::class, 'index'])->name('karyawan')->middleware('admin');
 Route::get('/karyawan/{id}', [KaryawanController::class, 'update'])->name('karyawan.update')->middleware('admin');
 Route::put('/karyawan/{id}', [KaryawanController::class, 'updateKaryawan'])->name('karyawan.updatekaryawan')->middleware('admin');
+Route::delete('/karyawan/delete/{id}', [KaryawanController::class, 'hapusKaryawan'])->name('karyawan.hapus')->middleware('admin');
+
 
 // Route::get('/', [HargaController::class, 'index'])->name('home');
 

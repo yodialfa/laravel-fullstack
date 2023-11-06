@@ -54,7 +54,7 @@ class KaryawanController extends Controller
 
         $this->validate($request, [
             'nama' => 'required|max:255',
-            'username' => ['required', 'min:3', 'unique:users'],
+            'username' => ['min:3','unique:user'],
             'email' => 'required|email:dns',
             'tempat_lahir' => 'required|max:255',
             'tanggal_lahir' => 'required|date',
@@ -63,39 +63,35 @@ class KaryawanController extends Controller
         ]);
 
         $karyawan = Karyawan::findOrFail($id);
+
+
         $karyawan->update([
             'nama'     => $request->nama,
-            'username'     => $request->username,
+            // 'username'     => $request->username,
             'email'   => $request->email,
             'tempat_lahir'   => $request->tempat_lahir,
             'tanggal_lahir'   => $request->tanggal_lahir,
             'alamat'   => $request->alamat,
         ]);
 
-        $user = User::findOrFail($id);
-        $user->update([
-                    'username' => $request->username,
-                ]);
-
-        // Update username di tabel User yang berelasi
-        // $user = User::where('username', $karyawan->username)->first();
-        // if ($user) {
-        //     $user->update([
-        //         'username' => $request->username,
-        //     ]);
-        // }
-
-
-        // $user = User::where('username', $karyawan->username)->first();
-        // if ($user) {
-        //     dd($user, $request->username);
-        //     // Lanjutkan dengan proses update
-        // } else {
-        //     // Tindakan alternatif jika user tidak ditemukan
-        // }
+        // $user = User::findOrFail($id);
+        // $user->update([
+        //             'username' => $request->username,
+        //         ]);
 
 
         return redirect()->route('karyawan')->with(['success' => 'Data Berhasil Diubah!']);
         // return dd($user);
+    }
+
+    public function hapusKaryawan($id)
+    {
+        $data = Karyawan::findOrFail($id);
+        $user = User::findOrFail($id);
+        $data->delete();
+        $user->delete();
+
+        return redirect()->route('karyawan')->with('success', 'Data berhasil dihapus');
+
     }
 }
