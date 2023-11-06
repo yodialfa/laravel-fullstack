@@ -86,7 +86,7 @@
         <select name="pilihan" id="layanan" class="w-1/7 py-2 px-3 border rounded-md">
             <option value="" selected>-- Pilih Layanan --</option>
             @foreach($layanan as $layan)
-            <option value="{{ $layan->id }}">{{ $layan->NamaLayanan }}</option>
+            <option value="{{ $layan['id'] }}">{{ $layan['NamaLayanan'] }}</option>
             @endforeach
         </select>
     </div>

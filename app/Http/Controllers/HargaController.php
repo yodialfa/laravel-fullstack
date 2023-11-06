@@ -27,23 +27,10 @@ class HargaController extends Controller
     
     }
 
-    // public function show()
-    // {
-    //     return view('harga.cektarif', [
-    //         "title" => "Home |Tarif",
-    //         "kotaasals" => City::all(),
-    //         "kecasals" => District::all(),
-    //         "kotatujs" => City::all(),
-    //         "kectujs" => District::all(),
-    //         "layanan" => Service::all() 
-    //     ]
-    // );
-    // }
-
     public function show()
     {
-        $data = [
-            "title" => "Home | Tarif",
+        $dataPrice = [
+
             "kotaasals" => City::with('districts')->get(),
             "kecasals" => District::all(),
             "kotatujs" => City::with('districts')->get(),
@@ -51,49 +38,7 @@ class HargaController extends Controller
             "layanan" => Service::all() 
         ];
 
-        return response()->json($data);
-
-
-        // $kotaasals = City::with('districts')->get();
-        // $kotatujs = City::with('districts')->get();
-        
-        // $filteredKotaasalDistricts = $kotaasals->flatMap->districts;
-        // $filteredKotatujDistricts = $kotatujs->flatMap->districts;
-        
-        // $data = [
-            // "title" => "Home | Tarif",
-            // "kotaasals" => $kotaasals,
-            // "kecasals" => District::all(),
-            // "kotatujs" => $kotaasals,
-            // "kectujs" => District::all(),
-            // "layanan" => Service::all(),
-            // "filteredKotaasalDistricts" => $filteredKotaasalDistricts,
-            // "filteredKotatujDistricts" => $filteredKotatujDistricts,
-        // ];
-
-        // return response()->json($data);
-
-        // $kotaasals = City::with('districts')->get();
-
-        // $filteredKotaasalDistricts = [];
-
-        // foreach ($kotaasals as $kotaasal) {
-        //     $districts = $kotaasal->districts;
-        //     // You can apply any additional filtering or logic here if needed.
-        //     $filteredKotaasalDistricts = array_merge($filteredKotaasalDistricts, $districts->toArray());
-        // }
-
-        // $data = [
-        //     "title" => "Home | Tarif",
-        //     "kotaasals" => $kotaasals,
-        //     "kecasals" => District::all(),
-        //     "kotatujs" => City::with('districts')->get(),
-        //     "kectujs" => District::all(),
-        //     "layanan" => Service::all(),
-        //     "filteredKotaasalDistricts" => $filteredKotaasalDistricts,
-        // ];
-
-        // return response()->json($data);
+        return response()->json($dataPrice);
     }
 
     public function getPrice(Request $request)
@@ -121,9 +66,45 @@ class HargaController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $validateData = $request->validate([
+            'kotaasal' => 'required',
+            'kecasal' => 'required',
+            'kotatujuan' => 'required',
+            'layanan' => 'required',
+            'harga' => 'decimal',
+        ]);
+
+        Harga::create($validateData);
+
+        return redirect()->route('harga.index')->with('success', 'Tambah Harga Berhasil.');
+    }
+
+    public function formAddHarga()
+    {
+        // $allCityDistrics = $this->show();
+        $response = $this->show(); // Mengambil response JSON dari show method
+        $data = json_decode($response->getContent(), true); // Mendekode response JSON menjadi array
+        $kotaasals = $data['kotaasals']; // Mengambil data kota
+        $kotatujs = $data['kotatujs']; // Mengambil data kota
+        $layanan = $data['layanan'];        
+        return view('harga.tambah-harga',[
+            'title' => 'Tambah Harga',
+            'data' => $data,
+            'kotaasals' => $kotaasals, // Mengirimkan data kota ke view
+            'kotatujs' => $kotatujs, // Mengirimkan data kota ke view
+            'layanan' => $layanan,
+        ]);
+    }
+
+    public function showView()
+    {
+        $dataHarga = Price::with(['cityFrom','districtFrom','cityTo','districtTo','service'])->get();
+        return view(('harga.index'),[
+            'title' => 'Daftar Harga',
+            'hargas' => $dataHarga,
+        ]);
     }
 
     /**
@@ -131,7 +112,7 @@ class HargaController extends Controller
      */
     public function store(StoreHargaRequest $request)
     {
-        //
+        
     }
 
     /**
