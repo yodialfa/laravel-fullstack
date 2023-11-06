@@ -67,7 +67,7 @@ class RegisterController extends Controller
         // $request->session()->flash('Success', 'Registarion success, Silahkan Login');
         Karyawan::create($karyawanData);
         // return dd(DB::getQueryLog());
-        return redirect()->route('admin')->with('success', 'Registrasi berhasil!');
+        return redirect()->route('karyawan')->with('success', 'Registrasi berhasil!');
         // return redirect(dd($karyawanData));
 
     }

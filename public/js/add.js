@@ -81,30 +81,43 @@ $(document).ready(function () {
   });
 });
 
-// document.getElementById('formRegist').addEventListener('submit', function (e) {
-//     e.preventDefault(); // Prevent the default form submission
+// modal confirmation
+// document.addEventListener('DOMContentLoaded', function() {
+//   console.log('DOMContentLoaded event fired.');
 
-//     const form = e.target;
-
-//     fetch(form.action, {
-//         method: form.method,
-//         body: new FormData(form),
-//     })
-//     .then(response => {
-//         if (response.ok) {
-//             // Reload the page after a successful submission
-//             window.location.reload();
-//         } else {
-//             // Handle errors if needed
-//         }
-//     })
-//     .catch(error => {
-//         console.error(error);
+//   const confirmDeleteButton = document.getElementById('confirmDelete');
+//   if (confirmDeleteButton) {
+//     console.log('Found confirmDelete button.');
+    
+//     // Add an event listener for the "Confirm Delete" button in the modal
+//     confirmDeleteButton.addEventListener('click', function() {
+//       // Submit the form when the confirmation modal's button is clicked
+//       document.getElementById('delete-form').submit();
 //     });
+//   } else {
+//     console.log('confirmDelete button not found.');
+//   }
 // });
 
 
+// end modal confirm
 
 
+// const openModalButton = document.getElementById('openModal');
+// const closeModalButton = document.getElementById('closeModal');
+// const confirmDeleteButton = document.getElementById('confirmDelete');
+// const modal = document.getElementById('confirmationModal');
 
+// openModalButton.addEventListener('click', () => {
+//   console.log('klik');  
+//   modal.classList.remove('hidden');
+// });
 
+// closeModalButton.addEventListener('click', () => {
+//     modal.classList.add('hidden');
+// });
+
+// confirmDeleteButton.addEventListener('click', () => {
+//     // Submit the form when the "Confirm Delete" button in the modal is clicked
+//     document.getElementById('delete-form').submit();
+// });

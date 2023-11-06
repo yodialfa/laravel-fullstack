@@ -1,4 +1,4 @@
-<div class="bg-input-gradient mx-w-full">
+<div class="bg-transparent max-w-full">
   <div class="container mx-auto">
   <nav class="bg-transparent border-transparent font-kanit dark:bg-red dark:border-gray-700">
     <div class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto px-4 py-2.5">
@@ -12,7 +12,7 @@
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
         </svg>
       </button>
-      <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
+      <div class="hidden w-full lg:block md:w-auto" id="navbar-dropdown">
         <ul class="flex flex-col font-medium p-4 mt-4 border border-gray-100 gap-6 rounded-lg bg-transparent md:flex-row md:space-x-8 md:mt-0 md:text-sm  md:border-0">
           <li>
             <a href="/" class="block py-2 pl-3 pr-4 text-white text-xl bg-blue-700 rounded md:bg-transparent md:p-0 " aria-current="page">Home</a>
@@ -30,7 +30,7 @@
           
           
 
-          {{-- authentikasi --}}
+          {{-- authentifikasi --}}
           @auth
 
           <li>

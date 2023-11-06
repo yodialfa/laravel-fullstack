@@ -46,7 +46,7 @@ Route::get('/admin',[AdminController::class, 'index'])->name('admin')->middlewar
 Route::get('/tambahkar',[RegisterController::class, 'index'])->name('tambahkar')->middleware('admin');
 Route::post('/tambahkar',[RegisterController::class, 'store'])->name('store')->middleware('admin');
 
-Route::get('/karyawan', [KaryawanController::class, 'index'])->name('karyawan');
+Route::get('/karyawan', [KaryawanController::class, 'index'])->name('karyawan')->middleware(['admin']);
 Route::get('/karyawan/{karyawan:id}',[KaryawanController::class, 'show']);
 
 
