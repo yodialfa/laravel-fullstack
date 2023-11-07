@@ -72,15 +72,26 @@ class HargaController extends Controller
             'kotaasal' => 'required',
             'kecasal' => 'required',
             'kotatujuan' => 'required',
+            'kectujuan' => 'required',
             'layanan' => 'required',
-            'harga' => 'decimal',
+            'harga' => 'integer',
         ]);
 
-        Harga::create($validateData);
+        $dataHarga = [
+            'IdKotaAsal' => $validateData['kotaasal'],
+            'IdKecAsal' => $validateData['kecasal'],
+            'IdKotaTujuan' => $validateData['kotatujuan'],
+            'IdKecTujuan' => $validateData['kectujuan'],
+            'IdLayanan' => $validateData['layanan'],
+            'Harga' => $validateData['harga'],
+        ];
+
+        Price::create($dataHarga);
 
         return redirect()->route('harga.index')->with('success', 'Tambah Harga Berhasil.');
     }
 
+    // kontroler untuk tambah harga
     public function formAddHarga()
     {
         // $allCityDistrics = $this->show();
@@ -98,6 +109,7 @@ class HargaController extends Controller
         ]);
     }
 
+    // function untuk menampilkan data harga pada menu admin
     public function showView()
     {
         $dataHarga = Price::with(['cityFrom','districtFrom','cityTo','districtTo','service'])->get();
