@@ -18,6 +18,13 @@ class HargaController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    private $dataHarga = null;
+    protected $dataList;
+    protected $kotaasals;
+    protected $kotatujs;
+    protected $layanan;
+
     public function index()
     {
         return view('harga.harga', [
@@ -39,6 +46,16 @@ class HargaController extends Controller
         ];
 
         return response()->json($dataPrice);
+    }
+
+    // function untuk menampilkan data harga pada menu admin
+    public function showView()
+    {
+        $this->dataHarga = Price::with(['cityFrom','districtFrom','cityTo','districtTo','service'])->get();
+        return view(('harga.index'),[
+            'title' => 'Daftar Harga',
+            'hargas' => $this->dataHarga,
+        ]);
     }
 
     public function getPrice(Request $request)
@@ -77,7 +94,7 @@ class HargaController extends Controller
             'harga' => 'integer',
         ]);
 
-        $dataHarga = [
+        $dataHargaCreate = [
             'IdKotaAsal' => $validateData['kotaasal'],
             'IdKecAsal' => $validateData['kecasal'],
             'IdKotaTujuan' => $validateData['kotatujuan'],
@@ -86,38 +103,111 @@ class HargaController extends Controller
             'Harga' => $validateData['harga'],
         ];
 
-        Price::create($dataHarga);
+        Price::create($dataHargaCreate);
 
         return redirect()->route('harga.index')->with('success', 'Tambah Harga Berhasil.');
     }
 
     // kontroler untuk tambah harga
-    public function formAddHarga()
+    public function formTambahHarga()
     {
-        // $allCityDistrics = $this->show();
+        $isEdit = false;
+
+
         $response = $this->show(); // Mengambil response JSON dari show method
-        $data = json_decode($response->getContent(), true); // Mendekode response JSON menjadi array
-        $kotaasals = $data['kotaasals']; // Mengambil data kota
-        $kotatujs = $data['kotatujs']; // Mengambil data kota
-        $layanan = $data['layanan'];        
+        $this->dataList = json_decode($response->getContent(), true); // Mendekode response JSON menjadi array
+        $this->kotaasals = $this->dataList['kotaasals']; // Mengambil data kota
+        $this->kotatujs = $this->dataList['kotatujs']; // Mengambil List kota
+        $this->layanan = $this->dataList['layanan'];   
+        
+
         return view('harga.tambah-harga',[
             'title' => 'Tambah Harga',
-            'data' => $data,
-            'kotaasals' => $kotaasals, // Mengirimkan data kota ke view
-            'kotatujs' => $kotatujs, // Mengirimkan data kota ke view
-            'layanan' => $layanan,
-        ]);
+            'data' => $this->dataList,
+            'kotaasals' => $this->kotaasals, // Mengirimkan data kota ke view
+            'kotatujs' => $this->kotatujs, // Mengirimkan data kota ke view
+            'layanan' => $this->layanan,  
+            'isEdit' => $isEdit,      
+        ]); 
     }
 
-    // function untuk menampilkan data harga pada menu admin
-    public function showView()
+    public function openViewUpdate(String $id)
     {
-        $dataHarga = Price::with(['cityFrom','districtFrom','cityTo','districtTo','service'])->get();
-        return view(('harga.index'),[
-            'title' => 'Daftar Harga',
-            'hargas' => $dataHarga,
+        // $response = Price::findOrFail($id);
+        $response = $this->show();
+        $allHarga = json_decode($response->getContent(), true); // Mengonversi respons JSON ke dalam array
+
+        $dataHarga = Price::with(['cityFrom','districtFrom','cityTo','districtTo','service'])
+        ->where('id', $id)
+        ->first();
+
+        // instansiasi dari districk controller
+        $getKec = new DistrictController();
+
+        $kotaasalGet = $allHarga['kotaasals'];
+
+        $kecasalGet = $getKec->getByKota($dataHarga->IdKotaAsal);
+        $kecasals = json_decode($kecasalGet->getContent(), true);
+        // $kecamatansAsal = collect($kecasalGet)->pluck('NamaKecamatan', 'id');
+
+
+        $kotatujuanGet = $allHarga['kotatujs'];
+
+        $kectujsGet = $getKec->getByKota($dataHarga->IdKotaTujuan);
+        $kectujs = json_decode($kectujsGet->getContent(), true);
+        // $kecamatansTujuan = $kectujsGet['kecamatan'];
+        // $kecamatansTujuan = collect($kectujsGet)->pluck('NamaKecamatan', 'id');
+
+
+
+        $layananGet = $allHarga['layanan'];
+
+        return view('harga.update',[
+            'title' => 'Update Harga',
+            'hargaById' => $dataHarga,
+            'kotaasals' => $kotaasalGet,
+            'kecasals' => $kecasals,
+            'kotatujs' => $kotatujuanGet,
+            'kectujs' => $kectujs,
+            'layanan' => $layananGet,
         ]);
+        // return $kecasalGet;
     }
+
+    public function updateHarga(Request $request, $id)
+    {
+        $this->validate($request,[
+            'kotaasal' => 'required',
+            'kecasal' => 'required',
+            'kotatujuan' => 'required',
+            'kectujuan' => 'required',
+            'layanan' => 'required',
+            'harga' => 'required|integer',     
+        ]);
+
+        $hargaId = Price::findOrFail($id);
+
+        $hargaId->update([
+            'IdKotaAsal' => $request->kotaasal,
+            'IdKecAsal' => $request->kecasal,
+            'IdKotaTujuan' => $request->kotatujuan,
+            'IdKecTujuan' => $request->kectujuan,
+            'IdLayanan' => $request->layanan,
+            'Harga' => $request->harga,
+        ]);
+
+        return redirect()->route('harga.index')->with(['success' => 'Data Harga Berhasil diubah.']);
+    } 
+
+    public function hapusHarga($id)
+    {
+        $data = Price::findOrFail($id);
+        $data->delete();
+
+        return redirect()->route('harga.index')->with('success','Harga Berhasil diahpus');
+    }
+
+    
 
     /**
      * Store a newly created resource in storage.

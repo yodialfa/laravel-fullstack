@@ -37,7 +37,7 @@
             </div>
 
             <div class="bg-white w-full table-auto mb-3 flex justify-center">
-                <button class="w-1/4 flex justify-center rounded-full bg-gray-500"><a href="{{ route('tambahkar') }}">Tambah Karyawan</a></button>
+                <button class="w-1/4 flex justify-center rounded-full bg-gray-500"><a class="w-full" href="{{ route('tambahkar') }}">Tambah Karyawan</a></button>
             </div>
                         
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">

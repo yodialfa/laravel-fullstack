@@ -53,8 +53,11 @@ Route::get('/karyawan/{karyawan:id}',[KaryawanController::class, 'show']);
 Route::get('/harga', [HargaController::class, 'index'])->name('price');
 Route::get('/harga/cek', [HargaController::class, 'show'])->name('cektarif');
 Route::get('/hargaadmin', [HargaController::class, 'showView'])->name('harga.index')->middleware('admin');
-Route::get('/hargaadmin/tambahharga', [HargaController::class, 'formAddHarga'])->name('harga.add')->middleware('admin');
+Route::get('/hargaadmin/tambahharga', [HargaController::class, 'formTambahHarga'])->name('harga.add')->middleware('admin');
 Route::post('/hargaadmin/tambahharga', [HargaController::class, 'create'])->name('harga.create')->middleware('admin');
+Route::get('/hargaadmin/updateharga/{id}', [HargaController::class, 'openViewUpdate'])->name('harga.update-view')->middleware('admin');
+Route::put('/hargaadmin/updateharga/{id}', [HargaController::class, 'updateHarga'])->name('harga.update')->middleware('admin');
+Route::delete('/hargaadmin/deleteharga/{id}', [HargaController::class, 'hapusHarga'])->name('harga.hapus')->middleware('admin');
 Route::get('/get-kecamatan/{id}', [DistrictController::class, 'getByKota']);
 Route::get('/get-price', [HargaController::class, 'getPrice'])->name('tampilharga');
 
