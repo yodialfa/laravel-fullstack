@@ -12,7 +12,7 @@
 <body>
    
 
-<div class="container max-w-full mx-auto bg-index">
+<div class="container max-w-full mx-auto ">
   @yield('container')
 </div>
   

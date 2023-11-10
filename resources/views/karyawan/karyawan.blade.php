@@ -84,7 +84,7 @@
                             <h1 class="text-center">{{ $karyawan->id }}</h1>
                         </th>
                         <th scope="row" class="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            <a href="/karyawan/{{ $karyawan->id }}">
+                            <a href="/karyawan/detail/{{ $karyawan->id }}">
                                 <h1>{{ $karyawan->nama }}</h1>    
                             </a>
                         </th>

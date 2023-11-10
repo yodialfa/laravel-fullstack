@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CityController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HargaController;
 use App\Http\Controllers\LoginController;
@@ -41,15 +42,15 @@ Route::delete('/karyawan/delete/{id}', [KaryawanController::class, 'hapusKaryawa
 // Route::get('/', [HargaController::class, 'index'])->name('home');
 
 Route::get('/admin',[AdminController::class, 'index'])->name('admin')->middleware('admin');
-
+// karyawan rute
 // Route::post('/register', [RegisterController::class, 'store'])->name('store')->middleware('guest');
 Route::get('/tambahkar',[RegisterController::class, 'index'])->name('tambahkar')->middleware('admin');
 Route::post('/tambahkar',[RegisterController::class, 'store'])->name('store')->middleware('admin');
 
 Route::get('/karyawan', [KaryawanController::class, 'index'])->name('karyawan')->middleware(['admin']);
-Route::get('/karyawan/{karyawan:id}',[KaryawanController::class, 'show']);
+Route::get('/karyawan/detail/{karyawan:id}',[KaryawanController::class, 'show']);
 
-
+// harga route
 Route::get('/harga', [HargaController::class, 'index'])->name('price');
 Route::get('/harga/cek', [HargaController::class, 'show'])->name('cektarif');
 Route::get('/hargaadmin', [HargaController::class, 'showView'])->name('harga.index')->middleware('admin');
@@ -61,10 +62,13 @@ Route::delete('/hargaadmin/deleteharga/{id}', [HargaController::class, 'hapusHar
 Route::get('/get-kecamatan/{id}', [DistrictController::class, 'getByKota']);
 Route::get('/get-price', [HargaController::class, 'getPrice'])->name('tampilharga');
 
+// city route
+Route::get('/kota', [CityController::class, 'index'])->name('kota')->middleware('admin');
+
 
 
 Route::get('/about ', function () {
     return view('about', [
         "title" => "About"
     ]);
-})->middleware('auth');
+});

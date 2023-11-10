@@ -2,10 +2,11 @@
 
 @section('container')
 
-@include('partials.navbar')
 
 
 
+<div class="container max-w-full mx-auto  bg-index">
+    @include('partials.navbar')
 <div class="container mx-auto p-4">
     <div class="flex flex-wrap">
         <!-- <div class="hero"> -->
@@ -95,7 +96,7 @@
 <div><h1 id="harga" class="text-3xl text-white"></h1></div>
 
 </section>
-
+</div>
 {{-- @foreach ($karyawans as $karyawan)
     <h1>{{ $karyawan->id }}</h1>
     
