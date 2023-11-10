@@ -59,11 +59,19 @@ Route::post('/hargaadmin/tambahharga', [HargaController::class, 'create'])->name
 Route::get('/hargaadmin/updateharga/{id}', [HargaController::class, 'openViewUpdate'])->name('harga.update-view')->middleware('admin');
 Route::put('/hargaadmin/updateharga/{id}', [HargaController::class, 'updateHarga'])->name('harga.update')->middleware('admin');
 Route::delete('/hargaadmin/deleteharga/{id}', [HargaController::class, 'hapusHarga'])->name('harga.hapus')->middleware('admin');
-Route::get('/get-kecamatan/{id}', [DistrictController::class, 'getByKota']);
 Route::get('/get-price', [HargaController::class, 'getPrice'])->name('tampilharga');
 
 // city route
 Route::get('/kota', [CityController::class, 'index'])->name('kota')->middleware('admin');
+Route::get('/get-kecamatan/{id}', [DistrictController::class, 'getByKota']);
+Route::get('/tambah-kota', [CityController::class, 'tambahKota'])->name('kota.add')->middleware('admin');
+Route::post('/tambah-kota', [CityController::class, 'create'])->name('kota.create')->middleware('admin');
+Route::get('/update-kota/{id}', [CityController::class, 'openViewUpdate'])->name('kota.update-view')->middleware('admin');
+Route::put('/update-kota/{id}', [CityController::class, 'updateHarga'])->name('kota.update')->middleware('admin');
+Route::delete('/deletkota/{id}',[CityController::class, 'hapusKota'])->name('kota.hapus')->middleware('admin');
+Route::get('/kota/cek', [CityController::class, 'show'])->name('cekkota');
+
+    
 
 
 

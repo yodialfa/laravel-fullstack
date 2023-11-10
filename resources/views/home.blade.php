@@ -5,7 +5,7 @@
 
 
 
-<div class="container max-w-full mx-auto  bg-index">
+<div class="container  bg-index">
     @include('partials.navbar')
 <div class="container mx-auto p-4">
     <div class="flex flex-wrap">

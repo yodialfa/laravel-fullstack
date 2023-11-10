@@ -77,7 +77,7 @@ class KaryawanController extends Controller
         // $user = User::findOrFail($id);
         // $user->update([
         //             'username' => $request->username,
-        //         ]);hjvjvvcxxgvjjgvvcfj
+        //         ]);
 
 
         return redirect()->route('karyawan')->with(['success' => 'Data Berhasil Diubah!']);

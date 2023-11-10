@@ -131,6 +131,8 @@ class HargaController extends Controller
         ]); 
     }
 
+
+    //menampilkan form update
     public function openViewUpdate(String $id)
     {
         // $response = Price::findOrFail($id);
@@ -162,16 +164,16 @@ class HargaController extends Controller
 
         $layananGet = $allHarga['layanan'];
 
-        return view('harga.update',[
-            'title' => 'Update Harga',
-            'hargaById' => $dataHarga,
-            'kotaasals' => $kotaasalGet,
-            'kecasals' => $kecasals,
-            'kotatujs' => $kotatujuanGet,
-            'kectujs' => $kectujs,
-            'layanan' => $layananGet,
-        ]);
-        // return $kecasalGet;
+        // return view('harga.update',[
+        //     'title' => 'Update Harga',
+        //     'hargaById' => $dataHarga,
+        //     'kotaasals' => $kotaasalGet,
+        //     'kecasals' => $kecasals,
+        //     'kotatujs' => $kotatujuanGet,
+        //     'kectujs' => $kectujs,
+        //     'layanan' => $layananGet,
+        // ]);
+        return $kotatujuanGet;
     }
 
     public function updateHarga(Request $request, $id)
