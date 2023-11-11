@@ -69,6 +69,9 @@ Route::post('/tambah-kota', [CityController::class, 'create'])->name('kota.creat
 Route::get('/update-kota/{id}', [CityController::class, 'openViewUpdate'])->name('kota.update-view')->middleware('admin');
 Route::put('/update-kota/{id}', [CityController::class, 'updateHarga'])->name('kota.update')->middleware('admin');
 Route::delete('/deletkota/{id}',[CityController::class, 'hapusKota'])->name('kota.hapus')->middleware('admin');
+
+//kecamatan
+Route::get('/kecamatan', [DistrictController::class, 'index'])->name('kecamatan')->middleware('admin');
 Route::get('/kota/cek', [CityController::class, 'show'])->name('cekkota');
 
     

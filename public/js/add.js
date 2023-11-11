@@ -1,6 +1,6 @@
 
 
-/// Fungsi untuk mengisi dropdown kecamatan
+//Fungsi untuk mengisi dropdown kecamatan
 function isiDropdownKecamatan(selectedKota, targetDropdownId) {
   if (selectedKota !== '') {
     $.ajax({
@@ -18,7 +18,7 @@ function isiDropdownKecamatan(selectedKota, targetDropdownId) {
           selected: true // Opsi default terpilih
         }));
 
-        $.each(data.kecamatan, function (index, kecamatan) {
+        $.each(data, function (index, kecamatan) {
           kecamatanDropdown.append($('<option>', {
             value: kecamatan.id,
             text: kecamatan.NamaKecamatan
@@ -81,43 +81,101 @@ $(document).ready(function () {
   });
 });
 
-// modal confirmation
-// document.addEventListener('DOMContentLoaded', function() {
-//   console.log('DOMContentLoaded event fired.');
 
-//   const confirmDeleteButton = document.getElementById('confirmDelete');
-//   if (confirmDeleteButton) {
-//     console.log('Found confirmDelete button.');
-    
-//     // Add an event listener for the "Confirm Delete" button in the modal
-//     confirmDeleteButton.addEventListener('click', function() {
-//       // Submit the form when the confirmation modal's button is clicked
-//       document.getElementById('delete-form').submit();
-//     });
-//   } else {
-//     console.log('confirmDelete button not found.');
-//   }
+
+
+// ambil kecamatan admin
+$(document).ready(function() {
+  // Event ketika opsi kota dipilih
+  $('#selectKota').change(function () {
+      var selectedKotaId = $(this).val();
+      console.log('klik');
+
+      // Kirim request Ajax untuk mendapatkan kecamatan berdasarkan kota
+      $.ajax({
+          url: '/get-kecamatan/' + selectedKotaId,
+          type: 'GET',
+          success: function(data) {
+            console.log('Data kecamatan diterima:', data);
+              // Hapus data lama dari tabel
+              $('#tableKecamatan tbody').empty();
+
+              // Tambahkan data kecamatan ke dalam tabel
+              $.each(data, function(index, kecamatan) {
+                // Tambahkan tombol edit dan hapus ke setiap baris
+                var newRow = '<tr class="">' +
+                    '<td class="text-center">' + kecamatan.id + '</td>' +
+                    '<td>' + kecamatan.NamaKecamatan + '</td>' +
+                    '<td class="flex items-center justify-center gap-4">' +
+                    '<button class="btn-edit bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded" data-kecamatan-id="' + kecamatan.id + '">Edit</button>' +
+                    '<button class="btn-hapus bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded" data-kecamatan-id="' + kecamatan.id + '">Hapus</button>' +
+                    '</td>' +
+                    '</tr>';
+                $('#tableKecamatan tbody').append(newRow);
+            });
+            
+          },
+          error: function(error) {
+              console.error('Error:', error);
+          }
+      });
+  });
+
+  // Tambahkan event click untuk tombol edit
+//   $('#tableKecamatan').on('click', '.btn-edit', function() {
+//       var kecamatanId = $(this).data('kecamatan-id');
+//       // Implementasikan logika edit sesuai kebutuhan
+//       console.log('Edit kecamatan with ID:', kecamatanId);
+//   });
+
+//   // Tambahkan event click untuk tombol hapus
+//   $('#tableKecamatan').on('click', '.btn-hapus', function() {
+//       var kecamatanId = $(this).data('kecamatan-id');
+//       // Implementasikan logika hapus sesuai kebutuhan
+//       console.log('Hapus kecamatan with ID:', kecamatanId);
+//   });
 // });
 
 
-// end modal confirm
+  // Tambahkan event click untuk tombol hapus
+  // Tambahkan event click untuk tombol hapus
+  $('#tableKecamatan').on('click', '.btn-hapus', function () {
+    var kecamatanId = $(this).data('kecamatan-id');
+
+    // Mendapatkan elemen-elemen yang diperlukan
+    const modal = document.getElementById('myModal');
+    const confirmButton = document.getElementById('confirm');
+    const cancelButton = document.getElementById('cancel');
+    const closeButton = document.getElementById('close');
+    const modalMessage = document.getElementById('modal-message');
+
+    // Tampilkan modal ketika tombol hapus diklik
+    const message = "Apakah Anda yakin ingin menghapus kecamatan dengan ID " + kecamatanId + "?";
+    modalMessage.textContent = message;
+    modal.classList.remove('hidden');
+
+    // Menambahkan event listener untuk tombol konfirmasi
+    confirmButton.addEventListener('click', function () {
+        // Implementasikan logika hapus sesuai kebutuhan
+        console.log('Hapus kecamatan with ID:', kecamatanId);
+
+        // Sembunyikan modal setelah proses hapus selesai
+        modal.classList.add('hidden');
+    });
+
+    // Menambahkan event listener untuk tombol batal
+    cancelButton.addEventListener('click', () => {
+        // Sembunyikan modal jika tombol batal diklik
+        modal.classList.add('hidden');
+    });
+
+    closeButton.addEventListener('click', () => {
+      // Sembunyikan modal jika tombol batal diklik
+      modal.classList.add('hidden');
+  });
+  });
+
+});
 
 
-// const openModalButton = document.getElementById('openModal');
-// const closeModalButton = document.getElementById('closeModal');
-// const confirmDeleteButton = document.getElementById('confirmDelete');
-// const modal = document.getElementById('confirmationModal');
 
-// openModalButton.addEventListener('click', () => {
-//   console.log('klik');  
-//   modal.classList.remove('hidden');
-// });
-
-// closeModalButton.addEventListener('click', () => {
-//     modal.classList.add('hidden');
-// });
-
-// confirmDeleteButton.addEventListener('click', () => {
-//     // Submit the form when the "Confirm Delete" button in the modal is clicked
-//     document.getElementById('delete-form').submit();
-// });

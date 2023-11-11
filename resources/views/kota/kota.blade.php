@@ -10,7 +10,7 @@
     <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-20">
         <div class="relative overflow-x-auto bg-white shadow-md sm:rounded-lg min-h-full">
 
-
+            {{-- session jika sukses --}}
             @if(session()->has('success'))
             <div id="alert-1" class="flex items-center p-4 mb-4 text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
                 <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -28,6 +28,9 @@
                 </button>
             </div>
             @endif
+
+            {{-- endseection --}}
+            
 
             <div class="bg-white w-full table-auto mb-3">
                 <h1 class="text-center text-3xl">Daftar Kota</h1>

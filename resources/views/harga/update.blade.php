@@ -40,7 +40,7 @@
                     <label for="kecasal" class="block mb-2 text-xl font-medium text-gray-900 dark:text-white">Kecamatan Asal</label>
                     <select name="kecasal" id="kecasal" aria-placeholder="Pilih Kecamatan" class="py-2 px-3 border rounded-md w-full">
                         <option value="{{ $hargaById->IdKecAsal }}" selected>{{ $hargaById->districtFrom->NamaKecamatan }} (Selected)</option>
-                        @foreach($kecasals['kecamatan'] as $kecamatan)
+                        @foreach($kecasals as $kecamatan)
                             <option value="{{ $kecamatan['id'] }}">{{ $kecamatan['NamaKecamatan'] }}</option>
                         @endforeach
                     </select>
@@ -69,7 +69,7 @@
                     <label for="kectujuan" class="block mb-2 text-xl w-full font-medium text-gray-900 dark:text-white">Kec Tujuan</label>
                     <select name="kectujuan" id="kectujuan" class="py-2 px-3 border w-full rounded-md">
                         <option value="{{ $hargaById->districtTo->id }}" selected>{{ $hargaById->districtTo->NamaKecamatan }} (Selected)</option>
-                        @foreach($kectujs['kecamatan'] as $kecamatan)
+                        @foreach($kectujs as $kecamatan)
                             <option value="{{ $kecamatan['id'] }}">{{ $kecamatan['NamaKecamatan'] }}</option>
                         @endforeach
                     </select>

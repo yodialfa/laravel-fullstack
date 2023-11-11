@@ -164,16 +164,16 @@ class HargaController extends Controller
 
         $layananGet = $allHarga['layanan'];
 
-        // return view('harga.update',[
-        //     'title' => 'Update Harga',
-        //     'hargaById' => $dataHarga,
-        //     'kotaasals' => $kotaasalGet,
-        //     'kecasals' => $kecasals,
-        //     'kotatujs' => $kotatujuanGet,
-        //     'kectujs' => $kectujs,
-        //     'layanan' => $layananGet,
-        // ]);
-        return $kotatujuanGet;
+        return view('harga.update',[
+            'title' => 'Update Harga',
+            'hargaById' => $dataHarga,
+            'kotaasals' => $kotaasalGet,
+            'kecasals' => $kecasals,
+            'kotatujs' => $kotatujuanGet,
+            'kectujs' => $kectujs,
+            'layanan' => $layananGet,
+        ]);
+        // return $kotatujuanGet;
     }
 
     public function updateHarga(Request $request, $id)
