@@ -50,7 +50,7 @@ $(document).ready(function () {
 $(document).ready(function () {
   // ketika submit cek tarif
   $('#ambil').on('click', function () {
-      console.log("klik");
+      // console.log("klik");
       // Ambil nilai yang dipilih dalam form
       var kotaasal = $('#kotaasal').val();
       var kecasal = $('#kecasal').val();
@@ -70,7 +70,7 @@ $(document).ready(function () {
               layanan: layanan
           },
           success: function (data) {
-            console.log("berhasil");
+            // console.log("berhasil");
               // Tampilkan harga yang diterima dari server
               $('#harga').text('Harga: ' + data.price);
           },
@@ -86,9 +86,10 @@ $(document).ready(function () {
 
 // ambil kecamatan admin
 $(document).ready(function() {
+  let selectedKotaId;
   // Event ketika opsi kota dipilih
   $('#selectKota').change(function () {
-      var selectedKotaId = $(this).val();
+      selectedKotaId = $(this).val();
       console.log('klik');
 
       // Kirim request Ajax untuk mendapatkan kecamatan berdasarkan kota
@@ -96,7 +97,7 @@ $(document).ready(function() {
           url: '/get-kecamatan/' + selectedKotaId,
           type: 'GET',
           success: function(data) {
-            console.log('Data kecamatan diterima:', data);
+            // console.log('Data kecamatan diterima:', data);
               // Hapus data lama dari tabel
               $('#tableKecamatan tbody').empty();
 
@@ -106,9 +107,12 @@ $(document).ready(function() {
                 var newRow = '<tr class="">' +
                     '<td class="text-center">' + kecamatan.id + '</td>' +
                     '<td>' + kecamatan.NamaKecamatan + '</td>' +
+                    
                     '<td class="flex items-center justify-center gap-4">' +
                     '<button class="btn-edit bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded" data-kecamatan-id="' + kecamatan.id + '">Edit</button>' +
+
                     '<button class="btn-hapus bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded" data-kecamatan-id="' + kecamatan.id + '">Hapus</button>' +
+                    
                     '</td>' +
                     '</tr>';
                 $('#tableKecamatan tbody').append(newRow);
@@ -121,26 +125,24 @@ $(document).ready(function() {
       });
   });
 
-  // Tambahkan event click untuk tombol edit
-//   $('#tableKecamatan').on('click', '.btn-edit', function() {
-//       var kecamatanId = $(this).data('kecamatan-id');
-//       // Implementasikan logika edit sesuai kebutuhan
-//       console.log('Edit kecamatan with ID:', kecamatanId);
-//   });
-
-//   // Tambahkan event click untuk tombol hapus
-//   $('#tableKecamatan').on('click', '.btn-hapus', function() {
-//       var kecamatanId = $(this).data('kecamatan-id');
-//       // Implementasikan logika hapus sesuai kebutuhan
-//       console.log('Hapus kecamatan with ID:', kecamatanId);
-//   });
-// });
 
 
-  // Tambahkan event click untuk tombol hapus
+
+  //Tambahkan event click untuk tombol edit
+  $('#tableKecamatan').on('click', '.btn-edit', function() {
+      const kecamatanId = $(this).data('kecamatan-id');
+      // Implementasikan logika edit sesuai kebutuhan
+      console.log('Edit kecamatan with ID:', kecamatanId);
+      window.location.href = '/kecamatan/update/' + selectedKotaId + '/' + kecamatanId;
+  });
+
+
+
+
+
   // Tambahkan event click untuk tombol hapus
   $('#tableKecamatan').on('click', '.btn-hapus', function () {
-    var kecamatanId = $(this).data('kecamatan-id');
+    const kecamatanId = $(this).data('kecamatan-id');
 
     // Mendapatkan elemen-elemen yang diperlukan
     const modal = document.getElementById('myModal');
@@ -148,12 +150,22 @@ $(document).ready(function() {
     const cancelButton = document.getElementById('cancel');
     const closeButton = document.getElementById('close');
     const modalMessage = document.getElementById('modal-message');
+    const deleteForm = document.getElementById('delete-form');
+
+
+    // Set atribut data-kecamatan-id pada modal
+    modal.setAttribute('data-kecamatan-id', kecamatanId);
+
+    // Set action pada form
+    deleteForm.setAttribute('action', '/kecamatan/hapus/' + kecamatanId);
+
 
     // Tampilkan modal ketika tombol hapus diklik
     const message = "Apakah Anda yakin ingin menghapus kecamatan dengan ID " + kecamatanId + "?";
     modalMessage.textContent = message;
     modal.classList.remove('hidden');
 
+  
     // Menambahkan event listener untuk tombol konfirmasi
     confirmButton.addEventListener('click', function () {
         // Implementasikan logika hapus sesuai kebutuhan
@@ -161,6 +173,7 @@ $(document).ready(function() {
 
         // Sembunyikan modal setelah proses hapus selesai
         modal.classList.add('hidden');
+        // window.location.href = '{{ route('kecamatan') }}';
     });
 
     // Menambahkan event listener untuk tombol batal
@@ -177,5 +190,12 @@ $(document).ready(function() {
 
 });
 
+
+  //tambah kecamatan event
+$('#tambahkec').on('click', function() {
+  var selectedKotaId = $('#selectKota').val(); 
+  console.log('Tambah kecamatan clicked with selectedKotaId:', selectedKotaId);
+  window.location.href = '/kecamatan/tambah/'+ selectedKotaId;
+});
 
 

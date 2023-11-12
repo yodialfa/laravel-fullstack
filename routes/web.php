@@ -63,16 +63,22 @@ Route::get('/get-price', [HargaController::class, 'getPrice'])->name('tampilharg
 
 // city route
 Route::get('/kota', [CityController::class, 'index'])->name('kota')->middleware('admin');
-Route::get('/get-kecamatan/{id}', [DistrictController::class, 'getByKota']);
 Route::get('/tambah-kota', [CityController::class, 'tambahKota'])->name('kota.add')->middleware('admin');
 Route::post('/tambah-kota', [CityController::class, 'create'])->name('kota.create')->middleware('admin');
 Route::get('/update-kota/{id}', [CityController::class, 'openViewUpdate'])->name('kota.update-view')->middleware('admin');
-Route::put('/update-kota/{id}', [CityController::class, 'updateHarga'])->name('kota.update')->middleware('admin');
-Route::delete('/deletkota/{id}',[CityController::class, 'hapusKota'])->name('kota.hapus')->middleware('admin');
+Route::put('/update-kota/{id}', [CityController::class, 'updateKota'])->name('kota.update')->middleware('admin');
+Route::delete('/deletekota/{id}',[CityController::class, 'hapusKota'])->name('kota.hapus')->middleware('admin');
+Route::get('/kota/cek', [CityController::class, 'show'])->name('cekkota');
 
 //kecamatan
 Route::get('/kecamatan', [DistrictController::class, 'index'])->name('kecamatan')->middleware('admin');
-Route::get('/kota/cek', [CityController::class, 'show'])->name('cekkota');
+Route::get('/kecamatan/tambah/{id}', [DistrictController::class, 'tambahKecamatan'])->name('kecamatan.add')->middleware('admin');
+Route::post('/kecamatan/tambah/{id}', [DistrictController::class, 'create'])->name('kecamatan.create')->middleware('admin');
+Route::get('/kecamatan/update/{idKota}/{idKec}', [DistrictController::class, 'openViewUpdate'])->name('kecamatan.update-view')->middleware('admin');
+Route::put('/kecamatan/update/{idKec}', [DistrictController::class, 'updateKecamatan'])->name('kecamatan.update')->middleware('admin');
+Route::delete('/kecamatan/hapus/{id}', [DistrictController::class, 'hapusKecamatan'])->name('kecamatan.hapus')->middleware('admin');
+Route::get('/get-kecamatan/{id}', [DistrictController::class, 'getByKota']);
+
 
     
 

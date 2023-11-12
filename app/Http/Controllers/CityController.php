@@ -63,7 +63,7 @@ class CityController extends Controller
         // return $getCityId;
     }
 
-    public function updateHarga(Request $request, $id)
+    public function updateKota(Request $request, $id)
     {
         $this->validate($request,[
             'namakota' => 'required',
