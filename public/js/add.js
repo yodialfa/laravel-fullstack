@@ -29,57 +29,143 @@ function isiDropdownKecamatan(selectedKota, targetDropdownId) {
   }
 }
 
-// Event handler untuk dropdown kota (misalnya, kotaasal)
-$(document).ready(function () {
-  $('#kotaasal').change(function () {
-    var selectedKotaasal = $(this).val();
-    isiDropdownKecamatan(selectedKotaasal, 'kecasal'); // Panggil fungsi untuk mengisi dropdown kecamatan
-  });
+//fungsi generate id
+let counter = 0;
+function generateUniqueID() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0'); // Adding 1 because months are zero-indexed
+  const day = String(now.getDate()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+  const miliseconds = String(now.getMilliseconds()).padStart(2,'0');
+  
+  const noResi = `${year}${month}${day}${minutes}${seconds}${miliseconds}${counter}`;
+  counter++;
 
-});
-
-// Event handler untuk dropdown kota (misalnya, kectujuan)
-$(document).ready(function () {
-  $('#kotatujuan').change(function () {
-    var selectedKotatujuan = $(this).val();
-    isiDropdownKecamatan(selectedKotatujuan, 'kectujuan'); // Panggil fungsi untuk mengisi dropdown kecamatan
-  });
-});
+  return noResi;
+}
 
 
-$(document).ready(function () {
-  // ketika submit cek tarif
-  $('#ambil').on('click', function () {
-      // console.log("klik");
-      // Ambil nilai yang dipilih dalam form
-      var kotaasal = $('#kotaasal').val();
-      var kecasal = $('#kecasal').val();
-      var kotatujuan = $('#kotatujuan').val();
-      var kectujuan = $('#kectujuan').val();
-      var layanan = $('#layanan').val();
+// fungsi elemen dinamis untuk getHarga
+function updateElementValue(element, value) {
+  // Fungsi ini memeriksa tipe elemen dan kemudian mengatur nilai sesuai dengan tipe elemen tersebut.
+  if (element.is('input, select, textarea')) {
+    element.val(value);
+  } else {
+    element.text(value);
+  }
+}
 
-      // Kirim permintaan AJAX
+//fungsi getHarga
+function getHarga(kotaAsal, kecAsal, kotaTujuan, kecTujuan, layananTrx, element) {
+  // console.log("klik");
+  // Ambil nilai yang dipilih dalam form
+  const kotaasal = kotaAsal.val();
+  const kecasal = kecAsal.val();
+  const kotatujuan = kotaTujuan.val();
+  const kectujuan = kecTujuan.val();
+  const layanan = layananTrx.val();
+
+  if (kotaasal && kecasal && kotatujuan && kectujuan && layanan) {
+    $.ajax({
+      type: 'GET',
+      url: "/get-price",
+      data: {
+          kotaasal: kotaasal,
+          kecasal: kecasal,
+          kotatujuan: kotatujuan,
+          kectujuan: kectujuan,
+          layanan: layanan
+      },
+      success: function (data) {
+        // console.log("berhasil");
+          // Tampilkan harga yang diterima dari server
+          if (data.price) {
+            const priceData = data.price; // Consider the first customer for simplicity
+            // console.log(customerData);
+            updateElementValue(element, priceData); // Update the value of the name field
+            
+         } else
+         {
+             updateElementValue(element, 0);
+         }
+      },
+      error: function (data) {
+          console.log('Error:', data);
+      }
+    });
+  }
+}
+
+
+//fungsi filled recipient
+function updateRecipientData(inputElement, nameElement, addressElement) {
+  const selectedPhone = inputElement.val();
+
+  if (selectedPhone) {
+      // Fetch the corresponding customer details from the server
       $.ajax({
           type: 'GET',
-          url: "/get-price",
-          data: {
-              kotaasal: kotaasal,
-              kecasal: kecasal,
-              kotatujuan: kotatujuan,
-              kectujuan: kectujuan,
-              layanan: layanan
+          url: '/transaksi/get-customer/' + selectedPhone,
+          // data: { no_hp_cust: selectedPhone },
+          dataType: 'json',
+          success: function(data) {
+            // console.log(data);
+              if (data.customer) {
+                  const customerData = data.customer; // Consider the first customer for simplicity
+                  // console.log(customerData);
+                  nameElement.val(customerData.nama_customer); // Update the value of the name field
+                  addressElement.val(customerData.alamat_customer); // Update the value of the address field
+                  // You can also update other fields similarly
+              } else
+              {
+                  nameElement.val('');
+                  addressElement.val('');
+              }
           },
-          success: function (data) {
-            // console.log("berhasil");
-              // Tampilkan harga yang diterima dari server
-              $('#harga').text('Harga: ' + data.price);
-          },
-          error: function (data) {
-              console.log('Error:', data);
+          error: function() {
+              // Handle error
           }
       });
-  });
-});
+  }
+}
+
+
+
+// $(document).ready(function () {
+//   // ketika submit cek tarif
+//   $('#ambil').on('click', function () {
+//       // console.log("klik");
+//       // Ambil nilai yang dipilih dalam form
+//       var kotaasal = $('#kotaasal').val();
+//       var kecasal = $('#kecasal').val();
+//       var kotatujuan = $('#kotatujuan').val();
+//       var kectujuan = $('#kectujuan').val();
+//       var layanan = $('#layanan').val();
+
+//       // Kirim permintaan AJAX
+//       $.ajax({
+//           type: 'GET',
+//           url: "/get-price",
+//           data: {
+//               kotaasal: kotaasal,
+//               kecasal: kecasal,
+//               kotatujuan: kotatujuan,
+//               kectujuan: kectujuan,
+//               layanan: layanan
+//           },
+//           success: function (data) {
+//             // console.log("berhasil");
+//               // Tampilkan harga yang diterima dari server
+//               $('#harga').text('Harga: ' + data.price);
+//           },
+//           error: function (data) {
+//               console.log('Error:', data);
+//           }
+//       });
+//   });
+// });
 
 
 
@@ -187,15 +273,104 @@ $(document).ready(function() {
       modal.classList.add('hidden');
   });
   });
-
 });
 
 
   //tambah kecamatan event
 $('#tambahkec').on('click', function() {
   var selectedKotaId = $('#selectKota').val(); 
-  console.log('Tambah kecamatan clicked with selectedKotaId:', selectedKotaId);
+  // console.log('Tambah kecamatan clicked with selectedKotaId:', selectedKotaId);
   window.location.href = '/kecamatan/tambah/'+ selectedKotaId;
 });
 
+
+// Event handler untuk dropdown kota (misalnya, kotaasal)
+$(document).ready(function () {
+  $('#kotaasal').change(function () {
+    var selectedKotaasal = $(this).val();
+    isiDropdownKecamatan(selectedKotaasal, 'kecasal'); // Panggil fungsi untuk mengisi dropdown kecamatan
+  });
+
+});
+
+// Event handler untuk dropdown kota (misalnya, kectujuan)
+$(document).ready(function () {
+  $('#kotatujuan').change(function () {
+    var selectedKotatujuan = $(this).val();
+    isiDropdownKecamatan(selectedKotatujuan, 'kectujuan'); // Panggil fungsi untuk mengisi dropdown kecamatan
+  });
+});
+
+
+//set default
+$(document).ready(function() {
+  var beratTransaksi = $('#jumlah');
+  var jumlahTransaksi = $('#berat');
+  var diskonTransaksi = $('#diskon');
+  var bySurat = $('#biaya_surat');
+  var byAsuransi = $('#biaya_asuransi');
+  var total = $('#total_harga');
+  var elementIDs = ['jumlah', 'berat', 'diskon', 'biaya_surat', 'biaya_asuransi'];
+
+  elementIDs.forEach(function(id) {
+    $('#' + id).val(0);
+  });
+
+  beratTransaksi.val(0);
+  jumlahTransaksi.val(0);
+  diskonTransaksi.val(0);
+  bySurat.val(0);
+  byAsuransi.val(0);
+  total.val(0);
+
+
+  $('#no_resi').val(generateUniqueID());
+
+  $(elementIDs.map(id => '#' + id).join(', ')).on('change', function() {
+
+    // Ambil nilai dari elemen-elemen yang sesuai dengan event
+    let beratTransaksi = parseFloat($('#berat').val());
+    let hargaTrx = parseFloat($('#harga').val());
+    let disc = parseFloat($('#diskon').val());
+    let surat = parseFloat($('#biaya_surat').val());
+    let asuransi = parseFloat($('#biaya_asuransi').val());
+    
+
+    var ongkir = beratTransaksi * hargaTrx;
+    // console.log(ongkir);
+    // var diskon = disc / 100;
+    var totalDiskon = ongkir * (disc / 100);
+    // console.log(totalDiskon);
+    var total = ongkir - totalDiskon + surat + asuransi;
+    // console.log(total);
+      
+    // Update nilai total untuk elemen yang sesuai
+    $('#total_harga').val(total.toFixed(2));
+
+
+  });
+
+});
+
+
+
+$('#phone-input-pengirim').on('change', function() {
+  updateRecipientData($(this), $('#nama-pengirim'), $('#alamat-pengirim'));
+});
+
+$('#phone-input-penerima').on('change', function() {
+  updateRecipientData($(this), $('#nama-penerima'), $('#alamat-penerima'));
+});
+
+
+
+$('#layanan').on('change', function() {
+  const hargaElement = $('#harga');
+  getHarga($('#kotaasal'), $('#kecasal'), $('#kotatujuan'), $('#kectujuan'), $(this), hargaElement);
+});
+
+$('#ambil').on('click', function () {
+  const hargaElement = $('#harga');
+  getHarga($('#kotaasal'), $('#kecasal'), $('#kotatujuan'), $('#kectujuan'), $('layanan'), hargaElement);
+});
 

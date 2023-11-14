@@ -14,7 +14,8 @@ class CityController extends Controller
     }
     public function index()
     {
-        $cityData = self::getAll();
+        $cityData = City::filters(['search' => request('search')])
+                                ->paginate(10);
         return view('kota.kota',[
             'title' => "Kota",
             'cities' => $cityData, 

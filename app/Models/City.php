@@ -15,5 +15,22 @@ class City extends Model
     {
         return $this->hasMany(District::class, 'IdCities');
     }
+
+    // In City model
+    public function scopeGetAll($query, $perPage = 10)
+    {
+        return $query->paginate($perPage);
+    }
+
+    public function scopeFilters($query, array $filters)
+    {
+        // dd($filters); 
+        $query->when($filters['search'], function ($query, $search) {
+                // dd('Search parameter:', $search);
+            return $query->where('Namakota', 'like', '%' . $search . '%');       
+        });
+
+    }
+
 }
 

@@ -31,6 +31,25 @@
                     <a href="{{ route('harga.add') }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Tambah Harga</a>
                 </div>
 
+                <form class="flex items-center justify-center mx-auto gap-2">   
+              
+                    <div class="flex flex-wrap">
+                        <input type="search" id="search-asal" name="search-asal" class=" flex flex-wrap mx-auto w-13 p-2  justify-center ps-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Asal.." value="{{ request('search-asal') }}" required>
+                    </div>
+                    <div  class="flex flex-wrap">
+                        <button type="submit" class="text-white flex mx-auto flex-wrap  bottom-1 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                    </div>
+                </form>
+                <form class="flex items-center justify-center mx-auto gap-2">   
+              
+                    <div class="flex flex-wrap">
+                        <input type="search" id="search-tujuan" name="search-tujuan" class=" flex flex-wrap mx-auto w-13 p-2  justify-center ps-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Tujuan.." value="{{ request('search-tujuan') }}" required>
+                    </div>
+                    <div  class="flex flex-wrap">
+                        <button type="submit" class="text-white flex mx-auto flex-wrap  bottom-1 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                    </div>
+                </form>
+
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
@@ -109,6 +128,7 @@
                         
                     </tbody>
                 </table>
+                {{ $hargas->links() }}
 
 
             </div>

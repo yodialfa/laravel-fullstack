@@ -39,6 +39,16 @@
             <div class="bg-white w-full table-auto mb-3 flex justify-center">
                 <button class="w-1/4 flex justify-center rounded-full bg-gray-500"><a class="w-full" href="{{ route('kota.add') }}">Tambah Kota</a></button>
             </div>
+
+            <form class="flex items-center justify-center mx-auto gap-2">   
+              
+                <div class="flex flex-wrap">
+                    <input type="search" id="search" name="search" class=" flex flex-wrap mx-auto w-13 p-2  justify-center ps-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Kota.." value="{{ request('search') }}" required>
+                </div>
+                <div  class="flex flex-wrap">
+                    <button type="submit" class="text-white flex mx-auto flex-wrap  bottom-1 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                </div>
+            </form>
                         
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 ml-1 mr-2">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -60,18 +70,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($cities as $cities)
+                    @foreach ($cities as $city)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <th scope="row" class="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            <h1 class="text-center">{{ $cities->id }}</h1>
+                            <h1 class="text-center">{{ $city->id }}</h1>
                         </th>
                         <th scope="row" class="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            <a href="/karyawan/detail/{{ $cities->id }}">
-                                <h1>{{ $cities->NamaKota }}</h1>    
+                            <a href="/karyawan/detail/{{ $city->id }}">
+                                <h1>{{ $city->NamaKota }}</h1>    
                             </a>
                         </th>
                         <td class="px-4 py-4 text-right w-3 text-center">
-                            <a href="{{ route('kota.update-view', $cities->id ) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                            <a href="{{ route('kota.update-view', $city->id ) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
 
                                 <svg class="h-5 w-5 text-gray-500 item-cente" <svg  width="4"  height="4"  viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" /></svg>
                                 {{-- >Edit</a> --}}
@@ -79,7 +89,7 @@
                         </td>
                         <td class="px-4 py-4 text-right w-3 text-center">
                             
-                            <form id="delete-form" action="{{ route('kota.hapus', $cities->id) }}" method="POST">
+                            <form id="delete-form" action="{{ route('kota.hapus', $city->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" onclick="return confirm('Are you sure?')">
@@ -98,6 +108,7 @@
                     
                 </tbody>
             </table>
+            {{ $cities->links() }}
 
         </div>
         

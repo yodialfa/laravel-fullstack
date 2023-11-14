@@ -36,13 +36,16 @@ class HargaController extends Controller
 
     public function show()
     {
+        $city = City::with('districts')->get();
+        $district = District::all();
+        $service = Service::all();
         $dataPrice = [
 
-            "kotaasals" => City::with('districts')->get(),
-            "kecasals" => District::all(),
-            "kotatujs" => City::with('districts')->get(),
-            "kectujs" => District::all(),
-            "layanan" => Service::all() 
+            "kotaasals" => $city,
+            "kecasals" => $district,
+            "kotatujs" => $city,
+            "kectujs" => $district,
+            "layanan" => $service,
         ];
 
         return response()->json($dataPrice);
@@ -51,10 +54,13 @@ class HargaController extends Controller
     // function untuk menampilkan data harga pada menu admin
     public function showView()
     {
-        $this->dataHarga = Price::with(['cityFrom','districtFrom','cityTo','districtTo','service'])->get();
+        $dataHarga = Price::with(['cityFrom','districtFrom','cityTo','districtTo','service'])
+                    ->filters(['search-asal' => request('search-asal'), 
+                               'search-tujuan' => request('search-tujuan')])
+                    ->paginate(10);
         return view(('harga.index'),[
             'title' => 'Daftar Harga',
-            'hargas' => $this->dataHarga,
+            'hargas' => $dataHarga,
         ]);
     }
 

@@ -1,15 +1,16 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\CityController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HargaController;
-use App\Http\Controllers\LoginController;
-
-use App\Http\Controllers\DistrictController;
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\HargaController;
+
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\TransaksiController;
 
 
 /*
@@ -79,6 +80,10 @@ Route::put('/kecamatan/update/{idKec}', [DistrictController::class, 'updateKecam
 Route::delete('/kecamatan/hapus/{id}', [DistrictController::class, 'hapusKecamatan'])->name('kecamatan.hapus')->middleware('admin');
 Route::get('/get-kecamatan/{id}', [DistrictController::class, 'getByKota']);
 
+
+//transaksi
+Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi')->middleware('admin');
+Route::get('/transaksi/get-customer/{number}', [TransaksiController::class, 'getCust'])->middleware('admin');
 
     
 

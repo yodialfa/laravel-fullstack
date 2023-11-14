@@ -22,6 +22,18 @@ class Karyawan extends Model
         return $this->belongsTo(User::class, 'username', 'username');
     }
 
+    //scoope untuk searching
+    public function scopeFilters($query, array $filters)
+    {
+        // dd($filters); // Check if the search parameter is reaching here
+
+        $query->when($filters['search'] ?? false, function ($query , $search) {
+            // dd('Search parameter:', $search);
+            return $query->where('nama', 'like', '%' . $search . '%')
+                         ->orWhere('username', 'like', '%' . $search . '%');
+        }); 
+    }
+
     public function sluggable(): array
     {
         return [

@@ -35,5 +35,34 @@ class Price extends Model
     {
         return $this->belongsTo(Service::class, 'IdLayanan');
     }
+
+    public function scopeFilters($query, array $filters)
+    {
+
+        // $query->when($filters['search-asal'] ?? false, function ($query , 
+        // dd($filters); 
+        $query->when($filters['search-asal'], function ($query, $searchAsal) {
+            if ($searchAsal) {
+                // dd('Search parameter:', $searchAsal);
+                $query->whereHas('cityFrom', function ($query) use ($searchAsal) {
+                    $query->where('NamaKota', 'like', '%' . $searchAsal . '%');
+                })->orWhereHas('districtFrom', function ($query) use ($searchAsal) {
+                    $query->where('NamaKecamatan', 'like', '%' . $searchAsal . '%');
+                });
+            }
+        });
+
+        $query->when($filters['search-tujuan'], function ($query, $searchTujuan) {
+            if ($searchTujuan) {
+                // dd('Search parameter:', $searchTujuan);
+                $query->whereHas('cityTo', function ($query) use ($searchTujuan) {
+                    $query->where('NamaKota', 'like', '%' . $searchTujuan . '%');
+                })->orWhereHas('districtTo', function ($query) use ($searchTujuan) {
+                    $query->where('NamaKecamatan', 'like', '%' . $searchTujuan . '%');
+                });
+            }
+        });
+    }
+
 }
 
