@@ -12,6 +12,8 @@ use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TransaksiController;
 
+use App\Http\Middleware\CheckRole;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,67 +27,94 @@ use App\Http\Controllers\TransaksiController;
 */
 
 
+Route::middleware(['checkRoles:admin,user'])->group(function () {
+    //route admin
+    Route::get('/admin',[AdminController::class, 'index'])->name('admin');
+    //transaksi
+    Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi');
+    Route::get('/transaksi/get-customer/{number}', [TransaksiController::class, 'getCust']);
+    Route::post('/transaksi/store', [TransaksiController::class, 'create'])->name('transaksi.store');
+
+
+    // Route yang dapat diakses oleh semua pengguna yang sudah login
+    Route::middleware('admin')->group(function() {
+        //route karyawan dan user 
+        Route::get('/register', [RegisterController::class, 'index'])->name('register');
+        Route::get('/karyawan', [KaryawanController::class, 'index'])->name('karyawan');
+        Route::get('/karyawan/{id}', [KaryawanController::class, 'update'])->name('karyawan.update');
+        Route::put('/karyawan/{id}', [KaryawanController::class, 'updateKaryawan'])->name('karyawan.updatekaryawan');
+        Route::delete('/karyawan/delete/{id}', [KaryawanController::class, 'hapusKaryawan'])->name('karyawan.hapus');
+
+        //route harga
+        Route::get('/tambahkar',[RegisterController::class, 'index'])->name('tambahkar');
+        Route::post('/tambahkar',[RegisterController::class, 'store'])->name('store');
+        Route::get('/karyawan', [KaryawanController::class, 'index'])->name('karyawan');
+        Route::get('/karyawan/detail/{karyawan:id}',[KaryawanController::class, 'show']);
+
+        //route harga
+        Route::get('/hargaadmin', [HargaController::class, 'showView'])->name('harga.index');
+        Route::get('/hargaadmin/tambahharga', [HargaController::class, 'formTambahHarga'])->name('harga.add');
+        Route::post('/hargaadmin/tambahharga', [HargaController::class, 'create'])->name('harga.create');
+        Route::get('/hargaadmin/updateharga/{id}', [HargaController::class, 'openViewUpdate'])->name('harga.update-view');
+        Route::put('/hargaadmin/updateharga/{id}', [HargaController::class, 'updateHarga'])->name('harga.update');
+        Route::delete('/hargaadmin/deleteharga/{id}', [HargaController::class, 'hapusHarga'])->name('harga.hapus');
+
+        // city route
+        Route::get('/kota', [CityController::class, 'index'])->name('kota');
+        Route::get('/tambah-kota', [CityController::class, 'tambahKota'])->name('kota.add');
+        Route::post('/tambah-kota', [CityController::class, 'create'])->name('kota.create');
+        Route::get('/update-kota/{id}', [CityController::class, 'openViewUpdate'])->name('kota.update-view');
+        Route::put('/update-kota/{id}', [CityController::class, 'updateKota'])->name('kota.update');
+        Route::delete('/deletekota/{id}',[CityController::class, 'hapusKota'])->name('kota.hapus');
+
+        //kecamatan
+        Route::get('/kecamatan', [DistrictController::class, 'index'])->name('kecamatan');
+        Route::get('/kecamatan/tambah/{id}', [DistrictController::class, 'tambahKecamatan'])->name('kecamatan.add');
+        Route::post('/kecamatan/tambah/{id}', [DistrictController::class, 'create'])->name('kecamatan.create');
+        Route::get('/kecamatan/update/{idKota}/{idKec}', [DistrictController::class, 'openViewUpdate'])->name('kecamatan.update-view');
+        Route::put('/kecamatan/update/{idKec}', [DistrictController::class, 'updateKecamatan'])->name('kecamatan.update');
+        Route::delete('/kecamatan/hapus/{id}', [DistrictController::class, 'hapusKecamatan'])->name('kecamatan.hapus');
+    });
+
+    // Route::middleware('checkRoles:user')->group(function() {
+
+    //     //route admin
+    //     Route::get('/admin',[AdminController::class, 'index'])->name('admin');
+
+        
+    // }); 
+});
+
+//route admin
+// Route::get('/admin',[AdminController::class, 'index'])->name('admin')->middleware(['user','admin']);
+
+
+
+
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('authenticate');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-Route::get('/register', [RegisterController::class, 'index'])->name('register')->middleware('admin');
+
 // Route::post('/register', [RegisterController::class, 'store'])->name('store')->middleware('admin');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-
-
-Route::get('/karyawan', [KaryawanController::class, 'index'])->name('karyawan')->middleware('admin');
-Route::get('/karyawan/{id}', [KaryawanController::class, 'update'])->name('karyawan.update')->middleware('admin');
-Route::put('/karyawan/{id}', [KaryawanController::class, 'updateKaryawan'])->name('karyawan.updatekaryawan')->middleware('admin');
-Route::delete('/karyawan/delete/{id}', [KaryawanController::class, 'hapusKaryawan'])->name('karyawan.hapus')->middleware('admin');
-
-
 // Route::get('/', [HargaController::class, 'index'])->name('home');
-
-Route::get('/admin',[AdminController::class, 'index'])->name('admin')->middleware('admin');
 // karyawan rute
 // Route::post('/register', [RegisterController::class, 'store'])->name('store')->middleware('guest');
-Route::get('/tambahkar',[RegisterController::class, 'index'])->name('tambahkar')->middleware('admin');
-Route::post('/tambahkar',[RegisterController::class, 'store'])->name('store')->middleware('admin');
 
-Route::get('/karyawan', [KaryawanController::class, 'index'])->name('karyawan')->middleware(['admin']);
-Route::get('/karyawan/detail/{karyawan:id}',[KaryawanController::class, 'show']);
 
 // harga route
 Route::get('/harga', [HargaController::class, 'index'])->name('price');
 Route::get('/harga/cek', [HargaController::class, 'show'])->name('cektarif');
-Route::get('/hargaadmin', [HargaController::class, 'showView'])->name('harga.index')->middleware('admin');
-Route::get('/hargaadmin/tambahharga', [HargaController::class, 'formTambahHarga'])->name('harga.add')->middleware('admin');
-Route::post('/hargaadmin/tambahharga', [HargaController::class, 'create'])->name('harga.create')->middleware('admin');
-Route::get('/hargaadmin/updateharga/{id}', [HargaController::class, 'openViewUpdate'])->name('harga.update-view')->middleware('admin');
-Route::put('/hargaadmin/updateharga/{id}', [HargaController::class, 'updateHarga'])->name('harga.update')->middleware('admin');
-Route::delete('/hargaadmin/deleteharga/{id}', [HargaController::class, 'hapusHarga'])->name('harga.hapus')->middleware('admin');
 Route::get('/get-price', [HargaController::class, 'getPrice'])->name('tampilharga');
 
-// city route
-Route::get('/kota', [CityController::class, 'index'])->name('kota')->middleware('admin');
-Route::get('/tambah-kota', [CityController::class, 'tambahKota'])->name('kota.add')->middleware('admin');
-Route::post('/tambah-kota', [CityController::class, 'create'])->name('kota.create')->middleware('admin');
-Route::get('/update-kota/{id}', [CityController::class, 'openViewUpdate'])->name('kota.update-view')->middleware('admin');
-Route::put('/update-kota/{id}', [CityController::class, 'updateKota'])->name('kota.update')->middleware('admin');
-Route::delete('/deletekota/{id}',[CityController::class, 'hapusKota'])->name('kota.hapus')->middleware('admin');
+
 Route::get('/kota/cek', [CityController::class, 'show'])->name('cekkota');
 
-//kecamatan
-Route::get('/kecamatan', [DistrictController::class, 'index'])->name('kecamatan')->middleware('admin');
-Route::get('/kecamatan/tambah/{id}', [DistrictController::class, 'tambahKecamatan'])->name('kecamatan.add')->middleware('admin');
-Route::post('/kecamatan/tambah/{id}', [DistrictController::class, 'create'])->name('kecamatan.create')->middleware('admin');
-Route::get('/kecamatan/update/{idKota}/{idKec}', [DistrictController::class, 'openViewUpdate'])->name('kecamatan.update-view')->middleware('admin');
-Route::put('/kecamatan/update/{idKec}', [DistrictController::class, 'updateKecamatan'])->name('kecamatan.update')->middleware('admin');
-Route::delete('/kecamatan/hapus/{id}', [DistrictController::class, 'hapusKecamatan'])->name('kecamatan.hapus')->middleware('admin');
+
 Route::get('/get-kecamatan/{id}', [DistrictController::class, 'getByKota']);
 
 
-//transaksi
-Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi')->middleware('admin');
-Route::get('/transaksi/get-customer/{number}', [TransaksiController::class, 'getCust'])->middleware('admin');
-
-    
 
 
 

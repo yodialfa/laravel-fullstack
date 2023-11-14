@@ -29,7 +29,7 @@ class LoginController extends Controller
             if (Auth::user()->role === 'admin') {
                 return redirect()->intended('/admin'); // Ganti '/admin/dashboard' dengan rute admin yang sesuai
             } elseif (Auth::user()->role === 'user') {
-                return redirect()->intended('/'); // Ganti '/dashboard' dengan rute dashboard pengguna biasa yang sesuai
+                return redirect()->intended('/admin'); // Ganti '/dashboard' dengan rute dashboard pengguna biasa yang sesuai
             }
     
             // $request->session()->regenerate();

@@ -352,6 +352,14 @@ $(document).ready(function() {
 
 });
 
+//  form submission using jQuery
+$('#formTrx').submit(function(event) {
+  // Set the value before submitting the form
+  var uniqueID = generateUniqueID();
+  console.log('Generated ID:', uniqueID);
+  $('#no_resi').val(uniqueID);
+
+});
 
 
 $('#phone-input-pengirim').on('change', function() {

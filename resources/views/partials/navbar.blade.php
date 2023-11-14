@@ -47,7 +47,7 @@
               @if (Auth::check())
 
               {{-- auth cek jika admin --}}
-                @if (Auth::user()->role === 'admin')
+                @if (Auth::user())
                   <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
                     <li>
                       <a href="{{ route('admin') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>

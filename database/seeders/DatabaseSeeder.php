@@ -3,18 +3,19 @@
 namespace Database\Seeders;
 
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Faker\Factory as Faker;
-use App\Models\Karyawan;
 use App\Models\City;
-use App\Models\District;
-use App\Models\Service;
-use App\Models\Price;
 use App\Models\User;
+use App\Models\Price;
+use App\Models\Service;
+use App\Models\Customer;
+use App\Models\District;
+use App\Models\Karyawan;
+use Faker\Factory as Faker;
 
 
 
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 
 class DatabaseSeeder extends Seeder
@@ -35,6 +36,7 @@ class DatabaseSeeder extends Seeder
 
 
         City::factory(15)->create();
+        Customer::factory(15)->create();
 
         Karyawan::create([
             'slug' => '1',
