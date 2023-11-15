@@ -9,6 +9,7 @@ use App\Http\Controllers\HargaController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\KaryawanController;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TransaksiController;
 
@@ -74,6 +75,9 @@ Route::middleware(['checkRoles:admin,user'])->group(function () {
         Route::get('/kecamatan/update/{idKota}/{idKec}', [DistrictController::class, 'openViewUpdate'])->name('kecamatan.update-view');
         Route::put('/kecamatan/update/{idKec}', [DistrictController::class, 'updateKecamatan'])->name('kecamatan.update');
         Route::delete('/kecamatan/hapus/{id}', [DistrictController::class, 'hapusKecamatan'])->name('kecamatan.hapus');
+
+        //generate pdf
+        Route::get('/generate-pdf', [PdfController::class, 'generatePdf'])->name('generate-pdf');
     });
 
     // Route::middleware('checkRoles:user')->group(function() {

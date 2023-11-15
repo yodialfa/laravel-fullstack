@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Console\Input\Input;
 use App\Http\Requests\StoreTransaksiRequest;
 use App\Http\Requests\UpdateTransaksiRequest;
-
+use PDF;
 
 class TransaksiController extends Controller
 {
@@ -82,6 +82,7 @@ class TransaksiController extends Controller
             'IdKotaTujuan' => $validatedData['kotatujuan'],
             'IdKecTujuan' => $validatedData['kectujuan'],
             'IdLayanan' => $validatedData['layanan'],
+            'cara_bayar' => $request->cara_bayar,
             'jumlah' => $validatedData['jumlah'],
             'berat' => $validatedData['berat'],
             'harga' => $request->harga,
@@ -94,8 +95,15 @@ class TransaksiController extends Controller
 
         ];
 
+        Transaksi::create($transaksiData);
+        $pdfUrl = route('generate-pdf', $transaksiData->no_resi);
+    
+        return redirect()->route('transaksi')
+                        ->with(['success' => 'Input Resi',
+                                'pdf_url' => $pdfUrl]);
+        // return $pdf->stream('invoice.pdf');
         // $transaksi = Transaksi::create($validatedData);
-        return $transaksiData;
+        // return $transaksiData;
     }
 
     /**

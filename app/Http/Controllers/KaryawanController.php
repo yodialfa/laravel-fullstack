@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Service;
 use App\Models\Karyawan;
+use Illuminate\Support\Facades\Auth;
 
 
 use Illuminate\Http\Request;
