@@ -35,6 +35,10 @@ Route::middleware(['checkRoles:admin,user'])->group(function () {
     Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi');
     Route::get('/transaksi/get-customer/{number}', [TransaksiController::class, 'getCust']);
     Route::post('/transaksi/store', [TransaksiController::class, 'create'])->name('transaksi.store');
+    Route::get('/transaksi/cetak', [TransaksiController::class, 'cetak'])->name('transaksi.cetak');
+
+    //generate pdf
+    Route::get('/generate-pdf/{no_resi}', [PdfController::class, 'generatePdf'])->name('generate-pdf');
 
 
     // Route yang dapat diakses oleh semua pengguna yang sudah login
@@ -76,8 +80,7 @@ Route::middleware(['checkRoles:admin,user'])->group(function () {
         Route::put('/kecamatan/update/{idKec}', [DistrictController::class, 'updateKecamatan'])->name('kecamatan.update');
         Route::delete('/kecamatan/hapus/{id}', [DistrictController::class, 'hapusKecamatan'])->name('kecamatan.hapus');
 
-        //generate pdf
-        Route::get('/generate-pdf', [PdfController::class, 'generatePdf'])->name('generate-pdf');
+        
     });
 
     // Route::middleware('checkRoles:user')->group(function() {

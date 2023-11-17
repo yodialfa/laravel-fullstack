@@ -59,14 +59,9 @@ class TransaksiController extends Controller
             'diskon' => "required|numeric",
             'biaya_surat' => "required|numeric",
             'jenis_barang' => "required|string",
-            'biaya_asuransi' => "required|numeric",
-           
+            'biaya_asuransi' => "required|numeric",    
 
         ]);
-
-
-
-
 
         $transaksiData = [
             
@@ -96,14 +91,18 @@ class TransaksiController extends Controller
         ];
 
         Transaksi::create($transaksiData);
-        $pdfUrl = route('generate-pdf', $transaksiData->no_resi);
+        $pdfUrl = $transaksiData['no_resi'];
+        // $pdfUrl = route('generate-pdf', $transaksiData['no_resi']);
     
-        return redirect()->route('transaksi')
-                        ->with(['success' => 'Input Resi',
-                                'pdf_url' => $pdfUrl]);
-        // return $pdf->stream('invoice.pdf');
-        // $transaksi = Transaksi::create($validatedData);
-        // return $transaksiData;
+        // return redirect()->route('transaksi',$pdfUrl)
+        //                 ->with(['success' => 'Input Resi',
+        //                         ]);
+        
+
+        return view('transaksi.cetak', [
+            'title' => 'Cetak',
+            'resi' => $pdfUrl,
+        ]);
     }
 
     /**

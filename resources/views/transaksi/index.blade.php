@@ -27,6 +27,9 @@
                 </button>
             </div>
             @endif
+
+           
+
             
             <div class="bg-gray-50 font-kanit dark:bg-gray-900 px-3 mt-4 rounded-xl w-full h-md">
             <h1 class="text-center text-2xl">Resi</h1>
@@ -291,5 +294,39 @@
         </div>
     </div>
 </div>
+
+
+
+
+<!-- your_view.blade.php -->
+
+<!-- Include other HTML content -->
+
+{{-- <script>
+    var successMessage = @json(session('success'));
+    var pdfUrl = @json(session('pdf_url'));
+
+    if (successMessage && pdfUrl) {
+        alert(successMessage);
+
+        // Log the PDF URL to the console for debugging
+        console.log('PDF URL:', pdfUrl);
+
+        // Open the PDF URL in a new tab/window
+        var newWindow = window.open(pdfUrl, '_blank');
+
+        if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+            // Log an error message if opening the window fails
+            console.error('Failed to open new window.');
+        }
+
+        // Optional: Remove success message and PDF URL from the session
+        // You may need to make an AJAX request to your server to trigger this
+        // ...
+
+        // Optional: Redirect back to the same page or another URL if needed
+        // window.location.href = '/your-redirect-url';
+    }
+</script> --}}
 
 @endsection

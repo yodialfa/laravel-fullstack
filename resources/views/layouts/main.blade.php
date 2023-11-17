@@ -12,9 +12,9 @@
 <body>
    
 
-<div class="container max-w-full mx-auto ">
+{{-- <div class="container w-full mx-auto min-h-screen "> --}}
   @yield('container')
-</div>
+{{-- </div> --}}
   
     
 </body>

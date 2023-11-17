@@ -2,8 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\City;
+use App\Models\Service;
+use App\Models\District;
+use App\Models\User;
+// use Illuminate\Foundation\Auth\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Transaksi extends Model
 {
@@ -12,6 +17,37 @@ class Transaksi extends Model
 
     public function userId()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'employeeId');
     }
+
+    public function serviceId()
+    {
+        return $this->belongsTo(Service::class, 'IdLayanan');
+    }
+    
+
+    public function kotaAsal()
+    {
+        return $this->belongsTo(City::class, 'IdKotaAsal', 'id');
+    }
+
+    public function kotaTujuan()
+    {
+        return $this->belongsTo(City::class, 'IdKotaTujuan', 'id');
+    }
+
+    public function kecAsal()
+    {
+        return $this->belongsTo(District::class, 'IdKecAsal', 'id');
+    }
+    public function kecTujuan()
+    {
+        return $this->belongsTo(District::class, 'IdKecTujuan', 'id');
+    }
+
+    // public function userName()
+    // {
+    //     return $this->hasMany(User::class, 'employeeId');
+    // }
+
 }

@@ -350,6 +350,8 @@ $(document).ready(function() {
 
   });
 
+
+
 });
 
 //  form submission using jQuery
@@ -381,4 +383,38 @@ $('#ambil').on('click', function () {
   const hargaElement = $('#harga');
   getHarga($('#kotaasal'), $('#kecasal'), $('#kotatujuan'), $('#kectujuan'), $('layanan'), hargaElement);
 });
+
+// var successMessage = '{{ session('success') }}';
+// var pdfUrl = '{{ session('pdf_url') }}';
+
+// if (successMessage && pdfUrl) {
+//     // Display success message
+//     alert(successMessage);
+
+//     // Initiate PDF download in a new tab/window
+//     window.open(pdfUrl, '_blank');
+
+//     // Clear success message and PDF URL from the session
+//     '{{ session()->forget(['success', 'pdf_url']) }}';
+// }
+
+
+// var successMessage = '{{ session("success") }}';
+// var pdfUrl =  @json(session('pdf_url'));
+
+// if (successMessage && pdfUrl) {
+//     console.log('PDF URL:', pdfUrl);
+// //     // Display success message
+// //     // alert(successMessage);
+
+// //     // Initiate PDF download in a new tab/window
+//     window.open(pdfUrl, '_blank');
+    // window.location.href = '/generate-pdf/'+ pdfUrl;
+
+    // sessionStorage.removeItem('success'); 
+    // sessionStorage.removeItem('pdf_url');
+    
+// }
+
+
 

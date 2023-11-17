@@ -1,4 +1,4 @@
-<div class="bg-input-gradient max-w-full">
+<div class="bg-input-gradient w-full">
   <div class="container mx-auto">
   <nav class="bg-transparent border-transparent font-kanit dark:bg-red dark:border-gray-700">
     <div class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto px-4 py-2.5">
