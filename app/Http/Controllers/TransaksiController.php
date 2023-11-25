@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\City;
+use PDF;
 
+use App\Models\City;
+use App\Models\Status;
 use App\Models\Service;
 use App\Models\Customer;
 use App\Models\Transaksi;
@@ -11,7 +13,6 @@ use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Console\Input\Input;
 use App\Http\Requests\StoreTransaksiRequest;
 use App\Http\Requests\UpdateTransaksiRequest;
-use PDF;
 
 class TransaksiController extends Controller
 {
@@ -42,7 +43,7 @@ class TransaksiController extends Controller
     public function create(Request $request) 
     {
         $validatedData = request()->validate([
-            // 'no_resi' => "required",
+            'no_resi' => "required|unique:transaksis",
             'phone-input-pengirim' => "required|numeric",
             'nama-pengirim' => ['required', 'string'],
             'alamat-pengirim' => "required|max:255",
@@ -91,12 +92,14 @@ class TransaksiController extends Controller
         ];
 
         Transaksi::create($transaksiData);
+        Status::create(['no_resi' =>$validatedData['no_resi'], 
+                                'status' => '0',
+                                'ket' => 'Transaksi Agen',
+                                
+                            ]);
+        // Status::create(['no_resi' => $validatedData->no_resi, 'status' => '0', 'ket' => 'Transaksi Agen']);
         $pdfUrl = $transaksiData['no_resi'];
-        // $pdfUrl = route('generate-pdf', $transaksiData['no_resi']);
-    
-        // return redirect()->route('transaksi',$pdfUrl)
-        //                 ->with(['success' => 'Input Resi',
-        //                         ]);
+        
         
 
         return view('transaksi.cetak', [

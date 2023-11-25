@@ -37,6 +37,7 @@
             <div class="bg-white w-full table-auto mb-3 flex justify-center">
             
                 <select name="selectKota" id="selectKota">
+                    <option value="" selected>--Pilih Kota--</option>
                     @foreach ($cities as $city)
                         <option value="{{ $city->id }}">{{ $city->NamaKota }}</option>
                     @endforeach

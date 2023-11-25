@@ -14,9 +14,10 @@ use Illuminate\Http\RedirectResponse;
 
 class KaryawanController extends Controller
 {
-    public function index() {
-    $data = Karyawan::with('user')->filters(['search' => request('search')])
-                                  ->paginate(5);
+    public function index($page = 10) {
+        
+        $data = Karyawan::with('user')->filters(['search' => request('search')])
+                                  ->paginate($page);
 
         return view('karyawan.karyawan',[
             "title" => "Karyawan",

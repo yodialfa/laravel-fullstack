@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
-use App\Models\User;
+use App\Models\Agen;
 
+use App\Models\User;
+use App\Models\Cabang;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Karyawan extends Model
 {
@@ -20,6 +22,16 @@ class Karyawan extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'username', 'username');
+    }
+
+    public function cabang()
+    {
+        return $this->belongsTo(Cabang::class, 'cabang_id', 'id');
+    }
+
+    public function agen()
+    {
+        return $this->belongsTo(Agen::class, 'agen_id', 'id');
     }
 
     //scoope untuk searching

@@ -2,18 +2,19 @@
 
 namespace Database\Seeders;
 
-
+use App\Models\Agen;
 use App\Models\City;
 use App\Models\User;
 use App\Models\Price;
+use App\Models\Cabang;
 use App\Models\Service;
 use App\Models\Customer;
 use App\Models\District;
 use App\Models\Karyawan;
+
+
+
 use Faker\Factory as Faker;
-
-
-
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -36,7 +37,7 @@ class DatabaseSeeder extends Seeder
 
 
         City::factory(15)->create();
-        Customer::factory(15)->create();
+        // Customer::factory(15)->create();
 
         Karyawan::create([
             'slug' => '1',
@@ -45,6 +46,8 @@ class DatabaseSeeder extends Seeder
             'tempat_lahir' => 'Bandung',
             'email' => 'test@1gmail.com',
             'tanggal_lahir' => '1995-02-12',
+            'cabang_id' => 1,
+            'agen_id' => 1,
             'alamat' => 'Bandung'
         ]);
 
@@ -62,6 +65,8 @@ class DatabaseSeeder extends Seeder
             'tempat_lahir' => 'Bandung',
             'email' => 'test2@gmail.com',
             'tanggal_lahir' => '1995-02-12',
+            'cabang_id' => 1,
+            'agen_id' => 2,
             'alamat' => 'Ciamis'
         ]);
         User::create([
@@ -77,6 +82,8 @@ class DatabaseSeeder extends Seeder
             'tempat_lahir' => 'Bandung',
             'email' => 'test3@gmail.com',
             'tanggal_lahir' => '1995-02-12',
+            'cabang_id' => 1,
+            'agen_id' => 2,
             'alamat' => 'Cirebon'
         ]);
 
@@ -94,6 +101,8 @@ class DatabaseSeeder extends Seeder
             'tempat_lahir' => 'Bandung',
             'email' => 'test4@gmail.com',
             'tanggal_lahir' => '1995-02-12',
+            'cabang_id' => 2,
+            'agen_id' => 1,
             'alamat' => 'Bandung'
         ]);
 
@@ -202,6 +211,36 @@ class DatabaseSeeder extends Seeder
             'IdLayanan' => '2', 
             'Harga' => '5000'
         ]);
+
+        Agen::create([
+            'agen' => 'Ahmad Yani',
+            'cabang_id' => '1',
+            'alamatAgen' => "Jl. jend. A Yani"
+
+        ]);
+
+        Agen::create([
+            'agen' => 'Suci',
+            'cabang_id' => '1',
+            'alamatAgen' => "Jl. Suci"
+
+            
+        ]);
+
+        Agen::create([
+            'agen' => 'Ciluncat',
+            'cabang_id' => '1',
+            'alamatAgen' => "Jl. Mahmud"
+
+            
+        ]);
+
+        Cabang::create([
+            'cabang' => "Bandung",
+            'alamatCabang' => "Jl. Jend. A. Yani No. 288 Bandung",
+        ]);
+
+
 
         // $user = new User();
         // $user->name = 'Admin';

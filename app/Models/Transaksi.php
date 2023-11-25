@@ -45,6 +45,11 @@ class Transaksi extends Model
         return $this->belongsTo(District::class, 'IdKecTujuan', 'id');
     }
 
+    public function resi()
+    {
+        return $this->hasMany(Status::class, 'no_resi', 'no_resi');
+    }
+
     // public function userName()
     // {
     //     return $this->hasMany(User::class, 'employeeId');

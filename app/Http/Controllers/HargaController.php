@@ -236,24 +236,24 @@ class HargaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Harga $harga)
-    {
-        //
-    }
+    // public function edit(Harga $harga)
+    // {
+    //     //
+    // }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateHargaRequest $request, Harga $harga)
-    {
-        //
-    }
+    // public function update(UpdateHargaRequest $request, Harga $harga)
+    // {
+    //     //
+    // }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Harga $harga)
-    {
-        //
-    }
+    // public function destroy(Harga $harga)
+    // {
+    //     //
+    // }
 }

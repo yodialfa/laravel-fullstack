@@ -1,19 +1,20 @@
 <?php
 
+use App\Http\Middleware\CheckRole;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PdfController;
+use App\Http\Controllers\AgenController;
 use App\Http\Controllers\CityController;
+
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HargaController;
-
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\KaryawanController;
-use App\Http\Controllers\PdfController;
+
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TransaksiController;
-
-use App\Http\Middleware\CheckRole;
 
 
 /*
@@ -40,6 +41,18 @@ Route::middleware(['checkRoles:admin,user'])->group(function () {
     //generate pdf
     Route::get('/generate-pdf/{no_resi}', [PdfController::class, 'generatePdf'])->name('generate-pdf');
 
+    
+    // Route::get('/agen/transaksi/', [AgenController::class, 'index'])->name('agen.transaksi');
+    // Route::get('/agen/transaksi/get', [AgenController::class, 'getData'])->name('agen.getData');
+    // Route::get('/agen/transaksi/{start}/{end}/', [AgenController::class, 'index'])->name('agen.date');
+    Route::get('/agen/transaksi/', [AgenController::class, 'index'])->name('agen.transaksi');
+    Route::get('/agen/transaksi/get', [AgenController::class, 'getData'])->name('agen.getData');
+    Route::get('/agen/transaksi/{start}/{end}/', [AgenController::class, 'index'])->name('agen.date');
+
+    Route::get('/agen/transaksi/rows', [AgenController::class, 'getRecords'])->name('agen.rows');
+    Route::get('/agen/manivest', [AgenController::class, 'manivest'])->name('agen.manivest');
+    Route::post('/agen/manivest', [AgenController::class, 'storeshipment'])->name('agen.shipment');
+    
 
     // Route yang dapat diakses oleh semua pengguna yang sudah login
     Route::middleware('admin')->group(function() {
@@ -80,7 +93,8 @@ Route::middleware(['checkRoles:admin,user'])->group(function () {
         Route::put('/kecamatan/update/{idKec}', [DistrictController::class, 'updateKecamatan'])->name('kecamatan.update');
         Route::delete('/kecamatan/hapus/{id}', [DistrictController::class, 'hapusKecamatan'])->name('kecamatan.hapus');
 
-        
+        //agen
+
     });
 
     // Route::middleware('checkRoles:user')->group(function() {

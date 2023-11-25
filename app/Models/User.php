@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Agen;
+use App\Models\Cabang;
 use App\Models\Karyawan;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -52,4 +54,14 @@ class User extends Authenticatable
         // return $this->hasOne(Karyawan::class, 'username');
         return $this->hasOne(Karyawan::class);
     }
+
+    // public function cabang()
+    // {
+    //     return $this->belongsTo(Cabang::class);
+    // }
+
+    // public function agen()
+    // {
+    //     return $this->belongsTo(Agen::class);
+    // }
 }

@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('tempat_lahir');
             $table->date('tanggal_lahir');
             $table->string('alamat');
+            $table->foreignId('cabang_id');
+            $table->foreignId('agen_id');
             $table->timestamps();
         });
     }

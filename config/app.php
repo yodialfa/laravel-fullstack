@@ -71,7 +71,9 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    // 'timezone' => 'UTC',
+    'timezone' => 'Asia/Jakarta',
+
 
     /*
     |--------------------------------------------------------------------------
@@ -160,6 +162,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Yajra\DataTables\DataTablesServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -169,6 +172,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+        
+        
     ])->toArray(),
 
     /*
@@ -182,18 +188,24 @@ return [
     |
     */
 
-    // 'aliases' => Facade::defaultAliases()->merge([
-    //     // 'Example' => App\Facades\Example::class,
-    // ])->toArray(),
+    'aliases' => Facade::defaultAliases()->merge([
+        // 'Example' => App\Facades\Example::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        
+
+    ])->toArray(),
 
     // 'providers' => [
     //     // ...
-    //     Barryvdh\DomPDF\ServiceProvider::class,
+        
     // ],
     
     // 'aliases' => [
     //     // ...
-    //     'PDF' => Barryvdh\DomPDF\Facade::class,
+    //     'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+
+
     // ],
     
     
