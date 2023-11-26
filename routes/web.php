@@ -47,7 +47,8 @@ Route::middleware(['checkRoles:admin,user'])->group(function () {
     // Route::get('/agen/transaksi/{start}/{end}/', [AgenController::class, 'index'])->name('agen.date');
     Route::get('/agen/transaksi/', [AgenController::class, 'index'])->name('agen.transaksi');
     Route::get('/agen/transaksi/get', [AgenController::class, 'getData'])->name('agen.getData');
-    Route::get('/agen/transaksi/{start}/{end}/', [AgenController::class, 'index'])->name('agen.date');
+    // Route::get('/agen/transaksi/{start}/{end}/', [AgenController::class, 'index'])->name('agen.date');
+    Route::get('/agen/transaksi/export/{start}/{end}/', [AgenController::class, 'exportAll'])->name('agen.export');
 
     Route::get('/agen/transaksi/rows', [AgenController::class, 'getRecords'])->name('agen.rows');
     Route::get('/agen/manivest', [AgenController::class, 'manivest'])->name('agen.manivest');
