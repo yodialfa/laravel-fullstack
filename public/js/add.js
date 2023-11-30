@@ -383,11 +383,3 @@ $('#ambil').on('click', function () {
   const hargaElement = $('#harga');
   getHarga($('#kotaasal'), $('#kecasal'), $('#kotatujuan'), $('#kectujuan'), $('layanan'), hargaElement);
 });
-
-
-
-
-
-
-
-

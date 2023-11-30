@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use App\Models\Agen;
+
 
 use App\Models\User;
 use App\Models\Cabang;
+use App\Models\Agen;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

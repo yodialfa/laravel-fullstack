@@ -8,6 +8,7 @@ use App\Http\Controllers\CityController;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CabangController;
 use App\Http\Controllers\HargaController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DistrictController;
@@ -53,6 +54,12 @@ Route::middleware(['checkRoles:admin,user'])->group(function () {
     Route::get('/agen/transaksi/rows', [AgenController::class, 'getRecords'])->name('agen.rows');
     Route::get('/agen/manivest', [AgenController::class, 'manivest'])->name('agen.manivest');
     Route::post('/agen/manivest', [AgenController::class, 'storeshipment'])->name('agen.shipment');
+
+    //menu cabang
+    Route::get('/cabang/shipment/', [CabangController::class, 'genShipmentAgen'])->name('cabang.view-shipment-agen');
+    Route::get('/cabang/shipment/data', [CabangController::class, 'genShipment'])->name('cabang.generate-shipment');
+    Route::get('/cabang/auth', [CabangController::class, 'check'])->name('cabang.cek');
+    Route::get('/cabang/shipment/update-agen', [CabangController::class, 'updateShipment'])->name('cabang.update-shipment-agen');
     
 
     // Route yang dapat diakses oleh semua pengguna yang sudah login

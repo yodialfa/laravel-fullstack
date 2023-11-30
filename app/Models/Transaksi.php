@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use App\Models\City;
+use App\Models\User;
 use App\Models\Service;
 use App\Models\District;
-use App\Models\User;
 // use Illuminate\Foundation\Auth\User;
+use App\Models\Karyawan;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -18,6 +19,11 @@ class Transaksi extends Model
     public function userId()
     {
         return $this->belongsTo(User::class, 'employeeId');
+    }
+
+    public function karyawan()
+    {
+        return $this->belongsTo(Karyawan::class, 'employeeId');
     }
 
     public function serviceId()

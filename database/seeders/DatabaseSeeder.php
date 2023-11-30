@@ -259,7 +259,7 @@ class DatabaseSeeder extends Seeder
                 'no_hp_penerima'=>$faker->phoneNumber,
                 'alamat_penerima'=>$faker->address,
                 'nama_penerima'=>$faker->name,
-                'IdLayanan'=> random_int(1,10),
+                'IdLayanan'=> random_int(1,4),
                 'IdKotaAsal'=> random_int(1,10),
                 'IdKecAsal'=> random_int(1,10),
                 'IdKotaTujuan'=> random_int(1,10),
