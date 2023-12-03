@@ -60,6 +60,8 @@ Route::middleware(['checkRoles:admin,user'])->group(function () {
     Route::get('/cabang/shipment/data', [CabangController::class, 'genShipment'])->name('cabang.generate-shipment');
     Route::get('/cabang/auth', [CabangController::class, 'check'])->name('cabang.cek');
     Route::get('/cabang/shipment/update-agen', [CabangController::class, 'updateShipment'])->name('cabang.update-shipment-agen');
+    Route::get('/cabang/shipment/loading', [CabangController::class, 'loadingView'])->name('cabang.loading');
+    Route::get('/cabang/shipment/loadingshipment', [CabangController::class, 'loadingShipment'])->name('cabang.loading-shipment');
     
 
     // Route yang dapat diakses oleh semua pengguna yang sudah login

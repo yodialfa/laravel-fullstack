@@ -75,6 +75,27 @@
                </li>
          </ul>
          </li>
+
+
+         <button type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-cabang" data-collapse-toggle="dropdown-cabang">
+            <svg class="h-8 w-8 text-gray-500"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <circle cx="5" cy="17" r="2" />  <circle cx="17" cy="17" r="2" />  <path d="M7 18h8m4 0h2v-6a5 7 0 0 0 -5 -7h-1l1.5 7h4.5" />  <path d="M12 18v-13h3" />  <polyline points="3 17 3 12 12 12" /></svg>
+               <span class="flex-1 ml-3 text-left whitespace-nowrap">Cabang</span>
+               <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+               </svg>
+         </button>
+         <ul id="dropdown-cabang" class="hidden py-2 space-y-2">
+               <li>
+                  <a href="{{ route('cabang.view-shipment-agen') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Generate Shipment Agen</a>
+               </li>
+               <li>
+                  <a href="{{ route('cabang.loading') }}"" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Data Loading Barang</a>
+               </li>
+               <li>
+                  <a href="{{ route('agen.manivest') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Manivest</a>
+               </li>
+         </ul>
+         </li>
           
           <li>
              <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
