@@ -131,6 +131,29 @@ function updateRecipientData(inputElement, nameElement, addressElement) {
   }
 }
 
+function generateRandomCode(prefix, length) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const prefixLength = prefix.length;
+
+  let randomCode = prefix;
+
+  for (let i = 0; i < length - prefixLength; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      randomCode += characters.charAt(randomIndex);
+  }
+
+  return randomCode;
+}
+
+// // Contoh penggunaan
+// const prefix = 'CODE-';
+// const length = 8;
+// const randomCode = generateRandomCode(prefix, length);
+
+// console.log(randomCode);
+
+
+
 
 
 // $(document).ready(function () {

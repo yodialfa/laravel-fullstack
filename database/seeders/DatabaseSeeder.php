@@ -61,7 +61,7 @@ class DatabaseSeeder extends Seeder
         Karyawan::create([
             'slug' => '2',
             'nama' => 'Alfariz',
-            'username' => 'yodialfariz2',
+            'username' => 'yodialfariz1',
             'tempat_lahir' => 'Bandung',
             'email' => 'test2@gmail.com',
             'tanggal_lahir' => '1995-02-12',
@@ -70,7 +70,7 @@ class DatabaseSeeder extends Seeder
             'alamat' => 'Ciamis'
         ]);
         User::create([
-            'username' => 'yodialfariz2',
+            'username' => 'yodialfariz1',
             'role'=> 'user',
             'password' => bcrypt('aaaaa')
         ]);
@@ -78,17 +78,17 @@ class DatabaseSeeder extends Seeder
         Karyawan::create([
             'slug' => '3',
             'nama' => 'Diaz Grimaldy',
-            'username' => 'yodialfariz3',
+            'username' => 'yodialfariz2',
             'tempat_lahir' => 'Bandung',
             'email' => 'test3@gmail.com',
             'tanggal_lahir' => '1995-02-12',
-            'cabang_id' => 1,
-            'agen_id' => 2,
+            'cabang_id' => 2,
+            'agen_id' => 3,
             'alamat' => 'Cirebon'
         ]);
 
         User::create([
-            'username' => 'yodialfariz3',
+            'username' => 'yodialfariz2',
             'role'=> 'user',
             'password' => bcrypt('aaaaa')
         ]);
@@ -102,7 +102,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'test4@gmail.com',
             'tanggal_lahir' => '1995-02-12',
             'cabang_id' => 2,
-            'agen_id' => 1,
+            'agen_id' => 4,
             'alamat' => 'Bandung'
         ]);
 
@@ -235,9 +235,22 @@ class DatabaseSeeder extends Seeder
             
         ]);
 
+        Agen::create([
+            'agen' => 'Mahmud',
+            'cabang_id' => '2',
+            'alamatAgen' => "Jl. Mahmud"
+
+            
+        ]);
+
         Cabang::create([
             'cabang' => "Bandung",
             'alamatCabang' => "Jl. Jend. A. Yani No. 288 Bandung",
+        ]);
+
+        Cabang::create([
+            'cabang' => "Jakarta",
+            'alamatCabang' => "Jl. Jend. A. Yani No. 288 Jkt",
         ]);
 
 

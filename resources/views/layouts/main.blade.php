@@ -98,7 +98,7 @@
 
     {{-- {{-- <script src="https://cdn.datatables.net/buttons/2.1.3/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.1.3/js/buttons.flash.min.js"></script>
-
+--}}
     <style>
       .dataTables_length select {
       width: 100px;

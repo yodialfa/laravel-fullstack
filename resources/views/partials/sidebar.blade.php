@@ -71,7 +71,7 @@
                   <a href="{{ route('agen.manivest') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Manivest</a>
                </li>
                <li>
-                  <a href="{{ route('cabang.view-shipment-agen') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Generate Shipment Agen</a>
+                  <a href="{{ route('agen.manivest-data') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Data Manivest</a>
                </li>
          </ul>
          </li>
@@ -92,7 +92,7 @@
                   <a href="{{ route('cabang.loading') }}"" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Data Loading Barang</a>
                </li>
                <li>
-                  <a href="{{ route('agen.manivest') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Manivest</a>
+                  <a href="{{ route('cabang.departure') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Pemberangkatan</a>
                </li>
          </ul>
          </li>

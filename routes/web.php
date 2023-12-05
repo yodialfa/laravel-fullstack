@@ -54,14 +54,18 @@ Route::middleware(['checkRoles:admin,user'])->group(function () {
     Route::get('/agen/transaksi/rows', [AgenController::class, 'getRecords'])->name('agen.rows');
     Route::get('/agen/manivest', [AgenController::class, 'manivest'])->name('agen.manivest');
     Route::post('/agen/manivest', [AgenController::class, 'storeshipment'])->name('agen.shipment');
+    Route::get('/agen/manivest/data', [AgenController::class, 'viewManivestData'])->name('agen.manivest-data');
+    Route::get('/agen/manivest/data-fetch', [AgenController::class, 'fetchManivestData'])->name('agen.manivest-fetch');
 
     //menu cabang
     Route::get('/cabang/shipment/', [CabangController::class, 'genShipmentAgen'])->name('cabang.view-shipment-agen');
     Route::get('/cabang/shipment/data', [CabangController::class, 'genShipment'])->name('cabang.generate-shipment');
     Route::get('/cabang/auth', [CabangController::class, 'check'])->name('cabang.cek');
-    Route::get('/cabang/shipment/update-agen', [CabangController::class, 'updateShipment'])->name('cabang.update-shipment-agen');
+    Route::get('/cabang/shipment/update-agen', [CabangController::class, 'genUpdateShipmentGudangAsal'])->name('cabang.update-shipment-agen');
     Route::get('/cabang/shipment/loading', [CabangController::class, 'loadingView'])->name('cabang.loading');
     Route::get('/cabang/shipment/loadingshipment', [CabangController::class, 'loadingShipment'])->name('cabang.loading-shipment');
+    Route::get('/cabang/shipment/updateloading', [CabangController::class, 'updateLoading'])->name('cabang.loading-update');
+    Route::get('/cabang/shipment/departure', [CabangController::class, 'departureView'])->name('cabang.departure');
     
 
     // Route yang dapat diakses oleh semua pengguna yang sudah login
