@@ -120,6 +120,7 @@ function updateRecipientData(inputElement, nameElement, addressElement) {
                   // You can also update other fields similarly
               } else
               {
+                
                   nameElement.val('');
                   addressElement.val('');
               }

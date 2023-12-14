@@ -92,8 +92,18 @@
                   <a href="{{ route('cabang.loading') }}"" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Data Loading Barang</a>
                </li>
                <li>
+                  <a href="{{ route('cabang.list-loading') }}"" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">List Loading Barang</a>
+               </li>
+               <li>
                   <a href="{{ route('cabang.departure') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Pemberangkatan</a>
                </li>
+               <li>
+                  <a href="{{ route('cabang.list-departure') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">List Pemberangkatan</a>
+               </li>
+               <li>
+                  <a href="{{ route('cabang.view-arrived') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Datang Barang</a>
+               </li>
+               
          </ul>
          </li>
           
