@@ -71,11 +71,20 @@ Route::middleware(['checkRoles:admin,user'])->group(function () {
     Route::get('/cabang/shipment/listloading/data', [CabangController::class, 'getLoadingList'])->name('cabang.loading-shipment-data');
     Route::get('/cabang/shipment/departure', [CabangController::class, 'departureView'])->name('cabang.departure');
     Route::get('/cabang/shipment/departure/data', [CabangController::class, 'departureData'])->name('cabang.dep-data');
-    Route::get('/cabang/shipment/arrived/generate', [CabangController::class, 'getViewGenDep'])->name('cabang.view-arrived');
     Route::get('/cabang/shipment/departure/create', [CabangController::class, 'createDeparture'])->name('cabang.dep-create');
-    Route::get('/cabang/shipment/arrived/generate/departure', [CabangController::class, 'genDeparture'])->name('cabang.generate-arrived');
     Route::get('/cabang/shipment/departure/listdeparture', [CabangController::class, 'listDepartureView'])->name('cabang.list-departure');
-    Route::get('/cabang/shipment/departure/listdeparture/data', [CabangController::class, 'getDepList'])->name('cabang.list-depdata');
+    Route::get('/cabang/shipment/departure/listdeparture/data', [CabangController::class, 'fetchDepartureData'])->name('cabang.list-depdata');
+    Route::get('/cabang/shipment/arrived/generate', [CabangController::class, 'getViewGenDep'])->name('cabang.view-arrived');
+    Route::get('/cabang/shipment/arrived/generate/departure', [CabangController::class, 'genDeparture'])->name('cabang.generate-arrived');
+    Route::get('/cabang/shipment/arrived/generate/update', [CabangController::class, 'genUpdateShipmentGudangTujuan'])->name('cabang.update-depdata');
+    Route::get('/cabang/shipment/arrived/listarrived', [CabangController::class, 'listArrivedView'])->name('cabang.list-arrived');
+    Route::get('/cabang/shipment/arrived/listarrived/data', [CabangController::class, 'getArrivedList'])->name('cabang.list-arrived-data');
+    Route::get('/cabang/shipment/sorting', [CabangController::class, 'getSortirPengantaranView'])->name('cabang.sorting');
+    Route::get('/cabang/shipment/sorting/data', [CabangController::class, 'loadDataSortirPengantaran'])->name('cabang.sorting-data');
+    Route::get('/cabang/shipment/sorting/create', [CabangController::class, 'createSortingShipment'])->name('cabang.sorting-data-create');
+    
+
+    
 
     
 

@@ -82,6 +82,17 @@
       0 => 'Termwind\\Laravel\\TermwindServiceProvider',
     ),
   ),
+  'opcodesio/log-viewer' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Opcodes\\LogViewer\\LogViewerServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'LogViewer' => 'Opcodes\\LogViewer\\Facades\\LogViewer',
+    ),
+  ),
   'spatie/laravel-ignition' => 
   array (
     'providers' => 
