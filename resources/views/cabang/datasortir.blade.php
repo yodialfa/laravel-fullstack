@@ -53,14 +53,24 @@
                                 Cabang Tujuan
                             </th>
                             <th scope="col" class="px-4 py-3">
-                                Nama Agen
+                                Kec. Tujuan
                             </th>
+
                             <th scope="col" class="px-4 py-3">
                                 Cabang Asal
                             </th>
                             <th scope="col" class="px-4 py-3">
+                                Nama Agen
+                            </th>
+                            <th scope="col" class="px-4 py-3">
+                                PIC
+                            </th>
+                            <th scope="col" class="px-4 py-3">
                                 Detail
                             </th>
+                            {{-- <th scope="col" class="px-4 py-3">
+                                Detail
+                            </th> --}}
                             
                         </tr>
                     </thead>
@@ -82,8 +92,8 @@
 <script>
     $(function(){
     // $(document).ready(function() {
-        
-        var start_date = moment().startOf('day').subtract(1, 'M');
+        //set default 7 days
+        var start_date = moment().startOf('day').subtract(6, 'days');
 
         var end_date = moment().endOf('day');
 
@@ -106,7 +116,7 @@
         serverSide: true,
         // data: data,
         ajax: {
-            url : "{{ route('cabang.list-arrived-data') }}",
+            url : "{{ route('cabang.sorting-list-sortir-data') }}",
             data : function(data){
                 data.from_date = $('#daterange').data('daterangepicker').startDate.format('YYYY-MM-DD HH:mm:ss');
                 data.to_date = $('#daterange').data('daterangepicker').endDate.format('YYYY-MM-DD HH:mm:ss');
@@ -120,9 +130,12 @@
             },
             {data: 'created_at', name: 'created_at'},
             {data: 'ship_id', name: 'ship_id'},
-            {data: 'tujuan', name: 'tujuan'},
-            {data: 'agen.agen', name: 'agen.agen'},
+            {data: 'cabang_tujuan.cabang', name: 'tujuan'},
+            {data: 'kec_tujuan_pengantaran.NamaKecamatan', name: 'agen.agen'},
             {data: 'cabang.cabang', name: 'cabang.cabang'},
+            
+            {data: 'agen.agen', name: 'cabang.cabang'},
+            {data: 'pic', name: 'pic'},
             {
                 data: 'dynamic_link_column',
                 name: 'dynamic_link_column',

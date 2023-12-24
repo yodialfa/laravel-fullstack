@@ -372,7 +372,7 @@
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     method:"get",
                     data: { data: JSON.stringify(requestData),
-                            // asal: asal,
+                            kec: kec,
                             // tujuan: tujuan,
                             pic:pic,
                         },

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('pic', 20)->default('admin');
             $table->string('status', 2);
             $table->string('tujuan');
+            $table->string('kecTujuan')->default(0);
 
             $table->index('ship_id');
             $table->timestamps();

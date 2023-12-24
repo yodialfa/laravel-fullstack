@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Agen;
 use App\Models\Cabang;
 
+use App\Models\District;
 use App\Models\DetailShipment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -45,6 +46,11 @@ class Shipments extends Model
     public function transaksis()
     {
         return $this->hasMany(Transaksi::class, 'no_resi', 'no_resi');
+    }
+
+    public function kecTujuanPengantaran()
+    {
+        return $this->belongsTo(District::class, 'kecTujuan', 'id');
     }
 
 }

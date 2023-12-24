@@ -82,6 +82,14 @@ Route::middleware(['checkRoles:admin,user'])->group(function () {
     Route::get('/cabang/shipment/sorting', [CabangController::class, 'getSortirPengantaranView'])->name('cabang.sorting');
     Route::get('/cabang/shipment/sorting/data', [CabangController::class, 'loadDataSortirPengantaran'])->name('cabang.sorting-data');
     Route::get('/cabang/shipment/sorting/create', [CabangController::class, 'createSortingShipment'])->name('cabang.sorting-data-create');
+    Route::get('/cabang/shipment/sorting/list', [CabangController::class, 'getViewListSortir'])->name('cabang.sorting-list-sortir');
+    Route::get('/cabang/shipment/sorting/list/data', [CabangController::class, 'listSortir'])->name('cabang.sorting-list-sortir-data');
+    Route::get('/cabang/shipment/pengantaran', [CabangController::class, 'pengantaranView'])->name('cabang.pengantaran-view');
+    Route::get('/cabang/shipment/pengantaran/data', [CabangController::class, 'loadDataPengantaran'])->name('cabang.pengantaran-data');
+    Route::get('/cabang/shipment/pengantaran/create', [CabangController::class, 'createDataPengantaran'])->name('cabang.pengantaran-shipment');
+    Route::get('/cabang/shipment/pengantaran/list', [CabangController::class, 'getListPengantaranView'])->name('cabang.pengantaran-listview');
+    Route::get('/cabang/shipment/pengantaran/listdata', [CabangController::class, 'loadListPengantaran'])->name('cabang.pengantaran-listview-data');
+    
     
 
     

@@ -41,6 +41,7 @@ class CabangController extends Controller
     private function fetchData($ship_id, $addCond)
     {
 
+        
         $model = DetailShipments::with(['resi','shipment',
                                         // 'shipment.cabang_id',    
                                         'resi.karyawan:id,cabang_id,agen_id', 
@@ -52,18 +53,48 @@ class CabangController extends Controller
                                         'resi.karyawan.agen:id,agen'])
                 ->where('ship_id',$ship_id);
 
+        // $checkroles = $model->whereHas('shipment', function ($query) use ($auth) {
+        //     $query->where('tujuan', $auth);
+        // })->count();
+
         if (Auth::user()->role !== 'admin') {
-            if ($addCond == 'asal')
-            {
+            if ($addCond == 'asal') {
                 $model->whereHas('shipment', function ($query) {
                     $query->where('cabang_id', Auth::user()->karyawanuser->cabang_id);
                 });
-            } else if ($addCond == 'tujuan') {
+            } elseif ($addCond == 'tujuan') {
                 $model->whereHas('shipment', function ($query) {
-                    $query->where('cabang_id', '!=', Auth::user()->karyawanuser->cabang_id);
+                    $query->where('tujuan', '=', Auth::user()->karyawanuser->cabang_id);
                 });
             }
         }
+        // if (Auth::user()->role !== 'admin') {
+        //     if ($addCond == 'asal') {
+        //         $model->whereHas('shipment', function ($query) {
+        //             $query->where('cabang_id', Auth::user()->karyawanuser->cabang_id);
+        //         });
+        //     } elseif ($addCond == 'tujuan' && $checkroles > 0) {
+        //         $model->whereHas('shipment', function ($query) {
+        //             // $query->where('cabang_id', Auth::user()->karyawanuser->cabang_id);
+        //             $query->where('tujuan', '=', Auth::user()->karyawanuser->cabang_id);
+        //         });
+        //     } elseif ($addCond == 'tujuan') {
+        //         $model->whereHas('shipment', function ($query) {
+        //             $query->where('cabang_id', '!=', Auth::user()->karyawanuser->cabang_id);
+        //         });
+        //     }
+
+        // } elseif (Auth::user()->role === 'admin') {
+        
+        //     if ($addCond == 'tujuan') {
+        //         // $model->whereHas('shipment', function ($query) {
+        //         //     // $query->where('cabang_id', Auth::user()->karyawanuser->cabang_id);
+        //         //     $query->where('tujuan', '=', Auth::user()->karyawanuser->cabang_id);
+        //         // });
+        //         $model = $model;
+        //     }
+
+        // }
 
 
         \Log::info($model->toSql());
@@ -73,7 +104,7 @@ class CabangController extends Controller
         // var_dump(DB::getQueryLog());
 
 
-        // return dd($data); 
+        // return dd($model); 
 
         return $model;
     
@@ -394,22 +425,28 @@ class CabangController extends Controller
     }
 
     //fetching list loading
-    public function fetchLoadingData(Request $request, $stat_shipid)
+    public function fetchLoadingData(Request $request, $stat_shipid, $tujuan = false)
     {
         $start_date = Carbon::parse($request->input('from_date'));
         $end_date = Carbon::parse($request->input('to_date'));
 
         if ($end_date->greaterThan($start_date)) {
             $model = Shipments::with(['agen:id,agen,cabang_id', 'cabang:id,cabang', 'cabangTujuan:id,cabang'])
-                                ->whereBetween('created_at', [$start_date, $end_date])
-                                ->where('status', $stat_shipid);
-
-            if ((Auth::user()->role !== 'admin') && !in_array($stat_shipid, [4, 5, 6])) {
-                $model->where('cabang_id', Auth::user()->karyawanuser->cabang_id);
-                // where('agen_id', Auth::user()->karyawanuser->agen_id)
-            } else if (in_array($stat_shipid, [4, 5, 6]))
+                ->whereBetween('created_at', [$start_date, $end_date])
+                ->where('status', $stat_shipid);
+            if ($tujuan == true)
             {
-                $model->where('tujuan', Auth::user()->karyawanuser->cabang_id);
+                $model = $model->with(['kecTujuanPengantaran:id,NamaKecamatan']);
+            } 
+            
+
+            if (Auth::user()->role !== 'admin') {
+                if (!in_array($stat_shipid, [4, 5, 6])) {
+                    $model->where('cabang_id', Auth::user()->karyawanuser->cabang_id);
+                    // where('agen_id', Auth::user()->karyawanuser->agen_id)
+                } else {
+                    $model->where('tujuan', Auth::user()->karyawanuser->cabang_id);
+                }
             }
 
             $data = $model->get();
@@ -444,7 +481,7 @@ class CabangController extends Controller
     //turunan data pemberangkatan dengan status 3 (berangkat dari gudang)
     public function fetchDepartureData(Request $request)
     {
-        $load = 'asal';
+        // $load = 'asal';
         $data = $this->getDepList($request, 3);
         return DataTables::of($data)
                 ->toJson();
@@ -453,7 +490,7 @@ class CabangController extends Controller
     //turunan data pemberangkatan untuk menampilkan data dengan status 4 (sampai di gdg tujuan)
     public function fetchArrivedData(Request $request)
     {
-        $load = 'tujuan';
+        // $load = 'tujuan';
         $data = $this->getDepList($request, 4);
         return DataTables::of($data)
                 ->toJson();
@@ -572,10 +609,10 @@ class CabangController extends Controller
         $stat_shipid = 4;
         $load = 'tujuan';
         $data = $this->fetchLoadingData($request, $stat_shipid);
-        if (Auth::user()->role !== 'admin') {
+        // if (Auth::user()->role !== 'admin') {
             
         
-        }
+        // }
         // dd($data);
         // return $data;
         return DataTables::of($data)
@@ -597,14 +634,17 @@ class CabangController extends Controller
     {
         $cabang = Auth::user()->karyawanuser->cabang_id;
         $kec = $request->input('kec');
-
         $data = Transaksi::with('kotaAsal:id,NamaKota','kotaTujuan:id,NamaKota',
                             'kecAsal:id,NamaKecamatan','kecTujuan:id,NamaKecamatan',
                             'serviceId:id,NamaLayanan','karyawan:id,agen_id,cabang_id','karyawan.agen:id,agen')
-                            ->where('IdKotaTujuan', $cabang)
                             ->where('IdKecTujuan', $kec)
-                            ->where('status', 5)
-                            ->get();
+                            ->where('status', 5);
+        if (Auth::user()->role !== 'admin') {
+            $data = $data->where('IdKotaTujuan', $cabang);
+        }
+
+        $data = $data->get();
+        
 
         return DataTables::of($data)
                         ->addColumn('checkbox', '<input type="checkbox" name="resi_checkbox[]" id="{{$no_resi}}" class="resi_checkbox" value="{{$no_resi}}" />')
@@ -617,6 +657,7 @@ class CabangController extends Controller
     {
         $this->updateShipment($request);
         $requestData = json_decode($request->input('data'), true);
+        $kec = $request->input('kec');
 
         // $kotaasal = $request->input('asal');
         $kota = Auth::user()->karyawanuser->cabang_id;
@@ -632,7 +673,7 @@ class CabangController extends Controller
                                 ->where('id', $user)->first();
         $randomCode = Str::random(8);
 
-        $cabang = $karyawanUser->cabang_id;
+        // $cabang = $karyawanUser->cabang_id;
         $agen = $karyawanUser->agen_id;
 
         // $noResis = $this->$noResis;
@@ -647,6 +688,7 @@ class CabangController extends Controller
             'pic' => $pic,
             'status' => '5',
             'tujuan' => $kotatujuan,
+            'kecTujuan' => $kec,
         ];
   
 
@@ -670,5 +712,144 @@ class CabangController extends Controller
         // // or
         // dd($shipmentData);
         // return $shipmentData;
+    }
+
+    public function getViewListSortir()
+    {
+        return view('cabang.datasortir', [
+            'title' => 'List Sortir Barang',
+        ]);
+    }
+
+    public function listSortir(Request $request)
+    {
+        $stat_shipid = 5;
+        $sortir = true;
+        $data = $this->fetchLoadingData($request, $stat_shipid, $sortir);
+        // if (Auth::user()->role !== 'admin') {
+            
+        // }
+        // dd($data);
+        // return $data;
+        return DataTables::of($data)
+                ->toJson();
+    }
+
+    public function pengantaranView()
+    {
+        $cabang = Auth::user()->karyawanuser->cabang_id;
+        $kec = District::where('IdCities', $cabang)->get();
+        return view('cabang.pengantaran', [
+            'title' => 'List Sortir Barang',
+            'kecs' => $kec
+        ]);
+    }
+
+    public function listPengantaran(Request $request)
+    {
+        $stat_shipid = 5;
+        $tujuan = true;
+        $data = $this->fetchLoadingData($request, $stat_shipid, $tujuan);
+
+        return DataTables::of($data)
+                ->toJson();
+    }
+
+    public function loadDataPengantaran(Request $request)
+    {
+        $cabang = Auth::user()->karyawanuser->cabang_id;
+        $kec = $request->input('kec');
+        $data = Transaksi::with('kotaAsal:id,NamaKota','kotaTujuan:id,NamaKota',
+                            'kecAsal:id,NamaKecamatan','kecTujuan:id,NamaKecamatan',
+                            'serviceId:id,NamaLayanan','karyawan:id,agen_id,cabang_id','karyawan.agen:id,agen')
+                            ->where('IdKecTujuan', $kec)
+                            ->where('status',6);
+        if (Auth::user()->role !== 'admin') {
+            $data = $data->where('IdKotaTujuan', $cabang);
+        }
+
+        $data = $data->get();
+        
+
+        return DataTables::of($data)
+                        ->addColumn('checkbox', '<input type="checkbox" name="resi_checkbox[]" id="{{$no_resi}}" class="resi_checkbox" value="{{$no_resi}}" />')
+                        ->rawColumns(['checkbox','action'])
+                        ->make(true);
+        // return $data;
+    }
+
+    public function createDataPengantaran(Request $request)
+    {
+        $this->updateShipment($request);
+        $requestData = json_decode($request->input('data'), true);
+        $kec = $request->input('kec');
+
+        // $kotaasal = $request->input('asal');
+        $kota = Auth::user()->karyawanuser->cabang_id;
+        // $kotatujuan = $request->input('tujuan');
+        $kotaasal = $kota;
+        $kotatujuan = $kota;
+        
+        $pic = $request->input('pic');
+        
+
+        $user = Auth::user()->id;
+        $karyawanUser = Karyawan::select('cabang_id', 'agen_id')
+                                ->where('id', $user)->first();
+        $randomCode = Str::random(8);
+
+        // $cabang = $karyawanUser->cabang_id;
+        $agen = $karyawanUser->agen_id;
+
+        // $noResis = $this->$noResis;
+
+
+
+        $shipmentData = [
+            'agen_id' => $agen,
+            'cabang_id' => $kotaasal,
+            'ship_id' => 'ANTAR'.$randomCode,
+            'nopol' => 'ANTAR',
+            'pic' => $pic,
+            'status' => '6',
+            'tujuan' => $kotatujuan,
+            'kecTujuan' => $kec,
+        ];
+  
+
+        //simpan data shipment
+        $shipment = Shipments::create($shipmentData);
+        
+        // Membuat array untuk detail shipment
+        $detailShipments = [];
+
+                    
+        // Memasukkan data ke dalam array
+        foreach ($requestData as $resi) {
+            // $detailShipments[] = ['no_resi' => $resi];
+            $detailShipments[] = ['no_resi' => $resi['no_resi']];
+        }
+        
+        // Melakukan saveMany untuk detail shipment
+        $shipment->detailShipments()->createMany($detailShipments);
+    }
+
+    public function getListPengantaranView(Request $request)
+    {
+        return view('cabang.datapengantaran', [
+            'title' => 'List Penganraran'
+        ]);
+
+        
+    }
+
+    public function loadListPengantaran(Request $request)
+    {
+        $stat_shipid = 6;
+        $tujuan = true;
+        $data = $this->fetchLoadingData($request, $stat_shipid, $tujuan);
+
+        return DataTables::of($data)
+                ->toJson();
     }
 }
