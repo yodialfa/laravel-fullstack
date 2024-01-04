@@ -1,7 +1,8 @@
 @extends('layouts.main')
-
 <div class="fixed top-0 z-50 w-full bg-cyan-400">
-    @include('partials.navbar')
+    <div class="hidden w-full lg:block md:w-auto" id="navbar-dropdown">
+        @include('partials.navbar')
+    </div>
 </div>
 @include('partials.sidebar')
 @section('container')
@@ -19,12 +20,17 @@
 
             {{-- <form id="shipmentForm" method="get" class="flex flex-col" onsubmit="return false;">
                 @csrf --}}
-                <label for='kotaasal'>Cabang Asal :</label>
-                <select name="pilihan" id="kotaasal" class="w-1/7 py-2 px-3 border rounded-md">
-                    <option value="" selected>-- Pilih Kota --</option>
-                    @foreach($kota as $kotaasal)
-                    <option value="{{ $kotaasal->id }}">{{ $kotaasal->NamaKota }}</option>
-                    @endforeach
+            <div class="flex items-center justify-center mt-8 flex-col">
+                <div>
+                    <label for='kotaasal'>Cabang Asal :</label>
+                    <select name="pilihan" id="kotaasal" class="w-1/7 py-2 px-3 border rounded-md">
+                        <option value="" selected>-- Pilih Kota --</option>
+                        @foreach($kota as $kotaasal)
+                        <option value="{{ $kotaasal->id }}">{{ $kotaasal->NamaKota }}</option>
+                        @endforeach
+                </div>
+                <div>
+
                 </select>
                 {{-- <input type="date" name="cabang_asal" id="cabang_asal" required> --}}
                 <label for='kotatujuan'>Cabang Tujuan :</label>
@@ -34,14 +40,22 @@
                     <option value="{{ $kotatujuan->id }}">{{ $kotatujuan->NamaKota }}</option>
                     @endforeach
                 </select>
-                     
-                <button type="button" id="submitBtn">Cari Data</button>
+                </div>
+            {{-- </div> --}}
+            <div class="flex items-center justify-center">
+                {{-- <button type="button" id="submitBtn">Cari Data</button> --}}
+                <button type="button" id="submitBtn" name="submitBtn" class=" mt-4 flex items-center justify-center text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Cari Data</button>
+            </div>
+            </div>
+            <hr>
                 
             {{-- </form> --}}
             <div class="flex justify-center m-5">
-                <button id="btnModal" data-modal-target="defaultModal" data-modal-toggle="defaultModal" class="hidden block text-black bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" type="button">
+                <button type="button" id="btnModal" data-modal-target="defaultModal" data-modal-toggle="defaultModal" class=" hidden text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Update RG Pemberangkatan</button>
+
+                {{-- <button id="btnModal" data-modal-target="defaultModal" data-modal-toggle="defaultModal" class="hidden block text-black bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" type="button">
                 Buat RG Pemberangkatan
-                </button>
+                </button> --}}
             </div>
 
             <!-- Modal toggle -->
@@ -309,8 +323,11 @@
                     {
                         console.log("sukses" + nopol + asal + tujuan + sopir);
                         
-                        alert("suskes update data");
-                        window.location.reload();
+                        console.log("sukses");
+                        alert(data.message);
+                        if (data.success && data.redirect) {
+                            window.location.href = data.redirect;
+                        }
 
                     },
                     error: function(data) {

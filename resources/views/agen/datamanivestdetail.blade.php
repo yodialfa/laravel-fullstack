@@ -132,6 +132,35 @@
         // console.log('jsonData structure:', jsonData);
         // console.log(jsonData.original.data);
         $(document).ready(function() {
+            const shipId = @json($ship_id);
+            // Cek apakah jsonData memiliki setidaknya satu elemen
+            if (jsonData.length > 0) {
+                // Ambil data pertama
+                var firstData = jsonData[0];
+
+                // Isi additionalInfo dengan data pertama dari JSON response
+                var additionalInfo = {
+                    judul : 'Data Manivest ' + shipId,
+                    Kota_Tujuan: firstData.resi.kota_tujuan.NamaKota,
+                    Kec_Tujuan: firstData.resi.kec_tujuan.NamaKecamatan,
+                    pic: firstData.shipment.pic,
+                };
+
+                // Gunakan additionalInfo sesuai kebutuhan Anda
+                console.log(additionalInfo);
+
+                // Sekarang additionalInfo berisi data pertama dari JSON response
+            } else {
+                // jsonData kosong, atur additionalInfo sesuai kebutuhan
+                var additionalInfo = {
+                    judul : 'Data Manivest',
+                    Kota_Tujuan: 'Kota Tujuan',
+                    Kec_Tujuan: 'Kec. Tujuan',
+                    pic: 'PIC',
+                };
+
+                console.log('JSON data is empty. Using default values.');
+            }
         $('#tableTransaksi').DataTable(
                 {
                     'data': jsonData,// Pass the data array
@@ -187,160 +216,92 @@
             }
             
             ],
+            buttons: [
+            {
+                // extend: 'collection',
+                extend: 'excelHtml5',
+                text: 'Export',
+                title: getExportTitle(additionalInfo),
+                buttons: ['export', 'excel', 'csv', 'pdf', 
+                {
+                    extend: 'excel',
+                    text: 'Export All Data',
+                    action: function(e, dt, button, config) {
+                        // Use the built-in buttons.exportData() function to get all data
+                        var exportData = dt.buttons.exportData({
+                            modifier: {
+                                page: 'all'
+                            }
+                        });
+
+                        // Create a Blob containing the data
+                        var blob = new Blob([exportData.excel]);
+
+                        // Create an object URL for the Blob
+                        var url = URL.createObjectURL(blob);
+
+                        // Create a link and click it to trigger the download
+                        var a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'exported_data.xlsx';
+                        a.click();
+
+                        // Release the Blob URL
+                        URL.revokeObjectURL(url);
+                    },
+
+                },
+                {
+                    text: 'Export All to Excel',
+                    action: function (e, dt, button, config)
+                    {
+                        dt.one('preXhr', function (e, s, data)
+                        {
+                            data.length = -1;
+                        }).one('draw', function (e, settings, json, xhr)
+                        {
+                            var excelButtonConfig = $.fn.DataTable.ext.buttons.excelHtml5;
+                            var addOptions = { exportOptions: { 'columns': ':all'} };
+
+                            $.extend(true, excelButtonConfig, addOptions);
+                            excelButtonConfig.action(e, dt, button, excelButtonConfig);
+                        }).draw();
+                    }
+                },
+                {
+                    extend: 'excel',
+                    text: 'Export All Data',
+                    action: function (e, dt, button, config) {
+                        // Trigger the exportAll endpoint to generate and download the Excel file
+                        var exportUrl = "{{ route('agen.export', ['start' => ':start', 'end' => ':end']) }}"
+                            .replace(':start', start_date.format('YYYY-MM-DD HH:mm:ss'))
+                            .replace(':end', end_date.format('YYYY-MM-DD HH:mm:ss'));
+
+                        window.location.href = exportUrl;
+                    }
+                },
+                ]
+            }
+        
+        
+            ],
+            colReorder: true,
+            dom: '<"flex justify-between items-center mb-4"lBf>rtip',
+            // dom: 'Bfrtip',
+            select: true,
+            lengthMenu: [[10, 25, 50, 75, 100, -1], [ '10 rows', '25 rows', '50 rows','75 rows','100 rows', 'Show all' ]],
+            pageLength: 10,
             }
         );
+
+        function getExportTitle(info) {
+            // Use <br> for HTML line breaks
+            return `${info.judul} Kota Tujuan: ${info.Kota_Tujuan}  Kec. Tujuan: ${info.Kec_Tujuan}   PIC:${info.pic}`;
+        }
+
         });
-        
-        // var start_date = moment().startOf('day').subtract(1, 'M');
 
-        // var end_date = moment().endOf('day');
-
-
-
-        // $('#daterange span').html(start_date.format('DD MMMM YYYY HH:mm:ss') + ' - ' + end_date.format('DD MMMM YYYY HH:mm:ss'));
-
-        // $('#daterange').daterangepicker({
-        //     startDate : start_date,
-        //     endDate : end_date
-        // }, function(start_date, end_date){
-        //     $('#daterange span').html(start_date.format('DD MMMM YYYY HH:mm:ss') + ' - ' + end_date.format('DD MMMM YYYY HH:mm:ss'));
-
-        //     table.draw();
-        // });
-
-        // var i = 1;
-        // var table = $('#tableTransaksi').DataTable({
-        // processing: true,
-        // serverSide: true,
-        // // data: data,
-        // ajax: {
-        //     url : "{{ route('agen.manivest-fetch') }}",
-        //     data : function(data){
-        //         data.from_date = $('#daterange').data('daterangepicker').startDate.format('YYYY-MM-DD HH:mm:ss');
-        //         data.to_date = $('#daterange').data('daterangepicker').endDate.format('YYYY-MM-DD HH:mm:ss');
-        //     }
-        // },
-        // columns: [
-        //     {data: null, sortable: false,
-        //     render: function (data, type, row, meta) {
-        //          return meta.row + meta.settings._iDisplayStart + 1;
-        //         }  
-        //     },
-        //     {data: 'created_at', name: 'created_at'},
-        //     {data: 'ship_id', name: 'ship_id'},
-        //     {data: 'tujuan', name: 'tujuan'},
-        //     {data: 'agen.agen', name: 'agen.agen'},
-        //     {data: 'cabang.cabang', name: 'cabang.cabang'},
-        //     {
-        //         data: 'dynamic_link_column',
-        //         name: 'dynamic_link_column',
-        //         render: function(data, type, full, meta) {
-        //             // 'data' adalah nilai kolom
-        //             // 'type' adalah tipe rendering (biasanya 'display')
-        //             // 'full' adalah objek data lengkap untuk baris saat ini
-        //             // 'meta' berisi informasi tambahan, seperti indeks kolom
-                    
-        //             // Contoh: Menyisipkan link dengan data sebagai bagian dari URL
-        //             return '<a href="/agen/manivest/data/detail/' + full.ship_id + '">Lihat Detail</a>';
-        //         }
-        //     },
-
-        // ],
-        // "columnDefs": [
-        //     {
-        //         "targets": 1,
-        //         "render": DataTable.render.datetime('DD-MM-YYYY HH:mm:ss')
-                
-        //     }
-        // ],
-        // buttons: [
-        //     {
-        //         extend: 'collection',
-        //         text: 'Export',
-        //         buttons: ['export', 'excel', 'csv', 'pdf', 
-        //         {
-        //             extend: 'excel',
-        //             text: 'Export All Data',
-        //             action: function(e, dt, button, config) {
-        //                 // Use the built-in buttons.exportData() function to get all data
-        //                 var exportData = dt.buttons.exportData({
-        //                     modifier: {
-        //                         page: 'all'
-        //                     }
-        //                 });
-
-        //                 // Create a Blob containing the data
-        //                 var blob = new Blob([exportData.excel]);
-
-        //                 // Create an object URL for the Blob
-        //                 var url = URL.createObjectURL(blob);
-
-        //                 // Create a link and click it to trigger the download
-        //                 var a = document.createElement('a');
-        //                 a.href = url;
-        //                 a.download = 'exported_data.xlsx';
-        //                 a.click();
-
-        //                 // Release the Blob URL
-        //                 URL.revokeObjectURL(url);
-        //             }
-        //         },
-        //         {
-        //             text: 'Export All to Excel',
-        //             action: function (e, dt, button, config)
-        //             {
-        //                 dt.one('preXhr', function (e, s, data)
-        //                 {
-        //                     data.length = -1;
-        //                 }).one('draw', function (e, settings, json, xhr)
-        //                 {
-        //                     var excelButtonConfig = $.fn.DataTable.ext.buttons.excelHtml5;
-        //                     var addOptions = { exportOptions: { 'columns': ':all'} };
-
-        //                     $.extend(true, excelButtonConfig, addOptions);
-        //                     excelButtonConfig.action(e, dt, button, excelButtonConfig);
-        //                 }).draw();
-        //             }
-        //         },
-        //         {
-        //             extend: 'excel',
-        //             text: 'Export All Data',
-        //             action: function (e, dt, button, config) {
-        //                 // Trigger the exportAll endpoint to generate and download the Excel file
-        //                 var exportUrl = "{{ route('agen.export', ['start' => ':start', 'end' => ':end']) }}"
-        //                     .replace(':start', start_date.format('YYYY-MM-DD HH:mm:ss'))
-        //                     .replace(':end', end_date.format('YYYY-MM-DD HH:mm:ss'));
-
-        //                 window.location.href = exportUrl;
-        //             }
-        //         },
-        //         ]
-        //     }
-        
-        
-        // ],
-        // colReorder: true,
-        // dom: '<"flex justify-between items-center mb-4"lBf>rtip',
-        // // dom: 'Bfrtip',
-        // select: true,
-        // lengthMenu: [[10, 25, 50, 75, 100, -1], [ '10 rows', '25 rows', '50 rows','75 rows','100 rows', 'Show all' ]],
-        // pageLength: 10,
-        // language: {
-        //     // Customize the "Show entries" dropdown text
-        //     lengthMenu: "_MENU_",
-        // },
-        
-        // });
-
-        // table.buttons().container().appendTo($('.flex:eq(0)', table.table().container()));
-        // $('.dataTables_length select').addClass('text-sm');
-
-
-        // var data = table.buttons.exportData();
-
-
-
-        
+       
         
     });
 

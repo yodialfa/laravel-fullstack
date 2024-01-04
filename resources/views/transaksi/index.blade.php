@@ -1,6 +1,8 @@
 @extends('layouts.main')
 <div class="fixed top-0 z-50 w-full bg-cyan-400">
-    @include('partials.navbar')
+    <div class="hidden w-full lg:block md:w-auto" id="navbar-dropdown">
+        @include('partials.navbar')
+    </div>
 </div>
 @include('partials.sidebar')
 @section('container')
@@ -126,13 +128,18 @@
                         <option value="{{ $kotas['id'] }}">{{ $kotas['NamaKota'] }}</option>
                         @endforeach
                     </select>
+                    <!-- Add a hidden field to indicate whether kotaasal is disabled -->
+                    <input type="hidden" name="kotaasal_disabled" id="kotaasal_disabled" value="false">
+
                 </div>
+                
 
                 <div>
                     <label for="kecasal" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kecamatan Asal</label>
                     <select name="kecasal" id="kecasal" aria-placeholder="Pilih Kecamatan" class="py-2 px-3 border rounded-md w-full">
                         <option value="#">--Pilih Kecamatan--</option>
                     </select>
+                    <input type="hidden" name="kecasal_disabled" id="kotaasal_disabled" value="false">
                 </div>
             </div>
 
@@ -145,6 +152,7 @@
                         <option value="{{ $kotuj['id'] }}">{{ $kotuj['NamaKota'] }}</option>
                         @endforeach
                     </select>
+                    <input type="hidden" name="kotatujuan_disabled" id="kotaasal_disabled" value="false">
                 </div> 
 
                 <div class="">
@@ -152,13 +160,14 @@
                     <select name="kectujuan" id="kectujuan" class="py-2 px-3 border w-full rounded-md">
                         <option value="#">--Pilih Kecamatan--</option>
                     </select>
+                    <input type="hidden" name="kectujuan_disabled" id="kotaasal_disabled" value="false">
                 </div>
             </div>
 
             <div class="">
                 <label for="layanan" class="block text-xl font-medium text-gray-900 dark:text-white">Layanan</label>
             
-                <select name="layanan" id="layanan" class="w-full  border rounded-md">
+                <select name="layanan" id="layanan" class="w-full  border rounded-md form-control">
                     <option value="" selected>--Pilih Layanan--</option>
                     @foreach($services as $service)
                         <option value="{{ $service->id }}">{{ $service['NamaLayanan'] }}</option>
@@ -174,7 +183,7 @@
                 </select>
                 <div class="">
                     <label for="cara_bayar" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kota Asal</label>
-                    <select name="cara_bayar" id="cara_bayar" class=" px-3 border rounded-md w-full">
+                    <select name="cara_bayar" id="cara_bayar" class=" px-3 border rounded-md w-full form-control">
                         {{-- <option value="" selected>-- Pilih Kota --</option> --}}
                         <option value="1" selected>Cash</option>
                         <option value="2" >Bayar Tujuan</option>
@@ -184,7 +193,7 @@
 
             <div class="mb-6">
                 <label for="jumlah" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jumlah Koli</label>
-                <input type="text" id="jumlah" name="jumlah" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('jumlah') is-invalid @enderror"" placeholder="" required value="{{ old('jumlah') }}">
+                <input type="text" id="jumlah" name="jumlah" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('jumlah') is-invalid @enderror"" placeholder="" required value="{{ old('jumlah') }}">
                 @error('jumlah')
                 <div>
                     {{ $message }}
@@ -194,7 +203,7 @@
 
             <div class="mb-6">
                 <label for="berat" class="proc block mb-2 text-sm font-medium text-gray-900 dark:text-white">Berat / Volume</label>
-                <input type="text" id="berat" name="berat" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('berat') is-invalid @enderror"" placeholder="" required value="{{ old('berat') }}">
+                <input type="text" id="berat" name="berat" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('berat') is-invalid @enderror"" placeholder="" required value="{{ old('berat') }}">
                 @error('berat')
                 <div>
                     {{ $message }}
@@ -214,7 +223,7 @@
 
             <div class="mb-6">
                 <label for="diskon" class="proc block mb-2 text-sm font-medium text-gray-900 dark:text-white">Diskon</label>
-                <input type="text" id="diskon" name="diskon" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('diskon') is-invalid @enderror"" placeholder="" required value="{{ old('diskon') }}">
+                <input type="text" id="diskon" name="diskon" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('diskon') is-invalid @enderror" placeholder="" required value="{{ old('diskon') }}">
                 @error('diskon')
                 <div>
                     {{ $message }}
@@ -234,7 +243,7 @@
 
             <div class="mb-6">
                 <label for="jenis_barang" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis Barang</label>
-                <input type="text" id="jenis_barang" name="jenis_barang" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('jenis_barang') is-invalid @enderror"" placeholder="" required value="{{ old('jenis_barang') }}">
+                <input type="text" id="jenis_barang" name="jenis_barang" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('jenis_barang') is-invalid @enderror" placeholder="" required value="{{ old('jenis_barang') }}">
                 @error('jenis_barang')
                 <div>
                     {{ $message }}
@@ -244,7 +253,7 @@
 
             <div class="mb-6">
                 <label for="total_harga" class="proc block mb-2 text-sm font-medium text-gray-900 dark:text-white">Asuransi</label>
-                <input type="text" id="biaya_asuransi" name="biaya_asuransi" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('biaya_asuransi') is-invalid @enderror"" placeholder="" required value="{{ old('biaya_asuransi') }}">
+                <input type="text" id="biaya_asuransi" name="biaya_asuransi" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('biaya_asuransi') is-invalid @enderror" placeholder="" required value="{{ old('biaya_asuransi') }}">
                 @error('biaya_asuransi')
                 <div>
                     {{ $message }}
@@ -254,7 +263,7 @@
 
             <div class="mb-6">
                 <label for="total_harga" class="proc block mb-2 text-sm font-medium text-gray-900 dark:text-white">Total Bayar</label>
-                <input type="text" id="total_harga" name="total_harga" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('total_harga') is-invalid @enderror"" placeholder="" required value="{{ old('total_harga') }} " readonly>
+                <input type="text" id="total_harga" name="total_harga" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('total_harga') is-invalid @enderror" placeholder="" required value="{{ old('total_harga') }} " readonly>
                 @error('total_harga')
                 <div>
                     {{ $message }}
@@ -284,7 +293,7 @@
             --}}
 
             <div class="flex items-center justify-center gap-3">
-                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 flex">Submit</button>
+                <button onclick="submitForm()" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 flex">Submit</button>
                 <button type="button" class="focus:outline-none text-white bg-red-700  hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"><a href="{{ route('karyawan') }}">Batal</a></button>
             </div> 
 

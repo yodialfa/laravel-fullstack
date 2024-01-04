@@ -579,6 +579,14 @@ class CabangController extends Controller
         // dd($shipmentData);
         // return $shipmentData;
 
+        $response = [
+            'success' => true,
+            'message' => 'Data berhasil diupdate.',
+            'redirect' => '/agen/manivest/data/detail/'.$shipmentData['ship_id'],
+        ];
+        
+        return response()->json($response);
+
 
     }
 
@@ -853,3 +861,28 @@ class CabangController extends Controller
                 ->toJson();
     }
 }
+
+
+
+ // Get customer data from the form
+        // $customerData = $request->only(['phone-input-pengirim', 'nama-pengirim', 'alamat-pengirim']);
+
+        // Validation for customer data
+        // $validatedCustomerData = $request->validate([
+        //     'phone-input-pengirim' => 'required|numeric',
+        //     'nama-pengirim' => 'required|string',
+        //     'alamat-pengirim' => 'required|max:255',
+        // ]);
+
+        // // Check if the customer already exists based on the phone number
+        // $customer = Customer::where('no_hp', $validatedCustomerData['phone-input-pengirim'])->first();
+
+        // // If the customer does not exist, insert a new customer
+        // if (!$customer) {
+        //     $customer = Customer::create([
+        //         'no_hp' => $validatedCustomerData['phone-input-pengirim'],
+        //         'nama_customer' => $validatedCustomerData['nama-pengirim'],
+        //         'alamat_customer' => $validatedCustomerData['alamat-pengirim'],
+        //     ]);
+        // }
+

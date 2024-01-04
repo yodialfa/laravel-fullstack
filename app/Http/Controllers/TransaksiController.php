@@ -1,14 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
-use PDF;
+use Log;
 
+use PDF;
 use App\Models\City;
 use App\Models\Status;
 use App\Models\Service;
 use App\Models\Customer;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Console\Input\Input;
 use App\Http\Requests\StoreTransaksiRequest;
@@ -40,72 +42,115 @@ class TransaksiController extends Controller
         // return dd($number);
     }
 
-    public function create(Request $request) 
+    public function create(Request $request)
     {
-        $validatedData = request()->validate([
-            'no_resi' => "required|unique:transaksis",
-            'phone-input-pengirim' => "required|numeric",
-            'nama-pengirim' => ['required', 'string'],
-            'alamat-pengirim' => "required|max:255",
-            'phone-input-penerima' => "required|numeric",
-            'nama-penerima' => ['required', 'string'],
-            'alamat-penerima' => "required|max:255",
-            'kotaasal' => "required",
-            'kecasal' => "required",
-            'kotatujuan' => "required",
-            'kectujuan' => "required",
-            'layanan' => "required",
-            'jumlah' => "required|numeric",
-            'berat' => "required|numeric",
-            'diskon' => "required|numeric",
-            'biaya_surat' => "required|numeric",
-            'jenis_barang' => "required|string",
-            'biaya_asuransi' => "required|numeric",    
+        try {
+            // $kotaasalDisabled = $request->input('kotaasal_disabled', 'false');
+            // $kecasalDisabled = $request->input('kecasal_disabled', 'false');
+            // $kotatujuanDisabled = $request->input('kotatujuan_disabled', 'false');
+            // $kectujuanDisabled = $request->input('kectujuan_disabled', 'false');
+            //Validation for customer data
+            $validatedCustomerData = $request->validate([
+                'phone-input-pengirim' => 'required|numeric',
+                'nama-pengirim' => 'required|string',
+                'alamat-pengirim' => 'required|max:255',
+            ]);
 
-        ]);
+             // Check if the customer already exists based on the phone number
+            $customer = Customer::where('no_hp', $validatedCustomerData['phone-input-pengirim'])->first();
 
-        $transaksiData = [
-            
-            'no_resi' => $request->no_resi,
-            'no_hp_pengirim' => $validatedData['phone-input-pengirim'],
-            'nama_pengirim' => $validatedData['nama-pengirim'],
-            'alamat_pengirim' => $validatedData['alamat-pengirim'],
-            'no_hp_penerima' => $validatedData['phone-input-penerima'],
-            'nama_penerima' => $validatedData['nama-penerima'],
-            'alamat_penerima' => $validatedData['alamat-penerima'],
-            'IdKotaAsal' => $validatedData['kotaasal'],
-            'IdKecAsal' => $validatedData['kecasal'],
-            'IdKotaTujuan' => $validatedData['kotatujuan'],
-            'IdKecTujuan' => $validatedData['kectujuan'],
-            'IdLayanan' => $validatedData['layanan'],
-            'cara_bayar' => $request->cara_bayar,
-            'jumlah' => $validatedData['jumlah'],
-            'berat' => $validatedData['berat'],
-            'harga' => $request->harga,
-            'diskon' => $validatedData['diskon'],
-            'biaya_surat' => $validatedData['biaya_surat'],
-            'jenis_barang' => $validatedData['jenis_barang'],
-            'biaya_asuransi' => $validatedData['biaya_asuransi'],
-            'total_harga' => $request->total_harga,
-            'employeeId' => Auth::user()->id,
+            // If the customer does not exist, insert a new customer
+            if (!$customer) {
+                $customer = Customer::create([
+                    'no_hp' => $validatedCustomerData['phone-input-pengirim'],
+                    'nama_customer' => $validatedCustomerData['nama-pengirim'],
+                    'alamat_customer' => $validatedCustomerData['alamat-pengirim'],
+                ]);
+            }
 
-        ];
+            $validatedData = $request->validate([
+                'no_resi' => "required",
+                // 'phone-input-pengirim' => "required|numeric",
+                // 'nama-pengirim' => "required",
+                // 'alamat-pengirim' => "required|max:255",
+                'phone-input-penerima' => "required|numeric",
+                'nama-penerima' => "required|string",
+                'alamat-penerima' => "required|max:255",
+                'kotaasal' => "required",
+                'kecasal' => "required",
+                'kotatujuan' => "required",
+                'kectujuan' => "required",
 
-        Transaksi::create($transaksiData);
-        Status::create(['no_resi' =>$validatedData['no_resi'], 
-                                'status' => '0',
-                                'ket' => 'Transaksi Agen',
-                                
-                            ]);
-        // Status::create(['no_resi' => $validatedData->no_resi, 'status' => '0', 'ket' => 'Transaksi Agen']);
-        $pdfUrl = $transaksiData['no_resi'];
+                // 'kotaasal' => "required_unless:kotaasal_disabled,true",
+                // 'kecasal' => "required_unless:kecasal_disabled,true",
+                // 'kotatujuan' => "required_unless:kotatujuan_disabled,true",
+                // 'kectujuan' => "required_unless:kectujuan_disabled,true",
+                'layanan' => "required",
+                'jumlah' => "required|numeric",
+                'berat' => "required|numeric",
+                'diskon' => "required|numeric",
+                'biaya_surat' => "required|numeric",
+                'jenis_barang' => "required|string",
+                'biaya_asuransi' => "required|numeric",    
+            ]);
+
+            $transaksiData = [
+                
+                'no_resi' => $request->no_resi,
+                'no_hp_pengirim' => $validatedCustomerData['phone-input-pengirim'],
+                'nama_pengirim' => $validatedCustomerData['nama-pengirim'],
+                'alamat_pengirim' => $validatedCustomerData['alamat-pengirim'],
+                'no_hp_penerima' => $validatedData['phone-input-penerima'],
+                'nama_penerima' => $validatedData['nama-penerima'],
+                'alamat_penerima' => $validatedData['alamat-penerima'],
+
+                'IdKotaAsal' => $validatedData['kotaasal'],
+                'IdKecAsal' => $validatedData['kecasal'],
+                'IdKotaTujuan' => $validatedData['kotatujuan'],
+                'IdKecTujuan' => $validatedData['kotatujuan'],
+                
+                'IdLayanan' => $validatedData['layanan'],
+                'cara_bayar' => $request->cara_bayar,
+                'jumlah' => $validatedData['jumlah'],
+                'berat' => $validatedData['berat'],
+                'harga' => $request->harga,
+                'diskon' => $validatedData['diskon'],
+                'biaya_surat' => $validatedData['biaya_surat'],
+                'jenis_barang' => $validatedData['jenis_barang'],
+                'biaya_asuransi' => $validatedData['biaya_asuransi'],
+                'total_harga' => $request->total_harga,
+                'employeeId' => Auth::user()->id,
+
+            ];
+
+            $transaksi = Transaksi::create($transaksiData);
+            $stat = Status::create(['no_resi' =>$validatedData['no_resi'], 
+                                    'status' => '0',
+                                    'ket' => 'Transaksi Agen',
+                                    
+                                ]);
+            // Status::create(['no_resi' => $validatedData->no_resi, 'status' => '0', 'ket' => 'Transaksi Agen']);
+            $pdfUrl = $transaksiData['no_resi'];
+            // Your existing code here
+            Log::info('Request data:', $request->all());
+
+            // Log::info('Validation passed', $transaksi, $stat);
+            // return $validatedData;
+            return view('transaksi.cetak', [
+                'title' => 'Cetak',
+                'resi' => $pdfUrl,
+            ]);
+    
+        } catch (\Exception $e) {
+            Log::error('Error occurred: ' . $e->getMessage());
+            // You might also want to dd or return a response indicating the error.
+            dd('An error occurred. Please check the logs for details.');
+        }
+        
+        // Log::info('Validation passed', $validatedData);
+        // return $validatedData;
         
         
-
-        return view('transaksi.cetak', [
-            'title' => 'Cetak',
-            'resi' => $pdfUrl,
-        ]);
     }
 
     /**

@@ -1,6 +1,8 @@
 @extends('layouts.main')
 <div class="fixed top-0 z-50 w-full bg-cyan-400">
-@include('partials.navbar')
+    <div class="hidden w-full lg:block md:w-auto" id="navbar-dropdown">
+        @include('partials.navbar')
+    </div>
 </div>
 @include('partials.sidebar')
 

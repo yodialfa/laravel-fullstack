@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('no_resi');
             $table->char('status',10)->default(0);
             $table->char('ket', 100);
+            // $table->string('bukti_penerimaan')->nullable();
             $table->timestamps();
         });
     }

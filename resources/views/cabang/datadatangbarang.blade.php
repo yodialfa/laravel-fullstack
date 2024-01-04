@@ -1,9 +1,8 @@
 @extends('layouts.main')
-{{-- //cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css --}}
-
-
 <div class="fixed top-0 z-50 w-full bg-cyan-400">
-    @include('partials.navbar')
+    <div class="hidden w-full lg:block md:w-auto" id="navbar-dropdown">
+        @include('partials.navbar')
+    </div>
 </div>
 @include('partials.sidebar')
 @section('container')

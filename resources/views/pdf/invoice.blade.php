@@ -212,7 +212,7 @@
                     <td rowspan="2">Alamat :</td>
                     {{-- <td>:</td> --}}
 
-                    <td colspan="3" rowspan="2" style="max-width: 200px; word-wrap: break-word;">{{ $transaksi['alamat-penerima'] }} gcgcygcgjcgjhcgcjcjhchjcghjchjchjchjchgchccjhchjchjchjgchchgcgcygcgjcgjhcgcjcjhchjcghjchjchjchjchgchccjhchjchjchjgchch</td>
+                    <td colspan="3" rowspan="2" style="max-width: 200px; word-wrap: break-word;">{{ $transaksi['alamat-penerima'] }}</td>
     
                     <td rowspan="2">Alamat</td>
                     {{-- <td rowspan="2">:</td> --}}

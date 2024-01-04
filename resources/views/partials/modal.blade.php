@@ -1,26 +1,5 @@
 
 
-{{-- <div id="myModal" class="overflow-y-auto hidden">
-  <div class="flex items-center justify-start">
-      <div class="fixed z-100 inset-0 transition-opacity">
-          <div class="fixed inset-0 bg-gray-500 opacity-75"></div>
-      </div>
-      <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
-
-      <div class="mx-auto">
-          <div class="w-full h-28 bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-top">
-              <p class="text-sm text-gray-500" id="modal-message">Apakah Anda yakin ingin melanjutkan?</p>
-
-
-                  <button type="button" class="btn btn-secondary" id="cancel" data-dismiss="modal">Cancel</button>
-                  <button type="button" class="btn btn-primary" id="confirm">Confirm Delete</button>
-
-          </div>
-      </div>
-  </div>
-</div> --}}
-
-
 
   
   <div id="myModal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">

@@ -260,7 +260,7 @@
             {data: 'biaya_surat', name: 'biaya_surat'},
             {data: 'biaya_asuransi', name: 'biaya_asuransi'},                
             {data: 'total_harga', name: 'total_harga', 
-            render: $.fn.dataTable.render.number('.', ',', 0, '' )},
+            render: $.fn.dataTable.render.number(',', '.', 0, '' )},
             // render: function ( data, type, row ) {
             //             return 'Rp.'+ data;
             //         }},

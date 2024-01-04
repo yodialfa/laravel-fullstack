@@ -1,9 +1,8 @@
 @extends('layouts.main')
-{{-- //cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css --}}
-
-
 <div class="fixed top-0 z-50 w-full bg-cyan-400">
-    @include('partials.navbar')
+    <div class="hidden w-full lg:block md:w-auto" id="navbar-dropdown">
+        @include('partials.navbar')
+    </div>
 </div>
 @include('partials.sidebar')
 @section('container')
@@ -18,22 +17,28 @@
                 <h1 class="text-center text-3xl">Pengantaran Kurir</h1>
             </div>
 
-            <div>
+            <div class="flex items-center justify-center">
                 {{-- <input type="date" name="cabang_asal" id="cabang_asal" required> --}}
                 <label for='kectujuan'>Pilih Kecamatan :</label>
-                <select name="kectujuan" id="kectujuan" class="w-1/7 py-2 px-3 border rounded-md">
+                <select name="kectujuan" id="kectujuan" class="w-1/7 py-2 px-3 border rounded-md ml-3">
                     <option value="" selected>-- Pilih Kota --</option>
                     @foreach($kecs as $kec)
                     <option value="{{ $kec->id }}">{{ $kec->NamaKecamatan }}</option>
                     @endforeach
                 </select>
-                     
-                <button type="button" id="submitBtn">Cari Data</button>
+            
+
+                   
+                    {{-- <button type="button" id="submitBtn" name="submitBtn" class="flex items-center justify-center text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Cari Data</button> --}}
+                <button type="button" id="submitBtn" class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center ml-3">Cari Data</button>
+                   
             </div>
             <div class="flex justify-center m-5">
-                <button id="btnModal" data-modal-target="defaultModal" data-modal-toggle="defaultModal" class="hidden block text-black bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" type="button">
+                <button type="button" id="btnModal" data-modal-target="defaultModal" data-modal-toggle="defaultModal" class="hidden text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center ml-3">Buat Laporan Sortir</button>
+
+                {{-- <button id="btnModal" data-modal-target="defaultModal" data-modal-toggle="defaultModal" class="hidden block text-black bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" type="button">
                 Buat Laporan Sortir
-                </button>
+                </button> --}}
             </div>
                 <table class="display hidden w-full text-sm text-left text-gray-500 dark:text-gray-400" id="tableTransaksi">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

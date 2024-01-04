@@ -5,9 +5,24 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreStatusRequest;
 use App\Http\Requests\UpdateStatusRequest;
 use App\Models\Status;
+use Illuminate\Http\Request;
 
 class StatusController extends Controller
 {
+    public function cekResiView()
+    {
+        return view('cekresi', [
+            'title' => 'Cek Resi',
+        ]);
+    }
+
+    public function cekResi(Request $request)
+    {
+        $resi = $request->input('resi');
+
+        $status = Status::where('no_resi', $resi)->get();
+        return $status;
+    }
     /**
      * Display a listing of the resource.
      */

@@ -1,3 +1,4 @@
+
 <div class="bg-input-gradient w-full">
   <div class="container mx-auto">
   <nav class="bg-transparent border-transparent font-kanit dark:bg-red dark:border-gray-700">
@@ -21,6 +22,9 @@
           
           <li>
             <a href="{{ route('price') }}" class="block py-2 pl-3 pr-4 text-white text-xl bg-blue-700 rounded md:bg-transparent md:p-0 ">Harga</a>
+          </li>
+          <li>
+            <a href="{{ route('cekresi-view') }}" class="block py-2 pl-3 pr-4 text-white bg-blue-700 text-xl rounded md:bg-transparent md:p-0 ">Cek Resi</a>
           </li>
           <li>
             <a href="about/" class="block py-2 pl-3 pr-4 text-white bg-blue-700 text-xl rounded md:bg-transparent md:p-0 ">About</a>

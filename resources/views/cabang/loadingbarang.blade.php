@@ -1,6 +1,8 @@
 @extends('layouts.main')
 <div class="fixed top-0 z-50 w-full bg-cyan-400">
-    @include('partials.navbar')
+    <div class="hidden w-full lg:block md:w-auto" id="navbar-dropdown">
+        @include('partials.navbar')
+    </div>
 </div>
 @include('partials.sidebar')
 @section('container')
@@ -30,7 +32,10 @@
             <div class="bg-white w-full table-auto mb-3">
                 <h1 class="text-center text-3xl">Loading Barang</h1>
             </div>
+            
 
+            {{-- </div> --}}
+            <div class="flex items-center justify-center">
             <form id="shipmentForm" method="get" onsubmit="return false;">
                 @csrf
                 <label for='kotaasal'>Cabang Asal :</label>
@@ -50,10 +55,16 @@
                 </select>
                 {{-- <input type="date" name="cabang_tujuan" id="cabang_tujuan" required> --}}
                      
-                <button type="button" id="submitBtn">Cari Data</button>
+                {{-- <button type="button" id="submitBtn">Cari Data</button> --}}
+                <button type="button" id="submitBtn" name="submitBtn" class=" text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Cari Data</button>
             </form>
-                <button type="button" name="updateShipment" id="updateShipment" class="hidden btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i>Buat laporan</button>
-
+            </div>
+            <div class="flex items-center justify-center">
+                <button type="button" id="updateShipment" name="updateShipment" class="hidden text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Update Data</button>
+            </div>
+                
+                {{-- <button type="button" name="updateShipment" id="updateShipment" class="hidden btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i>Buat laporan</button> --}}
+            
 
             <table id="tableShipment" class="hidden w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead>

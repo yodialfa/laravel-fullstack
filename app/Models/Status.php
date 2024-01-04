@@ -11,6 +11,7 @@ class Status extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+    // protected $fillable = ['no_resi', 'status', 'ket'];
 
     public function resi()
     {
