@@ -58,7 +58,7 @@
                                 No
                             </th>
                             <th scope="col" class="px-4 py-3">
-                                <input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <input id="get-all" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                             </th>
                             <th scope="col" class="px-4 py-3">
                                 No Resi
@@ -116,7 +116,7 @@
                                 {{ $no++ }}
                             </td>
                             <td scope="col" class="px-4 py-3">
-                                <input id="default-checkbox" name="no_resi[]" type="checkbox" value="{{ $transaksi['no_resi'] }}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <input id="default-checkbox" name="no_resi[]" type="checkbox" value="{{ $transaksi['no_resi'] }}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 checkbox-item">
                             </td>
                             <td scope="col" class="px-4 py-3">
                                 {{ $transaksi['no_resi'] }}
@@ -186,6 +186,17 @@
     
 
 </div>
+<script>
+    document.getElementById('get-all').addEventListener('change', function () {
+        // Ambil semua elemen checkbox dengan class 'checkbox-item'
+        var checkboxes = document.querySelectorAll('.checkbox-item');
+
+        // Setel properti 'checked' pada setiap checkbox sesuai dengan status checkbox 'select all'
+        checkboxes.forEach(function (checkbox) {
+            checkbox.checked = this.checked;
+        }, this);
+    });
+</script>
 
 
 

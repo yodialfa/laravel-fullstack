@@ -49,6 +49,7 @@ Route::middleware(['checkRoles:admin,cabang,agen,kurir'])->group(function () {
         Route::get('/transaksi/get-customer/{number}', [TransaksiController::class, 'getCust']);
         Route::post('/transaksi/store', [TransaksiController::class, 'create'])->name('transaksi.store');
         Route::get('/transaksi/cetak', [TransaksiController::class, 'cetak'])->name('transaksi.cetak');
+        Route::get('/transaksi/cetak', [TransaksiController::class, 'success'])->name('transaksi.success');
 
         //generate pdf
         Route::get('/generate-pdf/{no_resi}', [PdfController::class, 'generatePdf'])->name('generate-pdf');
@@ -206,3 +207,5 @@ Route::get('/about ', function () {
         "title" => "About"
     ]);
 });
+
+Route::get('/contact', [HomeController::class, 'contact'])->name('contact');

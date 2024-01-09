@@ -23,13 +23,17 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        $getCity = City::all();
+        if (Auth::user()->role === 'admin') {
+            $getCity = City::all(); 
+        } else {
+            $getCity = City::where('id', '=', Auth::user()->karyawanuser->cabang_id)->get();
+        }
         $getService = Service::all();
-        
+        $cityDestination = City::all(); 
         return view('transaksi.index', [
             'title' => 'Transaksi',
             'kotaasals' => $getCity,
-            'kotatujs' => $getCity,
+            'kotatujs' => $cityDestination,
             'services' => $getService,
         ]);
         // return $getService;
@@ -45,11 +49,28 @@ class TransaksiController extends Controller
     public function create(Request $request)
     {
         try {
-            // $kotaasalDisabled = $request->input('kotaasal_disabled', 'false');
-            // $kecasalDisabled = $request->input('kecasal_disabled', 'false');
-            // $kotatujuanDisabled = $request->input('kotatujuan_disabled', 'false');
-            // $kectujuanDisabled = $request->input('kectujuan_disabled', 'false');
-            //Validation for customer data
+            // Check if the provided 'no_resi' already exists
+            $existingTransaction = Transaksi::where('no_resi', $request->input('no_resi'))->first();
+
+            if ($existingTransaction) {
+                // 'no_resi' already exists, handle accordingly (e.g., show an error message)
+                return redirect()->back()->with('error', 'Transaction with this no_resi already exists.');
+            }
+            // membuat kode Menggunakan waktu saat ini
+            $currentDateTime = now();
+
+            // Mendapatkan tahun, bulan, tanggal, jam, menit, dan detik
+            $cab_code = Auth::user()->karyawanuser->cabang_id;
+            $year = $currentDateTime->year;
+            $month = $currentDateTime->month;
+            $day = $currentDateTime->day;
+            $hour = $currentDateTime->hour;
+            $minute = $currentDateTime->minute;
+            $second = $currentDateTime->second;
+            $milliseconds = round($currentDateTime->format('u') / 1000); // Konversi mikrodetik ke milidetik
+            $no_resi = $cab_code . $year . $month . $day . $hour . $minute . $second .  $milliseconds;
+
+
             $validatedCustomerData = $request->validate([
                 'phone-input-pengirim' => 'required|numeric',
                 'nama-pengirim' => 'required|string',
@@ -69,7 +90,8 @@ class TransaksiController extends Controller
             }
 
             $validatedData = $request->validate([
-                'no_resi' => "required",
+                // 'no_resi' => 'required',
+                'dopo' => "nullable",
                 // 'phone-input-pengirim' => "required|numeric",
                 // 'nama-pengirim' => "required",
                 // 'alamat-pengirim' => "required|max:255",
@@ -96,7 +118,8 @@ class TransaksiController extends Controller
 
             $transaksiData = [
                 
-                'no_resi' => $request->no_resi,
+                'no_resi' => $no_resi,
+                'dopo' => $validatedData['dopo'],
                 'no_hp_pengirim' => $validatedCustomerData['phone-input-pengirim'],
                 'nama_pengirim' => $validatedCustomerData['nama-pengirim'],
                 'alamat_pengirim' => $validatedCustomerData['alamat-pengirim'],
@@ -124,7 +147,7 @@ class TransaksiController extends Controller
             ];
 
             $transaksi = Transaksi::create($transaksiData);
-            $stat = Status::create(['no_resi' =>$validatedData['no_resi'], 
+            $stat = Status::create(['no_resi' =>$no_resi, 
                                     'status' => '0',
                                     'ket' => 'Transaksi Agen',
                                     
@@ -133,18 +156,44 @@ class TransaksiController extends Controller
             $pdfUrl = $transaksiData['no_resi'];
             // Your existing code here
             Log::info('Request data:', $request->all());
+            Log::info('check: ' . $transaksi);
+            
 
-            // Log::info('Validation passed', $transaksi, $stat);
-            // return $validatedData;
+            // Clear the form input session
+            $request->session()->forget([
+                'phone-input-pengirim',
+                'nama-pengirim',
+                'alamat-pengirim',
+                'phone-input-penerima',
+                'nama-penerima',
+                'alamat-penerima',
+                'kotaasal',
+                'kecasal',
+                'kotatujuan',
+                'kectujuan',
+                'layanan',
+                'jumlah',
+                'berat',
+                'diskon',
+                'biaya_surat',
+                'jenis_barang',
+                'biaya_asuransi',
+            ]);
+            
             return view('transaksi.cetak', [
                 'title' => 'Cetak',
                 'resi' => $pdfUrl,
             ]);
+            // Redirect to a new URL after successful form submission
+            // return redirect()->route('transaksi.success')->with(['resi' => $pdfUrl]);
+
     
         } catch (\Exception $e) {
             Log::error('Error occurred: ' . $e->getMessage());
             // You might also want to dd or return a response indicating the error.
             dd('An error occurred. Please check the logs for details.');
+            // Log::info('check: ' . $transaksi);
+
         }
         
         // Log::info('Validation passed', $validatedData);

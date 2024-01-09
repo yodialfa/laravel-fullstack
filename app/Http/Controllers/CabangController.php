@@ -299,8 +299,15 @@ class CabangController extends Controller
     //menampilkan view loading barang
     function loadingView()
     {
+        $cabs = Auth::user()->karyawanuser->cabang_id;
+        if (Auth::user()->role === 'admin') {
+            $kotaAsal = City::all();
+        } else {
+            $kotaAsal = City::where('id', $cabs)->get();
+        }
         return view('cabang.loadingbarang', [
             'title' => "Loading Barang",
+            'asal' => $kotaAsal,
             'kota' => City::all(),
         ]);
     }
@@ -499,8 +506,15 @@ class CabangController extends Controller
     //menampilkan view pemberangkatan
     function departureView()
     {
+        $cabs = Auth::user()->karyawanuser->cabang_id;
+        if (Auth::user()->role === 'admin') {
+            $kotaAsal = City::all();
+        } else {
+            $kotaAsal = City::where('id', $cabs)->get();
+        }
         return view('cabang.pemberangkatan', [
             'title' => "Loading Barang",
+            'asal' => $kotaAsal,
             'kota' => City::all(),
         ]);
     }
@@ -720,6 +734,14 @@ class CabangController extends Controller
         // // or
         // dd($shipmentData);
         // return $shipmentData;
+        // return redirect('/agen/manivest/data/detail/'.$randomCode)->with('success', 'Manivest dibuat');
+        $response = [
+            'success' => true,
+            'message' => 'Data berhasil diupdate.',
+            'redirect' => '/agen/manivest/data/detail/'.$shipmentData['ship_id'],
+        ];
+
+        return response()->json($response);
     }
 
     public function getViewListSortir()
@@ -840,6 +862,14 @@ class CabangController extends Controller
         
         // Melakukan saveMany untuk detail shipment
         $shipment->detailShipments()->createMany($detailShipments);
+
+        $response = [
+            'success' => true,
+            'message' => 'Data berhasil diupdate.',
+            'redirect' => '/agen/manivest/data/detail/'.$shipmentData['ship_id'],
+        ];
+        
+        return response()->json($response);
     }
 
     public function getListPengantaranView(Request $request)

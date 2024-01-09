@@ -383,7 +383,9 @@
                         console.log("sukses" + pic);
                         
                         alert("suskes update data");
-                        window.location.reload();
+                        if (data.success && data.redirect) {
+                            window.location.href = data.redirect;
+                        }
 
                     },
                     error: function(data) {

@@ -180,6 +180,10 @@ class DatabaseSeeder extends Seeder
             "NamaLayanan" => "Towing",
         ]);
 
+        Service::create([
+            "NamaLayanan" => "Trucking",
+        ]);
+
 
         // $faker = Faker::create();
 
@@ -261,40 +265,44 @@ class DatabaseSeeder extends Seeder
         // $user->password = bcrypt('password');
         // $user->role = 'admin'; // Atur peran sebagai admin
         // $user->save();
-        // insert ke table siswas
-        $faker = Faker::create('id');
-        for ($i=1; $i <= 100; $i++) { 
-            \DB::table('transaksis')->insert([
-                'no_resi'=>$faker->randomNumber,
-                'no_hp_pengirim'=>$faker->phoneNumber,
-                'alamat_pengirim'=>$faker->address,
-                'nama_pengirim'=>$faker->name,
-                'no_hp_penerima'=>$faker->phoneNumber,
-                'alamat_penerima'=>$faker->address,
-                'nama_penerima'=>$faker->name,
-                'IdLayanan'=> random_int(1,4),
-                'IdKotaAsal'=> random_int(1,10),
-                'IdKecAsal'=> random_int(1,10),
-                'IdKotaTujuan'=> random_int(1,10),
-                'IdKecTujuan'=> random_int(1,10),
-                'cara_bayar'=> random_int(0,4),
-                'jumlah'=> random_int(1,4),
-                'berat'=> random_int(1,50),
-                'harga'=> $faker->randomDigit(),
-                'diskon'=> random_int(1,30),
-                'biaya_surat'=> $faker->randomDigit(),
-                'jenis_barang'=> 'pakaian',
-                'biaya_asuransi'=> $faker->randomDigit(),
-                'total_harga'=> $faker->randomDigit(),
-                'employeeId'=> random_int(1,4),
-                'status'=> random_int(1,4),
+        
+
+
+
+        
+        // $faker = Faker::create('id');
+        // for ($i=1; $i <= 100; $i++) { 
+        //     \DB::table('transaksis')->insert([
+        //         'no_resi'=>$faker->randomNumber,
+        //         'no_hp_pengirim'=>$faker->phoneNumber,
+        //         'alamat_pengirim'=>$faker->address,
+        //         'nama_pengirim'=>$faker->name,
+        //         'no_hp_penerima'=>$faker->phoneNumber,
+        //         'alamat_penerima'=>$faker->address,
+        //         'nama_penerima'=>$faker->name,
+        //         'IdLayanan'=> random_int(1,4),
+        //         'IdKotaAsal'=> random_int(1,10),
+        //         'IdKecAsal'=> random_int(1,10),
+        //         'IdKotaTujuan'=> random_int(1,10),
+        //         'IdKecTujuan'=> random_int(1,10),
+        //         'cara_bayar'=> random_int(0,4),
+        //         'jumlah'=> random_int(1,4),
+        //         'berat'=> random_int(1,50),
+        //         'harga'=> $faker->randomDigit(),
+        //         'diskon'=> random_int(1,30),
+        //         'biaya_surat'=> $faker->randomDigit(),
+        //         'jenis_barang'=> 'pakaian',
+        //         'biaya_asuransi'=> $faker->randomDigit(),
+        //         'total_harga'=> $faker->randomDigit(),
+        //         'employeeId'=> random_int(1,4),
+        //         'status'=> random_int(1,4),
 
 
                 
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
-            ]);
-        }
+        //         'created_at'=>date('Y-m-d H:i:s'),
+        //         'updated_at'=>date('Y-m-d H:i:s')
+        //     ]);
+        // }
 
         
 

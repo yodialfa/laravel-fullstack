@@ -41,7 +41,7 @@
                 <label for='kotaasal'>Cabang Asal :</label>
                 <select name="pilihan" id="kotaasal" class="w-1/7 py-2 px-3 border rounded-md">
                     <option value="" selected>-- Pilih Kota --</option>
-                    @foreach($kota as $kotaasal)
+                    @foreach($asal as $kotaasal)
                     <option value="{{ $kotaasal->id }}">{{ $kotaasal->NamaKota }}</option>
                     @endforeach
                 </select>

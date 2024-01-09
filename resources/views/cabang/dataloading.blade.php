@@ -48,9 +48,9 @@
                             <th scope="col" class="px-4 py-3">
                                 Manivest Code
                             </th>
-                            <th scope="col" class="px-4 py-3">
+                            {{-- <th scope="col" class="px-4 py-3">
                                 Tujuan
-                            </th>
+                            </th> --}}
                             <th scope="col" class="px-4 py-3">
                                 Nama Agen
                             </th>
@@ -119,7 +119,7 @@
             },
             {data: 'created_at', name: 'created_at'},
             {data: 'ship_id', name: 'ship_id'},
-            {data: 'cabang_tujuan.cabang', name: 'cabangTujuan.cabang'},
+            // {data: 'cabang_tujuan.cabang', name: 'cabangTujuan.cabang'},
             {data: 'agen.agen', name: 'agen.agen'},
             {data: 'cabang.cabang', name: 'cabang.cabang'},
             {

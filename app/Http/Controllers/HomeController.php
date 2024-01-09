@@ -21,4 +21,11 @@ class HomeController extends Controller
             "layanan" => Service::all() 
         ]);
     }
+
+    public function contact()
+    {
+        return view('contact', [
+            'title' => 'Contact',
+        ]);
+    }
 }

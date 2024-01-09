@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
             $table->string('no_resi');
+            $table->string('dopo')->nullable();
             $table->string('no_hp_pengirim');
             $table->string('nama_pengirim');
             $table->string('alamat_pengirim');

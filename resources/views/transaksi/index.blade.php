@@ -39,14 +39,23 @@
             @csrf
 
             <div class="grid mt-3 md:grid-cols-2 md:gap-6 border border-black border-1 py-6 px-3 rounded-xl">
-            {{-- <div class="mb-3"> --}}
-                <label for="no_resi" class="block w-1/3 mb-2 text-sm font-medium text-gray-900 dark:text-white">No. Resi</label>
-                <input type="text" id="no_resi" name="no_resi" class="bg-gray-50 border w-2/3 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('no_resi') is-invalid @enderror" placeholder="No resi" readonly>
+                <label for="no_resi" class="hidden block w-1/3 mb-2 text-sm font-medium text-gray-900 dark:text-white">No. DO / PO</label>
+                <input type="text" id="no_resi" name="no_resi" class="hidden bg-gray-50 border w-2/3 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('no_resi') is-invalid @enderror">
                 @error('no_resi')
                 <div>
                     {{ $message }}
                 </div>
                 @enderror
+            {{-- <div class="mb-3"> --}}
+                <label for="dopo" class="block w-1/3 mb-2 text-sm font-medium text-gray-900 dark:text-white">No. DO / PO</label>
+                <input type="text" id="dopo" name="dopo" class="bg-gray-50 border w-2/3 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('dopo') is-invalid @enderror" placeholder="DO / PO">
+                @error('dopo')
+                <div>
+                    {{ $message }}
+                </div>
+                @enderror
+
+
             </div>
 
             <div class="grid mt-3 md:grid-cols-2 md:gap-6 border border-black border-1 py-6 px-3 rounded-xl">
@@ -54,7 +63,7 @@
                 <div class="">
                     <div class="w-full">
                         <label for="phone-input-pengirim" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No. Pengirim</label>
-                        <input type="text" id="phone-input-pengirim" name="phone-input-pengirim" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('name') is-invalid @enderror" placeholder="Phone Number" required value="{{ old('phone-input-pengirim') }}">
+                        <input type="text" id="phone-input-pengirim" name="phone-input-pengirim" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('name') is-invalid @enderror" placeholder="08211111111" required value="{{ old('phone-input-pengirim') }}">
                         @error('phone-input-pengirim')
                         <div>
                             {{ $message }}
@@ -64,7 +73,7 @@
                     
                     <div class="w-full mb-3">
                         <label for="nama-pengirim" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Pengirim</label>
-                        <input type="text" id="nama-pengirim" name="nama-pengirim" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('nama-pengirim') is-invalid @enderror"" placeholder="john.doe@company.com" required value="{{ old('nama-pengirim') }}">
+                        <input type="text" id="nama-pengirim" name="nama-pengirim" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('nama-pengirim') is-invalid @enderror"" placeholder="Nama Pengirim" required value="{{ old('nama-pengirim') }}">
                         @error('nama-pengirim')
                         <div>
                             {{ $message }}
@@ -88,7 +97,7 @@
                 <div class="">
                     <div class="w-full">
                         <label for="phone-input-penerima" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No. Pengirim</label>
-                        <input type="text" id="phone-input-penerima" name="phone-input-penerima" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('name') is-invalid @enderror" placeholder="Phone Number" required value="{{ old('phone-input-penerima') }}">
+                        <input type="text" id="phone-input-penerima" name="phone-input-penerima" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('name') is-invalid @enderror" placeholder="082111111111" required value="{{ old('phone-input-penerima') }}">
                         @error('phone-input-penerima')
                         <div>
                             {{ $message }}
@@ -98,7 +107,7 @@
                     
                     <div class="w-full mb-3">
                         <label for="nama-penerima" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Pengirim</label>
-                        <input type="text" id="nama-penerima" name="nama-penerima" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('nama-penerima') is-invalid @enderror"" placeholder="john.doe@company.com" required value="{{ old('nama-pengirim') }}">
+                        <input type="text" id="nama-penerima" name="nama-penerima" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('nama-penerima') is-invalid @enderror" placeholder="Nama Penerima" required value="{{ old('nama-pengirim') }}">
                         @error('nama-penerima')
                         <div>
                             {{ $message }}
@@ -108,7 +117,7 @@
                     
                     <div class="w-full mb-3">
                         <label for="alamat-penerima" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alamat Penerima</label>
-                        <textarea type="textarea" name="alamat-penerima" id="alamat-penerima" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('alamat-penerima') is-invalid @enderror" placeholder="Alamat Pengirim" required >
+                        <textarea type="textarea" name="alamat-penerima" id="alamat-penerima" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('alamat-penerima') is-invalid @enderror" placeholder="Alamat Penerima" required >
                         </textarea>
                         @error('alamat-penerima')
                         <div>

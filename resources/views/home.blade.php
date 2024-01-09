@@ -106,14 +106,9 @@
 </div>
 </section>
 
-{{-- @foreach ($karyawans as $karyawan)
-    <h1>{{ $karyawan->id }}</h1>
-    
-    <a href="/karyawan/{{ $karyawan->id }}">
-        <h1>{{ $karyawan->nama }}</h1>    
-    </a>
-        <h1>{{ $karyawan->tanggal_lahir }}</h1>
-        <h1>{{ $karyawan->alamat }}</h1>
-@endforeach --}}
+
+<div>
+    @include('partials.footer')
+</div>
 
 @endsection
