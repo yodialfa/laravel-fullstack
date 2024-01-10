@@ -69,19 +69,19 @@
                             </div>
                             <div class="ml-6 grow">
                                 <p class="mb-2 font-bold">
-                                    Technical support
+                                    Marketing
                                 </p>
                                 <p class="text-white ">
-                                    irfanrisfandy@gmail.com
+                                    marketing@cahayaexpress.com
                                 </p>
                                 <p class="text-white ">
-                                    +62 821-2199-0323
+                                    +62 813-8565-4308
                                 </p>
                                 
                             </div>
                         </div>
                     </div>
-                    <div class="mb-12 w-full shrink-0 grow-0 basis-auto md:w-6/12 md:px-3 lg:px-6">
+                    {{-- <div class="mb-12 w-full shrink-0 grow-0 basis-auto md:w-6/12 md:px-3 lg:px-6">
                         <div class="flex items-start">
                             <div class="shrink-0">
                                 <div class="inline-block rounded-md bg-teal-400-100 p-4 text-teal-700">
@@ -151,7 +151,7 @@
                                 </p>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 
