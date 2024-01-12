@@ -61,8 +61,8 @@
 
 
             <div>
-                <label for="oldpass" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-                <input type="password" id="oldpass" name="oldpass" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('name') is-invalid @enderror" placeholder="Password Lama" required value="{{ old('name') }}">
+                <label for="oldpass" class=" block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password Lama</label>
+                <input type="password" id="oldpass" name="oldpass" class="password-input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('name') is-invalid @enderror" placeholder="Password Lama" required value="{{ old('name') }}">
                 @error('name')
                 <div>
                     {{ $message }}
@@ -71,8 +71,8 @@
             </div>
 
             <div>
-                <label for="newpass" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
-                <input type="password" id="newpass" name="newpass" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('name') is-invalid @enderror" placeholder="Password Baru" required value="{{ old('newpass') }}">
+                <label for="newpass" class=" block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password Baru</label>
+                <input type="password" id="newpass" name="newpass" class="password-input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('name') is-invalid @enderror" placeholder="Password Baru" required value="{{ old('newpass') }}">
                 @error('newpass')
                 <div>
                     {{ $message }}
@@ -81,13 +81,16 @@
             </div>
 
             <div class="mb-6">
-                <label for="retype" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">retype address</label>
-                <input type="password" id="retype" name="retype" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('retype') is-invalid @enderror"" placeholder="Retype Password Baru" required value="{{ old('retype') }}">
+                <label for="retype" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ulangi Password Baru</label>
+                <input type="password" id="retype" name="retype" class="password-input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('retype') is-invalid @enderror"" placeholder="Retype Password Baru" required value="{{ old('retype') }}">
                 @error('retype')
                 <div>
                     {{ $message }}
                 </div>
             @enderror
+            </div>
+            <div>
+                <input id="showPasswordCheckbox" type="checkbox" onclick="togglePassword()"> Show Password
             </div>
 
             <div class="flex items-center justify-center gap-3">
@@ -102,5 +105,19 @@
        {{-- </div> --}}
     </div>
 </div>
-
+<script>
+    function togglePassword() {
+        var passwordInputs = document.getElementsByClassName("password-input");
+        var showPasswordCheckbox = document.getElementById("showPasswordCheckbox");
+    
+        for (var i = 0; i < passwordInputs.length; i++) {
+            if (showPasswordCheckbox.checked) {
+                passwordInputs[i].type = "text";
+            } else {
+                passwordInputs[i].type = "password";
+            }
+        }
+    }
+</script>
+    
 @endsection

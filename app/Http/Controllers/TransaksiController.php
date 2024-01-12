@@ -202,6 +202,17 @@ class TransaksiController extends Controller
         
     }
 
+    public function viewAdminCekResi(){
+        return view('transaksi.admincekresi',[
+            'title' => 'Cek Resi',
+        ]);
+    }
+
+    public function getCekResi(){
+        
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */
