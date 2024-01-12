@@ -122,6 +122,7 @@ Route::middleware(['checkRoles:admin,cabang,agen,kurir'])->group(function () {
             Route::delete('/karyawan/delete/{id}', [KaryawanController::class, 'hapusKaryawan'])->name('karyawan.hapus');
 
             //route harga
+            Route::get('/get-agen/{cabang}' , [RegisterController::class, 'getAgen'])->name('get-agen');
             Route::get('/tambahkar',[RegisterController::class, 'index'])->name('tambahkar');
             Route::post('/tambahkar',[RegisterController::class, 'store'])->name('store');
             Route::get('/karyawan', [KaryawanController::class, 'index'])->name('karyawan');

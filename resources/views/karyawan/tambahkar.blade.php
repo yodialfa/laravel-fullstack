@@ -91,6 +91,20 @@
             @enderror
             </div> 
 
+            <select name="selectCabang" id="selectCabang">
+                <option value="" selected>--Pilih Cabang--</option>
+                @foreach ($cabangs as $cabang)
+                    <option value="{{ $cabang->id }}">{{ $cabang->cabang }}</option>
+                @endforeach
+            </select>
+
+            <select name="selectAgen" id="selectAgen">
+                {{-- <option value="" selected>--Pilih Kota--</option>
+                @foreach ($agens as $agen)
+                    <option value="{{ $agen->id }}">{{ $agen->agen }}</option>
+                @endforeach --}}
+            </select>
+
             <div class="mb-6">
                 <label for="alamat" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alamat</label>
                 <input type="text" name="alamat" id="alamat" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('alamat') is-invalid @enderror" placeholder="Alamat Lengkap" required >
@@ -98,7 +112,7 @@
                 <div>
                     {{ $message }}
                 </div>
-            @enderror
+                @enderror
             </div> 
 
             <div class="flex items-center justify-center gap-3">
@@ -113,5 +127,43 @@
        {{-- </div> --}}
     </div>
 </div>
+
+<script>
+function isiAgen(selectedCabang, targetDropdownId) {
+  if (selectedCabang !== '') {
+    $.ajax({
+      type: 'GET',
+      url: '/get-agen/' + selectedCabang,
+      success: function (data) {
+        var agen = $('#' + targetDropdownId); // Gunakan ID yang diteruskan
+        agen.empty(); // Menghapus opsi sebelumnya (jika ada)
+        
+        // Tambahkan opsi default ke dalam dropdown
+        agen.append($('<option>', {
+          value: '', // Nilai opsi default (bisa kosong atau sesuai kebutuhan)
+          text: '--Pilih Agen--', // Teks opsi default
+          disabled: true, // Opsi tidak dapat dipilih
+          selected: true // Opsi default terpilih
+        }));
+
+        $.each(data, function (index, agen) {
+          agen.append($('<option>', {
+            value: agen.id,
+            text: agen.NamaKecamatan
+          }));
+        });
+      }
+    });
+  }
+}
+
+$(document).ready(function () {
+  $('#selectCabang').change(function () {
+    var cabang = $(this).val();
+    isiDropdownKecamatan(cabang, 'selectAgen'); // Panggil fungsi untuk mengisi dropdown kecamatan
+  });
+
+});
+</script>
 
   @endsection
