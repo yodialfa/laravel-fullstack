@@ -39,6 +39,9 @@ Route::middleware(['checkRoles:admin,cabang,agen,kurir'])->group(function () {
     Route::get('/pengantaranupdateview/get/viewupdate/{no_resi}', [ResiSelesaiController::class, 'generateResiSelesaiUpdate'])->name('pengantaran-getviewupdate');
     Route::post('/pengantaranupdateview/get/viewupdate/{no_resi}', [ResiSelesaiController::class, 'updateResi'])->name('pengantaran-resiselesai');
     
+    // ganti password
+    Route::get('/ganti-password', [RegisterController::class, 'viewGantiPass'])->name('ganti-pass');
+    Route::post('/ganti-password/{user}', [RegisterController::class, 'gantiPass'])->name('ganti-pass-update');
     
 
     Route::middleware(['checkRoles:admin,cabang,agen'])->group(function () {

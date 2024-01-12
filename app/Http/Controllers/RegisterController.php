@@ -8,6 +8,7 @@ use App\Models\Cabang;
 use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
@@ -80,6 +81,40 @@ class RegisterController extends Controller
         return redirect()->route('karyawan')->with('success', 'Registrasi berhasil!');
         // return redirect(dd($karyawanData));
 
+    }
+
+    public function viewGantiPass(){
+        return view('karyawan.gantipass',[
+            "title" => "Ubah Password",
+        ]);
+    }
+
+    public function gantiPass(String $user, Request $request)
+    {
+        $userId = User::where('username', $user)->first();
+
+        $userForm = $request->validate([
+            'oldpass' => 'required|min:5|max:255',
+            'newpass' => 'required|min:5|max:255',
+            'retype' => 'required|min:5|max:255',
+        ]);
+
+        $encOldPass = $userId->password;
+        $newPass =$userForm['newpass'];
+        $retype =$userForm['retype'];
+        if (!Hash::check($userForm['oldpass'], $encOldPass)) {
+            return redirect()->route('ganti-pass')->with('error', 'Password lama tidak cocok');
+            // return $encOldPass;
+        } elseif( $newPass  === $retype) {
+            $encNewPass = bcrypt($newPass);
+            $userId->password = $encNewPass;
+            $userId->save();
+            return redirect()->route('ganti-pass')->with('success', 'Password Berhasil Diubah');
+        } else {
+            return redirect()->route('ganti-pass')->with('error', 'Password baru tidak cocok');
+        }
+
+        
     }
     
 }
