@@ -163,7 +163,7 @@
                         <span><img class="barcode" src="data:image/png;base64,{{ base64_encode($barcode) }}" alt="Barcode"></span>
                         <span>{{ $transaksi['no_resi'] }}</span> <br>
                         {{-- <span>Zip code : 560077</span> <br> --}}
-                        <span>Address: Jl. Jenderal Ahmad Yani No. 288 Kota Bandung 082219082230</span> 
+                        <span>Address: Jl. Thariq Bin Ziyad H2 No. 51 Cempaka Arum Kota Bandung 0813 856 543 08 / 0821 155 351 01</span> 
                     </th>
                 </tr>
             </thead>
@@ -343,9 +343,9 @@
                         
                         <span><img class="barcode" src="data:image/png;base64,{{ base64_encode($barcode) }}" alt="Barcode"></span>
                         <span>{{ $transaksi['no_resi'] }}</span> <br>
+                        <span>Address: Jl. Thariq Bin Ziyad H2 No. 51 Cempaka Arum Kota Bandung 0813 856 543 08 / 0821 155 351 01</span> 
                         {{-- <span>Zip code : 560077</span> <br> --}}
-                        <span>Address: Jl. Jenderal Ahmad Yani No. 288 Kota Bandung 082219082230</span> 
-                    </th>
+                   </th>
                 </tr>
             </thead>
         
@@ -393,7 +393,7 @@
                     <td rowspan="2">Alamat :</td>
                     {{-- <td>:</td> --}}
 
-                    <td colspan="3" rowspan="2" style="max-width: 200px; word-wrap: break-word;">{{ $transaksi['alamat-penerima'] }} gcgcygcgjcgjhcgcjcjhchjcghjchjchjchjchgchccjhchjchjchjgchchgcgcygcgjcgjhcgcjcjhchjcghjchjchjchjchgchccjhchjchjchjgchch</td>
+                    <td colspan="3" rowspan="2" style="max-width: 200px; word-wrap: break-word;">{{ $transaksi['alamat-penerima'] }}</td>
     
                     <td rowspan="2">Alamat</td>
                     {{-- <td rowspan="2">:</td> --}}
@@ -525,7 +525,7 @@
                         <span><img class="barcode" src="data:image/png;base64,{{ base64_encode($barcode) }}" alt="Barcode"></span>
                         <span>{{ $transaksi['no_resi'] }}</span> <br>
                         {{-- <span>Zip code : 560077</span> <br> --}}
-                        <span>Address: Jl. Jenderal Ahmad Yani No. 288 Kota Bandung 082219082230</span> 
+                        <span>Address: Jl. Thariq Bin Ziyad H2 No. 51 Cempaka Arum Kota Bandung 0813 856 543 08 / 0821 155 351 01</span> 
                     </th>
                 </tr>
             </thead>
@@ -574,7 +574,7 @@
                     <td rowspan="2">Alamat :</td>
                     {{-- <td>:</td> --}}
 
-                    <td colspan="3" rowspan="2" style="max-width: 200px; word-wrap: break-word;">{{ $transaksi['alamat-penerima'] }} gcgcygcgjcgjhcgcjcjhchjcghjchjchjchjchgchccjhchjchjchjgchchgcgcygcgjcgjhcgcjcjhchjcghjchjchjchjchgchccjhchjchjchjgchch</td>
+                    <td colspan="3" rowspan="2" style="max-width: 200px; word-wrap: break-word;">{{ $transaksi['alamat-penerima'] }} </td>
     
                     <td rowspan="2">Alamat</td>
                     {{-- <td rowspan="2">:</td> --}}

@@ -37,7 +37,7 @@ return new class extends Migration
             $table->foreignId('IdKotaTujuan');
             $table->foreignId('IdKecTujuan');
             $table->foreignId('IdLayanan');
-            $table->float('Harga');
+            $table->bigInteger('Harga');
             $table->timestamps();
         });
     }
