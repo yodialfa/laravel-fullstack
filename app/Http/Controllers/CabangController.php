@@ -890,6 +890,8 @@ class CabangController extends Controller
         return DataTables::of($data)
                 ->toJson();
     }
+
+    
 }
 
 

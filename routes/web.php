@@ -42,6 +42,10 @@ Route::middleware(['checkRoles:admin,cabang,agen,kurir'])->group(function () {
     // ganti password
     Route::get('/ganti-password', [RegisterController::class, 'viewGantiPass'])->name('ganti-pass');
     Route::post('/ganti-password/{user}', [RegisterController::class, 'gantiPass'])->name('ganti-pass-update');
+
+    // cek resi
+    Route::get('/cek-resi-adminview', [TransaksiController::class, 'viewAdminCekResi'])->name('cek-resi-adminview');
+    Route::get('/cek-resi-get', [TransaksiController::class, 'getCekResi'])->name('admin-cekresi-get');
     
 
     Route::middleware(['checkRoles:admin,cabang,agen'])->group(function () {

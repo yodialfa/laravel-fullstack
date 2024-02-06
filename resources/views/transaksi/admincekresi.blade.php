@@ -31,7 +31,7 @@
             @endif
 
             <div class="bg-white w-full table-auto mb-3">
-                <h1 class="text-center text-3xl">Selesai Pengantaran</h1>
+                <h1 class="text-center text-3xl">Cek Resi</h1>
             </div>
             
             <div class="flex items-center justify-center">
@@ -264,81 +264,6 @@
         },
         
         });
-    
-
-
-
-//     $('#updateShipment',).on('click',  function(){
-//         // var form = this;
-
-//         // Find all checked checkboxes in the first column
-//         var checkboxes = $('#tableShipment tbody input[type="checkbox"]:checked');
-
-//         // Create an array to store specific values (e.g., "no_resi")
-//         var selectedValues = [];
-//         var row_selected = table.columns(2, {selected: true}).data();
-//         if(confirm("Apakah sudah yakin ingin mengupdate data?"))
-//         {
-
-//             // Iterate over all checked checkboxes
-//             checkboxes.each(function () {
-//                 // Get the corresponding row data
-//                 var rowData = table.row($(this).closest('tr')).data();
-
-//                 if (rowData && rowData.no_resi) {
-//                     // Add the specific value to the array
-//                     selectedValues.push(rowData.no_resi);
-//                 }
-//             });
-
-//             // Log the array of selected values
-//             // console.log(selectedValues);
-
-  
-//             if(selectedValues.length > 0)
-//             {
-//             var requestData = [];
-
-//             selectedValues.forEach(function (no_resi) {
-//                 requestData.push({
-//                     no_resi: no_resi,
-//                     status: '2',
-//                     ket: 'Sampai di gudang'
-//                 });
-
-//                 console.log(requestData);
-//             });
-//                 $.ajax({
-//                     url:"{{ route('cabang.update-shipment-agen') }}",
-//                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-//                     method:"get",
-//                     data: { data: JSON.stringify(requestData) },
-//                     // {no_resi:selectedValues,
-//                     //      status: '2',
-//                     //      ket: 'Sampai di gudang'},
-
-//                     success:function(data)
-//                     {
-//                         console.log("sukses");
-//                         alert("suskes update data");
-//                         window.location.reload();
-
-//                     },
-//                     error: function(data) {
-//                         var errors = data.responseJSON;
-//                         console.log(errors);
-//                     }
-//                 });
-//             }
-//             else
-//             {
-//                 alert("Please select atleast one checkbox");
-//             }
-//         }
-
-
-
-// });
 
 
 

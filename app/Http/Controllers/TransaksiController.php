@@ -10,8 +10,11 @@ use App\Models\Service;
 use App\Models\Customer;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+
+use Illuminate\Database\Eloquent\Builder;
 use Symfony\Component\Console\Input\Input;
 use App\Http\Requests\StoreTransaksiRequest;
 use App\Http\Requests\UpdateTransaksiRequest;
@@ -155,8 +158,8 @@ class TransaksiController extends Controller
             // Status::create(['no_resi' => $validatedData->no_resi, 'status' => '0', 'ket' => 'Transaksi Agen']);
             $pdfUrl = $transaksiData['no_resi'];
             // Your existing code here
-            Log::info('Request data:', $request->all());
-            Log::info('check: ' . $transaksi);
+            // Log::info('Request data:', $request->all());
+            // Log::info('check: ' . $transaksi);
             
 
             // Clear the form input session
@@ -189,7 +192,7 @@ class TransaksiController extends Controller
 
     
         } catch (\Exception $e) {
-            Log::error('Error occurred: ' . $e->getMessage());
+            // Log::error('Error occurred: ' . $e->getMessage());
             // You might also want to dd or return a response indicating the error.
             dd('An error occurred. Please check the logs for details.');
             // Log::info('check: ' . $transaksi);
@@ -208,8 +211,22 @@ class TransaksiController extends Controller
         ]);
     }
 
-    public function getCekResi(){
-        
+    public function getCekResi(Request $request){
+        $resi = $request->input('resi');
+
+        // $cek = Transaksi::where('no_resi', $resi)->first();
+        $cek = Transaksi::with(['kotaAsal:id,NamaKota','kotaTujuan:id,NamaKota','kecAsal:id,NamaKecamatan',
+                            'kecTujuan:id,NamaKecamatan', 'serviceId:id,NamaLayanan', 
+                            'karyawan:id,agen_id,cabang_id', 'karyawan.agen:id,agen'])
+                        // ->where('IdKotaAsal', $asal)
+                        ->where('no_resi', $resi)->get();
+        // return $cek;
+        return DataTables::of($cek)->toJson();
+        //                 ->addColumn('kota_asal', function ($cek) {
+        //                     return $cek->kotaAsal->NamaKota;
+        //                 })
+        //                 // ... tambahkan kolom-kolom lainnya
+        //                 ->toJson();
     }
 
 
