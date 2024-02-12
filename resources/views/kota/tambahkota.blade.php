@@ -18,6 +18,7 @@
             <h1 class="text-center text-2xl">Tambah Kota</h1>
             <form id="formRegist" action="{{ route('kota.create') }}" method="post" class="">
             @csrf
+            @method('POST')
 
             <div class="mb-4">
                 <label for="namakota" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>

@@ -48,7 +48,7 @@
                 <div>
                     {{ $message }}
                 </div>
-            @enderror
+                @enderror
             </div>
 
             <div class="mb-6">
@@ -58,7 +58,7 @@
                 <div>
                     {{ $message }}
                 </div>
-            @enderror
+                @enderror
             </div>
 
             <div class="mb-6">
@@ -68,7 +68,7 @@
                 <div>
                     {{ $message }}
                 </div>
-            @enderror
+                @enderror
             </div> 
 
             <div class="mb-6">
@@ -88,7 +88,7 @@
                 <div>
                     {{ $message }}
                 </div>
-            @enderror
+                @enderror
             </div> 
 
             <select name="selectCabang" id="selectCabang">

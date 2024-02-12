@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Log;
 
 use PDF;
@@ -27,12 +28,12 @@ class TransaksiController extends Controller
     public function index()
     {
         if (Auth::user()->role === 'admin') {
-            $getCity = City::all(); 
+            $getCity = City::all();
         } else {
             $getCity = City::where('id', '=', Auth::user()->karyawanuser->cabang_id)->get();
         }
         $getService = Service::all();
-        $cityDestination = City::all(); 
+        $cityDestination = City::all();
         return view('transaksi.index', [
             'title' => 'Transaksi',
             'kotaasals' => $getCity,
@@ -45,7 +46,7 @@ class TransaksiController extends Controller
     public function getCust($number)
     {
         $dataCust = Customer::where('no_hp', $number)->first();
-        return response()->json(['customer'=> $dataCust]);
+        return response()->json(['customer' => $dataCust]);
         // return dd($number);
     }
 
@@ -80,7 +81,7 @@ class TransaksiController extends Controller
                 'alamat-pengirim' => 'required|max:255',
             ]);
 
-             // Check if the customer already exists based on the phone number
+            // Check if the customer already exists based on the phone number
             $customer = Customer::where('no_hp', $validatedCustomerData['phone-input-pengirim'])->first();
 
             // If the customer does not exist, insert a new customer
@@ -116,11 +117,11 @@ class TransaksiController extends Controller
                 'diskon' => "required|numeric",
                 'biaya_surat' => "required|numeric",
                 'jenis_barang' => "required|string",
-                'biaya_asuransi' => "required|numeric",    
+                'biaya_asuransi' => "required|numeric",
             ]);
 
             $transaksiData = [
-                
+
                 'no_resi' => $no_resi,
                 'dopo' => $validatedData['dopo'],
                 'no_hp_pengirim' => $validatedCustomerData['phone-input-pengirim'],
@@ -134,7 +135,7 @@ class TransaksiController extends Controller
                 'IdKecAsal' => $validatedData['kecasal'],
                 'IdKotaTujuan' => $validatedData['kotatujuan'],
                 'IdKecTujuan' => $validatedData['kotatujuan'],
-                
+
                 'IdLayanan' => $validatedData['layanan'],
                 'cara_bayar' => $request->cara_bayar,
                 'jumlah' => $validatedData['jumlah'],
@@ -150,17 +151,18 @@ class TransaksiController extends Controller
             ];
 
             $transaksi = Transaksi::create($transaksiData);
-            $stat = Status::create(['no_resi' =>$no_resi, 
-                                    'status' => '0',
-                                    'ket' => 'Transaksi Agen',
-                                    
-                                ]);
+            $stat = Status::create([
+                'no_resi' => $no_resi,
+                'status' => '0',
+                'ket' => 'Transaksi Agen',
+
+            ]);
             // Status::create(['no_resi' => $validatedData->no_resi, 'status' => '0', 'ket' => 'Transaksi Agen']);
             $pdfUrl = $transaksiData['no_resi'];
             // Your existing code here
             // Log::info('Request data:', $request->all());
             // Log::info('check: ' . $transaksi);
-            
+
 
             // Clear the form input session
             $request->session()->forget([
@@ -182,7 +184,7 @@ class TransaksiController extends Controller
                 'jenis_barang',
                 'biaya_asuransi',
             ]);
-            
+
             return view('transaksi.cetak', [
                 'title' => 'Cetak',
                 'resi' => $pdfUrl,
@@ -190,7 +192,7 @@ class TransaksiController extends Controller
             // Redirect to a new URL after successful form submission
             // return redirect()->route('transaksi.success')->with(['resi' => $pdfUrl]);
 
-    
+
         } catch (\Exception $e) {
             // Log::error('Error occurred: ' . $e->getMessage());
             // You might also want to dd or return a response indicating the error.
@@ -198,28 +200,32 @@ class TransaksiController extends Controller
             // Log::info('check: ' . $transaksi);
 
         }
-        
+
         // Log::info('Validation passed', $validatedData);
         // return $validatedData;
-        
-        
+
+
     }
 
-    public function viewAdminCekResi(){
-        return view('transaksi.admincekresi',[
+    public function viewAdminCekResi()
+    {
+        return view('transaksi.admincekresi', [
             'title' => 'Cek Resi',
         ]);
     }
 
-    public function getCekResi(Request $request){
+    public function getCekResi(Request $request)
+    {
         $resi = $request->input('resi');
 
         // $cek = Transaksi::where('no_resi', $resi)->first();
-        $cek = Transaksi::with(['kotaAsal:id,NamaKota','kotaTujuan:id,NamaKota','kecAsal:id,NamaKecamatan',
-                            'kecTujuan:id,NamaKecamatan', 'serviceId:id,NamaLayanan', 
-                            'karyawan:id,agen_id,cabang_id', 'karyawan.agen:id,agen'])
-                        // ->where('IdKotaAsal', $asal)
-                        ->where('no_resi', $resi)->get();
+        $cek = Transaksi::with([
+            'kotaAsal:id,NamaKota', 'kotaTujuan:id,NamaKota', 'kecAsal:id,NamaKecamatan',
+            'kecTujuan:id,NamaKecamatan', 'serviceId:id,NamaLayanan',
+            'karyawan:id,agen_id,cabang_id', 'karyawan.agen:id,agen'
+        ])
+            // ->where('IdKotaAsal', $asal)
+            ->where('no_resi', $resi)->get();
         // return $cek;
         return DataTables::of($cek)->toJson();
         //                 ->addColumn('kota_asal', function ($cek) {
@@ -229,13 +235,46 @@ class TransaksiController extends Controller
         //                 ->toJson();
     }
 
+    public function reprintResiView()
+    {
+
+        return view('transaksi.reprint', [
+            'title' => 'Reprint',
+        ]);
+    }
+
+    public function reprintResi(Request $request)
+    {
+
+        $resi = $request->input('resi');
+
+        $resiData = Transaksi::where('no_resi', $resi)->first();
+        // Periksa apakah nomor resi ditemukan
+        if ($resiData) {
+            // Nomor resi ditemukan, lanjutkan dengan proses pencetakan
+            $pdfUrl = $resi;
+            return view('transaksi.cetak', [
+                'title' => 'Reprint',
+                'resi' => $pdfUrl,
+            ]);
+        } else {
+            // Nomor resi tidak ditemukan, kirimkan pesan kesalahan kepada pengguna
+            return redirect()->back()->with('error', 'Nomor resi tidak ditemukan.');
+        }
+        // $pdfUrl = $resi;
+        // return view('transaksi.cetak', [
+        //     'title' => 'Reprint',
+        //     'resi' => $pdfUrl,
+        // ]);
+    }
+
 
     /**
      * Show the form for creating a new resource.
      */
     // public function create($number)
     // {
-        
+
     // }
 
     /**

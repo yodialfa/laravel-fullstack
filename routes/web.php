@@ -38,7 +38,7 @@ Route::middleware(['checkRoles:admin,cabang,agen,kurir'])->group(function () {
     Route::get('/pengantaranupdateview/get', [ResiSelesaiController::class, 'getPengantaranupdate'])->name('pengantaran-get');
     Route::get('/pengantaranupdateview/get/viewupdate/{no_resi}', [ResiSelesaiController::class, 'generateResiSelesaiUpdate'])->name('pengantaran-getviewupdate');
     Route::post('/pengantaranupdateview/get/viewupdate/{no_resi}', [ResiSelesaiController::class, 'updateResi'])->name('pengantaran-resiselesai');
-    
+
     // ganti password
     Route::get('/ganti-password', [RegisterController::class, 'viewGantiPass'])->name('ganti-pass');
     Route::post('/ganti-password/{user}', [RegisterController::class, 'gantiPass'])->name('ganti-pass-update');
@@ -46,11 +46,16 @@ Route::middleware(['checkRoles:admin,cabang,agen,kurir'])->group(function () {
     // cek resi
     Route::get('/cek-resi-adminview', [TransaksiController::class, 'viewAdminCekResi'])->name('cek-resi-adminview');
     Route::get('/cek-resi-get', [TransaksiController::class, 'getCekResi'])->name('admin-cekresi-get');
-    
+
+    //reprint resi
+    Route::get('/reprint-resi', [TransaksiController::class, 'reprintResiView'])->name('reprint-resi');
+    Route::post('/reprint-resi', [TransaksiController::class, 'reprintResi'])->name('reprint');
+
+
 
     Route::middleware(['checkRoles:admin,cabang,agen'])->group(function () {
         //route admin
-        Route::get('/admin',[AdminController::class, 'index'])->name('admin');
+        Route::get('/admin', [AdminController::class, 'index'])->name('admin');
         //transaksi
         Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi');
         Route::get('/transaksi/get-customer/{number}', [TransaksiController::class, 'getCust']);
@@ -61,7 +66,7 @@ Route::middleware(['checkRoles:admin,cabang,agen,kurir'])->group(function () {
         //generate pdf
         Route::get('/generate-pdf/{no_resi}', [PdfController::class, 'generatePdf'])->name('generate-pdf');
 
-        
+
         // Route::get('/agen/transaksi/', [AgenController::class, 'index'])->name('agen.transaksi');
         // Route::get('/agen/transaksi/get', [AgenController::class, 'getData'])->name('agen.getData');
         // Route::get('/agen/transaksi/{start}/{end}/', [AgenController::class, 'index'])->name('agen.date');
@@ -76,14 +81,14 @@ Route::middleware(['checkRoles:admin,cabang,agen,kurir'])->group(function () {
         Route::get('/agen/manivest/data', [AgenController::class, 'viewManivestData'])->name('agen.manivest-data');
         Route::get('/agen/manivest/data/detail/{ship_id}', [AgenController::class, 'fetchLoadingData'])->name('agen.manivest-detail-data');
         Route::get('/agen/manivest/data-fetch', [AgenController::class, 'fetchManivestData'])->name('agen.manivest-fetch');
-        
 
-        
-        
 
-        
+
+
+
+
         // Route yang dapat diakses oleh semua pengguna yang sudah login
-        Route::middleware(['checkRoles:admin,cabang'])->group(function() {
+        Route::middleware(['checkRoles:admin,cabang'])->group(function () {
             //menu cabang
             Route::get('/cabang/shipment/', [CabangController::class, 'genShipmentAgen'])->name('cabang.view-shipment-agen');
             Route::get('/cabang/shipment/data', [CabangController::class, 'genShipment'])->name('cabang.generate-shipment');
@@ -114,13 +119,12 @@ Route::middleware(['checkRoles:admin,cabang,agen,kurir'])->group(function () {
             Route::get('/cabang/shipment/pengantaran/create', [CabangController::class, 'createDataPengantaran'])->name('cabang.pengantaran-shipment');
             Route::get('/cabang/shipment/pengantaran/list', [CabangController::class, 'getListPengantaranView'])->name('cabang.pengantaran-listview');
             Route::get('/cabang/shipment/pengantaran/listdata', [CabangController::class, 'loadListPengantaran'])->name('cabang.pengantaran-listview-data');
-        
         });
 
-    
+
 
         // Route yang dapat diakses oleh admin
-        Route::middleware('admin')->group(function() {
+        Route::middleware('admin')->group(function () {
             //route karyawan dan user 
             Route::get('/register', [RegisterController::class, 'index'])->name('register');
             Route::get('/karyawan', [KaryawanController::class, 'index'])->name('karyawan');
@@ -129,11 +133,11 @@ Route::middleware(['checkRoles:admin,cabang,agen,kurir'])->group(function () {
             Route::delete('/karyawan/delete/{id}', [KaryawanController::class, 'hapusKaryawan'])->name('karyawan.hapus');
 
             //route harga
-            Route::get('/get-agen/{cabang}' , [RegisterController::class, 'getAgen'])->name('get-agen');
-            Route::get('/tambahkar',[RegisterController::class, 'index'])->name('tambahkar');
-            Route::post('/tambahkar',[RegisterController::class, 'store'])->name('store');
+            Route::get('/get-agen/{cabang}', [RegisterController::class, 'getAgen'])->name('get-agen');
+            Route::get('/tambahkar', [RegisterController::class, 'index'])->name('tambahkar');
+            Route::post('/tambahkar', [RegisterController::class, 'store'])->name('store');
             Route::get('/karyawan', [KaryawanController::class, 'index'])->name('karyawan');
-            Route::get('/karyawan/detail/{karyawan:id}',[KaryawanController::class, 'show']);
+            Route::get('/karyawan/detail/{karyawan:id}', [KaryawanController::class, 'show']);
 
             //route harga
             Route::get('/hargaadmin', [HargaController::class, 'showView'])->name('harga.index');
@@ -149,7 +153,7 @@ Route::middleware(['checkRoles:admin,cabang,agen,kurir'])->group(function () {
             Route::post('/tambah-kota', [CityController::class, 'create'])->name('kota.create');
             Route::get('/update-kota/{id}', [CityController::class, 'openViewUpdate'])->name('kota.update-view');
             Route::put('/update-kota/{id}', [CityController::class, 'updateKota'])->name('kota.update');
-            Route::delete('/deletekota/{id}',[CityController::class, 'hapusKota'])->name('kota.hapus');
+            Route::delete('/deletekota/{id}', [CityController::class, 'hapusKota'])->name('kota.hapus');
 
             //kecamatan
             Route::get('/kecamatan', [DistrictController::class, 'index'])->name('kecamatan');
@@ -159,17 +163,17 @@ Route::middleware(['checkRoles:admin,cabang,agen,kurir'])->group(function () {
             Route::put('/kecamatan/update/{idKec}', [DistrictController::class, 'updateKecamatan'])->name('kecamatan.update');
             Route::delete('/kecamatan/hapus/{id}', [DistrictController::class, 'hapusKecamatan'])->name('kecamatan.hapus');
 
-            //agen
+            //
 
         });
 
-    // Route::middleware('checkRoles:user')->group(function() {
+        // Route::middleware('checkRoles:user')->group(function() {
 
-    //     //route admin
-    //     Route::get('/admin',[AdminController::class, 'index'])->name('admin');
+        //     //route admin
+        //     Route::get('/admin',[AdminController::class, 'index'])->name('admin');
 
-        
-    }); 
+
+    });
 });
 
 //route admin

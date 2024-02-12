@@ -12,45 +12,48 @@ use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $cabang = Cabang::all();
-        return view('karyawan.tambahkar',[
+        return view('karyawan.tambahkar', [
             "title" => "Register",
             "cabangs" => $cabang,
         ]);
     }
 
-    public function getAgen(String $cabang){
+    public function getAgen(String $cabang)
+    {
         $agenData = Agen::where('cabang_id', $cabang)->get();
         return $agenData;
     }
 
-    public function store(Request $request){
-    //     $request->validate([
-    //         'username' =>['required','min:3','unique:users'],
-    //         "name" => 'required|unique|max255',
-    //         'email' => 'required|email|unique|users',
-    //         'password' => 'required|min:5:max:255'
-    //     ]);
-    //     dd('registrasi berhasil');
-    //     return request()->all();
-    // }
+    public function store(Request $request)
+    {
+        //     $request->validate([
+        //         'username' =>['required','min:3','unique:users'],
+        //         "name" => 'required|unique|max255',
+        //         'email' => 'required|email|unique|users',
+        //         'password' => 'required|min:5:max:255'
+        //     ]);
+        //     dd('registrasi berhasil');
+        //     return request()->all();
+        // }
 
         $validatedData = $request->validate([
             // 'slug' => 'required',
             'name' => 'required|max:255',
             'username' => ['required', 'min:3', 'unique:users'],
-            'email' => 'required|email:dns|unique:karyawans',
+            'email' => 'required|email|unique:karyawans',
             'tempat_lahir' => 'required|max:255',
             'tanggal_lahir' => 'required|date',
             'selectCabang' => 'required',
             'selectAgen' => 'required',
             'alamat' => 'required|max:255',
-            'password' => 'required|min:5|max:255', 
+            'password' => 'required|min:5|max:255',
         ]);
         // $validatedData = $request->all();
         $validatedData['slug'] = Karyawan::max('id') + 1;
-        
+
         $userData = [
             'username' => $validatedData['username'],
             'password' => bcrypt($validatedData['password']),
@@ -83,8 +86,9 @@ class RegisterController extends Controller
 
     }
 
-    public function viewGantiPass(){
-        return view('karyawan.gantipass',[
+    public function viewGantiPass()
+    {
+        return view('karyawan.gantipass', [
             "title" => "Ubah Password",
         ]);
     }
@@ -100,12 +104,12 @@ class RegisterController extends Controller
         ]);
 
         $encOldPass = $userId->password;
-        $newPass =$userForm['newpass'];
-        $retype =$userForm['retype'];
+        $newPass = $userForm['newpass'];
+        $retype = $userForm['retype'];
         if (!Hash::check($userForm['oldpass'], $encOldPass)) {
             return redirect()->route('ganti-pass')->with('error', 'Password lama tidak cocok');
             // return $encOldPass;
-        } elseif( $newPass  === $retype) {
+        } elseif ($newPass  === $retype) {
             $encNewPass = bcrypt($newPass);
             $userId->password = $encNewPass;
             $userId->save();
@@ -113,8 +117,5 @@ class RegisterController extends Controller
         } else {
             return redirect()->route('ganti-pass')->with('error', 'Password baru tidak cocok');
         }
-
-        
     }
-    
 }
