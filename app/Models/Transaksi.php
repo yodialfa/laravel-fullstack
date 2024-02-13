@@ -30,7 +30,7 @@ class Transaksi extends Model
     {
         return $this->belongsTo(Service::class, 'IdLayanan');
     }
-    
+
 
     public function kotaAsal()
     {

@@ -176,7 +176,7 @@
                     <th width="50%" colspan="2" class="layanan">{{ $transaksi['layanan'] }}</th>
                 </tr>
                 <tr class="bg-gray">
-                    <th>Tujuan : {{ $transaksi['kotaasal'] }}</th>
+                    <th>Tujuan : {{ $transaksi['kotatujuan'] }}</th>
                     <th colspan="2">{{ $transaksi['kectujuan'] }}</th>
                     <th colspan="2">Asal : {{ $transaksi['kotaasal'] }}</th>
                     <th colspan="3">{{ $transaksi['kecasal'] }}</th>
@@ -357,7 +357,7 @@
                     <th width="50%" colspan="2" class="layanan">{{ $transaksi['layanan'] }}</th>
                 </tr>
                 <tr class="bg-gray">
-                    <th>Tujuan : {{ $transaksi['kotaasal'] }}</th>
+                    <th>Tujuan : {{ $transaksi['kotatujuan'] }}</th>
                     <th colspan="2">{{ $transaksi['kectujuan'] }}</th>
                     <th colspan="2">Asal : {{ $transaksi['kotaasal'] }}</th>
                     <th colspan="3">{{ $transaksi['kecasal'] }}</th>
@@ -538,7 +538,7 @@
                     <th width="50%" colspan="2" class="layanan">{{ $transaksi['layanan'] }}</th>
                 </tr>
                 <tr class="bg-gray">
-                    <th>Tujuan : {{ $transaksi['kotaasal'] }}</th>
+                    <th>Tujuan : {{ $transaksi['kotatujuan'] }}</th>
                     <th colspan="2">{{ $transaksi['kectujuan'] }}</th>
                     <th colspan="2">Asal : {{ $transaksi['kotaasal'] }}</th>
                     <th colspan="3">{{ $transaksi['kecasal'] }}</th>

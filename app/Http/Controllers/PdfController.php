@@ -16,9 +16,8 @@ class PdfController extends Controller
     public function generatePdf($no_resi)
     {
         $transaksi = Transaksi::where('no_resi', $no_resi)->first();
-        
-        if(!$transaksi)
-        {
+
+        if (!$transaksi) {
             abort(404);
         }
 
@@ -35,7 +34,7 @@ class PdfController extends Controller
             'kotaasal' => $transaksi->kotaAsal->NamaKota,
             'kecasal' => $transaksi->kecAsal->NamaKecamatan,
             'kotatujuan' => $transaksi->kotaTujuan->NamaKota,
-            'kectujuan' => $transaksi->kecAsal->NamaKecamatan,
+            'kectujuan' => $transaksi->kecTujuan->NamaKecamatan,
             'layanan' => $transaksi->serviceId->NamaLayanan,
             'jumlah' => $transaksi->jumlah,
             'berat' => $transaksi->berat,
@@ -63,7 +62,7 @@ class PdfController extends Controller
             'isHtml5ParserEnabled' => true,
             'isPhpEnabled' => true,
         ]);
-    
+
         return $pdf->setPaper('A4')->stream('invoice.pdf');
         // return $pdf->download('invoice.pdf');
 
