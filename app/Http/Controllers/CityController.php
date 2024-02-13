@@ -15,15 +15,16 @@ class CityController extends Controller
     public function index()
     {
         $cityData = City::filters(['search' => request('search')])
-                                ->paginate(10);
-        return view('kota.kota',[
+            ->paginate(10);
+        return view('kota.kota', [
             'title' => "Kota",
-            'cities' => $cityData, 
+            'cities' => $cityData,
 
         ]);
     }
 
-    public function show(){
+    public function show()
+    {
         $cityData = self::getAll();
         return response()->json($cityData);
     }
@@ -38,7 +39,7 @@ class CityController extends Controller
     public function create(Request $request)
     {
         $validateKota = $request->validate([
-            'namakota' => 'required|unique:cities',
+            'namakota' => 'required|unique:Cities',
         ]);
 
         $dataKota = [
@@ -56,7 +57,7 @@ class CityController extends Controller
     {
         $cityData = City::findOrFail($id);
 
-        return view('kota.update-kota',[
+        return view('kota.update-kota', [
             'title' => "Update Kota",
             'cityNow' => $cityData,
         ]);
@@ -66,7 +67,7 @@ class CityController extends Controller
 
     public function updateKota(Request $request, $id)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'namakota' => 'required',
         ]);
 
@@ -76,19 +77,14 @@ class CityController extends Controller
             'NamaKota' => $request->namakota,
         ]);
         return redirect()->route('kota')->with(['success' => 'Kota diubah']);
-
     }
 
     public function hapusKota($id)
-    {
-        {
+    { {
             $data = City::findOrFail($id);
             $data->delete();
-    
-            return redirect()->route('kota')->with('success','Kota Berhasil dihapus');
+
+            return redirect()->route('kota')->with('success', 'Kota Berhasil dihapus');
         }
     }
-
-
-    
 }

@@ -15,11 +15,11 @@ class DistrictController extends Controller
     //     return response()->json(['kecamatan' => $kecamatan]);
     // }
 
-    public function index() 
+    public function index()
     {
         $cities = City::all();
 
-        return view('kota.kecamatan',[
+        return view('kota.kecamatan', [
             'title' => "Kecamatan",
             'cities' => $cities,
         ]);
@@ -28,8 +28,9 @@ class DistrictController extends Controller
     }
 
 
-    public function getByKota($id) {
-        $kecamatan = District::where('IdCities', $id)->get();   
+    public function getByKota($id)
+    {
+        $kecamatan = District::where('IdCities', $id)->get();
         // return response()->json(['kecamatan' => $kecamatan]);
         return response()->json($kecamatan);
         // return dd($kecamatan)
@@ -38,7 +39,7 @@ class DistrictController extends Controller
     public function tambahKecamatan($idKota)
     {
         $kota = City::findOrFail($idKota);
-        
+
         return view('kota.tambahkecamatan', [
             'title' => "Tambah Kecamatan",
             'city' => $kota,
@@ -49,7 +50,7 @@ class DistrictController extends Controller
     public function create(Request $request, $idKota)
     {
         $validateKec = $request->validate([
-            'namakecamatan' => 'required|unique:districts',
+            'namakecamatan' => 'required|unique:Districts',
         ]);
 
         $dataKec = [
@@ -59,15 +60,14 @@ class DistrictController extends Controller
 
         District::create($dataKec);
 
-        return redirect()->route('kecamatan')->with('success', 'menambahkan kecamatan' );
-        
+        return redirect()->route('kecamatan')->with('success', 'menambahkan kecamatan');
     }
 
     public function openViewUpdate($idKota, $idKec)
     {
         $kota = City::findOrFail($idKota);
         $kec = District::findOrFail($idKec);
-        return view('kota.update-kecamatan',[
+        return view('kota.update-kecamatan', [
             'title' => "Update Kecamatan",
             'city' => $kota,
             'kec' => $kec,
@@ -76,7 +76,7 @@ class DistrictController extends Controller
 
     public function updateKecamatan(Request $request, $idKec)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'namakecamatan' => 'required',
         ]);
 
@@ -86,7 +86,7 @@ class DistrictController extends Controller
             'NamaKecamatan' => $request->namakecamatan,
         ]);
 
-        return redirect()->route('kecamatan')->with('success','Kecamatan Berhasil diubah');
+        return redirect()->route('kecamatan')->with('success', 'Kecamatan Berhasil diubah');
     }
 
     public function hapusKecamatan($id)
@@ -94,6 +94,6 @@ class DistrictController extends Controller
         $data = District::findOrFail($id);
         $data->delete();
 
-        return redirect()->route('kecamatan')->with('success','Kecamatan Berhasil dihapus');
+        return redirect()->route('kecamatan')->with('success', 'Kecamatan Berhasil dihapus');
     }
 }
