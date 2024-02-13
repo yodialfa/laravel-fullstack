@@ -309,18 +309,18 @@
                 <tr class="">
                     <td>Harga/kg :</td>
                     {{-- <td>:</td> --}}
-                    <td>Rp. {{ $transaksi['harga'] }}</td>
+                    <td>Rp. {{ number_format($transaksi['harga'], 0, ',', '.') }}</td>
                     <td>Biaya Surat :</td>
-                    <td>{{ $transaksi['biaya_surat'] }}</td>
+                    <td>Rp. {{ number_format($transaksi['biaya_surat'], 0, ',', '.') }}</td>
                     <td><h4>Total Ongkir :</h4></td>
-                    <td><h4>Rp. {{ $transaksi['total_harga'] }}</h4></td>
+                    <td><h4>Rp. {{ number_format($transaksi['total_harga'], 0, ',', '.') }}</h4></td>
                 </tr>
                 <tr class="no-border">
                     <td>Diskon</td>
                     <td>:</td>
                     <td>{{ $transaksi['diskon'] }} %</td>
                     <td>Asuransi :</td>
-                    <td>{{ $transaksi['biaya_asuransi'] }}</td>
+                    <td>Rp. {{ number_format($transaksi['biaya_asuransi'], 0, ',', '.') }}</td>
                     <td>Petugas :</td>
                     <td colspan="2">{{ $transaksi['user'] }}</td>
                     <td width="30%"></td>
@@ -490,18 +490,18 @@
                 <tr class="">
                     <td>Harga/kg :</td>
                     {{-- <td>:</td> --}}
-                    <td>Rp. {{ $transaksi['harga'] }}</td>
+                    <td>Rp. {{ number_format($transaksi['harga'], 0, ',', '.') }}</td>
                     <td>Biaya Surat :</td>
-                    <td>{{ $transaksi['biaya_surat'] }}</td>
+                    <td>Rp. {{ number_format($transaksi['biaya_surat'], 0, ',', '.') }}</td>
                     <td><h4>Total Ongkir :</h4></td>
-                    <td><h4>Rp. {{ $transaksi['total_harga'] }}</h4></td>
+                    <td><h4>Rp. {{ number_format($transaksi['total_harga'], 0, ',', '.') }}</h4></td>
                 </tr>
                 <tr class="no-border">
                     <td>Diskon</td>
                     <td>:</td>
                     <td>{{ $transaksi['diskon'] }} %</td>
                     <td>Asuransi :</td>
-                    <td>{{ $transaksi['biaya_asuransi'] }}</td>
+                    <td>Rp. {{ number_format($transaksi['biaya_asuransi'], 0, ',', '.') }}</td>
                     <td>Petugas :</td>
                     <td colspan="2">{{ $transaksi['user'] }}</td>
                     <td width="30%"></td>
@@ -671,18 +671,18 @@
                 <tr class="">
                     <td>Harga/kg :</td>
                     {{-- <td>:</td> --}}
-                    <td>Rp. {{ $transaksi['harga'] }}</td>
+                    <td>Rp. {{ number_format($transaksi['harga'], 0, ',', '.') }}</td>
                     <td>Biaya Surat :</td>
-                    <td>{{ $transaksi['biaya_surat'] }}</td>
+                    <td>Rp. {{ number_format($transaksi['biaya_surat'], 0, ',', '.') }}</td>
                     <td><h4>Total Ongkir :</h4></td>
-                    <td><h4>Rp. {{ $transaksi['total_harga'] }}</h4></td>
+                    <td><h4>Rp. {{ number_format($transaksi['total_harga'], 0, ',', '.') }}</h4></td>
                 </tr>
                 <tr class="no-border">
                     <td>Diskon</td>
                     <td>:</td>
                     <td>{{ $transaksi['diskon'] }} %</td>
                     <td>Asuransi :</td>
-                    <td>{{ $transaksi['biaya_asuransi'] }}</td>
+                    <td>Rp. {{ number_format($transaksi['biaya_asuransi'], 0, ',', '.') }}</td>
                     <td>Petugas :</td>
                     <td colspan="2">{{ $transaksi['user'] }}</td>
                     <td width="30%"></td>
