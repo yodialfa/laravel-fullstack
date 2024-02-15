@@ -134,7 +134,7 @@ class TransaksiController extends Controller
                 'IdKotaAsal' => $validatedData['kotaasal'],
                 'IdKecAsal' => $validatedData['kecasal'],
                 'IdKotaTujuan' => $validatedData['kotatujuan'],
-                'IdKecTujuan' => $validatedData['kotatujuan'],
+                'IdKecTujuan' => $validatedData['kectujuan'],
 
                 'IdLayanan' => $validatedData['layanan'],
                 'cara_bayar' => $request->cara_bayar,
