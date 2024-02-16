@@ -403,14 +403,19 @@ $(document).ready(function () {
     // Ambil nilai dari elemen-elemen yang sesuai dengan event
     let beratTransaksiRaw = parseFloat($('#berat').val().replace(/\./g, '').replace(',', '.'));
     let hargaTrxRaw = parseFloat($('#harga').val().replace(/\./g, '').replace(',', '.'));
-    // let disc = parseFloat($('#diskon').val().replace(/\./g, '').replace(',', '.'));
+    let disc = parseFloat($('#diskon').val().replace(/\./g, '').replace(',', '.'));
     let surat = parseFloat($('#biaya_surat').val().replace(/\./g, '').replace(',', '.'));
     let asuransi = parseFloat($('#biaya_asuransi').val().replace(/\./g, '').replace(',', '.'));
 
     // Lakukan perhitungan matematika dengan nilai mentah
     let ongkir = beratTransaksiRaw * hargaTrxRaw;
     let totalDiskon = ongkir * (disc / 100);
-    let total = ongkir - totalDiskon + surat + asuransi;
+
+    // Format total diskon menggunakan toLocaleString()
+    let formattedTotalDiskon = totalDiskon.toLocaleString('id-ID', { minimumFractionDigits: 2 });
+
+
+    let total = ongkir - formattedTotalDiskon + surat + asuransi;
 
     // Format total menggunakan toLocaleString()
     let formattedTotal = total.toLocaleString('id-ID', { minimumFractionDigits: 2 });
