@@ -328,7 +328,7 @@
         value = value.replace(/\D/g, '');
         
         // Menambahkan titik sebagai pemisah ribuan
-        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
         // Menetapkan kembali nilai input yang telah diformat
         input.value = value;
