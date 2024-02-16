@@ -407,17 +407,32 @@ $(document).ready(function () {
     let surat = parseFloat($('#biaya_surat').val().replace(/\./g, '').replace(',', '.'));
     let asuransi = parseFloat($('#biaya_asuransi').val().replace(/\./g, '').replace(',', '.'));
 
+
+    console.log("Nilai beratTransaksiRaw:", beratTransaksiRaw);
+    console.log("Nilai hargaTrxRaw:", hargaTrxRaw);
+    console.log("Nilai disc:", disc);
+    console.log("Nilai surat:", surat);
+    console.log("Nilai asuransi:", asuransi);
+
+
     // Lakukan perhitungan matematika dengan nilai mentah
     let ongkir = beratTransaksiRaw * hargaTrxRaw;
-    let totalDiskon = ongkir * (disc / 100);
 
-    // Format total diskon menggunakan toLocaleString()
+    console.log("Nilai ongkir:", ongkir);
+
+    let totalDiskon = ongkir * (disc / 100);
+    console.log("Nilai totalDiskon:", totalDiskon);
+
+    // Ubah kembali ke tipe data number
+    totalDiskon = parseFloat(totalDiskon);
+    console.log("Nilai totalDiskon setelah di-parse:", totalDiskon);
 
     let total = ongkir - totalDiskon + surat + asuransi;
+    console.log("Nilai total setelah perhitungan:", total);
 
     // Format total menggunakan toLocaleString()
     let formattedTotal = total.toLocaleString('id-ID', { minimumFractionDigits: 0 });
-
+    console.log("Nilai formattedTotal:", formattedTotal);
 
     // Update nilai total untuk elemen yang sesuai
 
