@@ -427,16 +427,17 @@ $(document).ready(function () {
     let formattedAsuransi = asuransi.toLocaleString('id-ID', { minimumFractionDigits: 0 });
     let formattedDiskon = disc.toLocaleString('id-ID', { minimumFractionDigits: 0 });
 
-    console.log("Biaya surat yang diformat:", formattedSurat);
-    console.log("Biaya asuransi yang diformat:", formattedAsuransi);
-    console.log("Diskon yang diformat:", formattedDiskon);
+    // console.log("Biaya surat yang diformat:", formattedSurat);
+    // console.log("Biaya asuransi yang diformat:", formattedAsuransi);
+    // console.log("Diskon yang diformat:", formattedDiskon);
 
     // Hitung total biaya dengan memasukkan biaya surat, asuransi, dan diskon yang telah diformat
-    let total = ongkir - totalDiskon + parseFloat(formattedSurat.replace(/\./g, '').replace(',', '.')) + parseFloat(formattedAsuransi.replace(/\./g, '').replace(',', '.'));
+    // let total = ongkir - totalDiskon + parseFloat(formattedSurat.replace(/\./g, '').replace(',', '.')) + parseFloat(formattedAsuransi.replace(/\./g, '').replace(',', '.'));
+    let total = ongkir - totalDiskon + formattedSurat + formattedAsuransi;
 
     // Format total menggunakan toLocaleString()
     let formattedTotal = total.toLocaleString('id-ID', { minimumFractionDigits: 0 });
-    console.log("Nilai formattedTotal:", formattedTotal);
+    // console.log("Nilai formattedTotal:", formattedTotal);
 
     // Update nilai total untuk elemen yang sesuai
     $('#total_harga').val(formattedTotal);
