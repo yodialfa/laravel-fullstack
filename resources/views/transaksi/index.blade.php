@@ -202,7 +202,7 @@
 
             <div class="mb-6">
                 <label for="jumlah" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jumlah Koli</label>
-                <input type="text" id="jumlah" name="jumlah" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('jumlah') is-invalid @enderror"" placeholder="" required value="{{ old('jumlah') }}">
+                <input type="text" id="jumlah" name="jumlah" onkeyup="formatNumber(this)" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('jumlah') is-invalid @enderror"" placeholder="" required value="{{ old('jumlah') }}">
                 @error('jumlah')
                 <div>
                     {{ $message }}
@@ -212,7 +212,7 @@
 
             <div class="mb-6">
                 <label for="berat" class="proc block mb-2 text-sm font-medium text-gray-900 dark:text-white">Berat / Volume</label>
-                <input type="text" id="berat" name="berat" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('berat') is-invalid @enderror"" placeholder="" required value="{{ old('berat') }}">
+                <input type="text" id="berat" name="berat" onkeyup="formatNumber(this)" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('berat') is-invalid @enderror"" placeholder="" required value="{{ old('berat') }}">
                 @error('berat')
                 <div>
                     {{ $message }}
@@ -222,7 +222,7 @@
 
             <div class="mb-6">
                 <label for="harga" class="proc block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga per kg</label>
-                <input type="text" id="harga" name="harga" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('harga') is-invalid @enderror"" placeholder="" required value="{{ old('harga') }}" readonly>
+                <input type="text" id="harga" name="harga" onkeyup="formatNumber(this)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('harga') is-invalid @enderror"" placeholder="" required value="{{ old('harga') }}" readonly>
                 @error('harga')
                 <div>
                     {{ $message }}
@@ -242,7 +242,7 @@
 
             <div class="mb-6">
                 <label for="biaya_surat" class="proc block mb-2 text-sm font-medium text-gray-900 dark:text-white">Biaya Surat</label>
-                <input type="text" id="biaya_surat" name="biaya_surat" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('biaya_surat') is-invalid @enderror"" placeholder="" required value="{{ old('biaya_surat') }}">
+                <input type="text" id="biaya_surat" name="biaya_surat" onkeyup="formatNumber(this)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('biaya_surat') is-invalid @enderror"" placeholder="" required value="{{ old('biaya_surat') }}">
                 @error('biaya_surat')
                 <div>
                     {{ $message }}
@@ -262,7 +262,7 @@
 
             <div class="mb-6">
                 <label for="total_harga" class="proc block mb-2 text-sm font-medium text-gray-900 dark:text-white">Asuransi</label>
-                <input type="text" id="biaya_asuransi" name="biaya_asuransi" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('biaya_asuransi') is-invalid @enderror" placeholder="" required value="{{ old('biaya_asuransi') }}">
+                <input type="text" id="biaya_asuransi" name="biaya_asuransi" onkeyup="formatNumber(this)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('biaya_asuransi') is-invalid @enderror" placeholder="" required value="{{ old('biaya_asuransi') }}">
                 @error('biaya_asuransi')
                 <div>
                     {{ $message }}
@@ -272,7 +272,7 @@
 
             <div class="mb-6">
                 <label for="total_harga" class="proc block mb-2 text-sm font-medium text-gray-900 dark:text-white">Total Bayar</label>
-                <input type="text" id="total_harga" name="total_harga" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('total_harga') is-invalid @enderror" placeholder="" required value="{{ old('total_harga') }} " readonly>
+                <input type="text" id="total_harga" name="total_harga" onkeyup="formatNumber(this)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('total_harga') is-invalid @enderror" placeholder="" required value="{{ old('total_harga') }} " readonly>
                 @error('total_harga')
                 <div>
                     {{ $message }}
@@ -319,6 +319,21 @@
 <!-- your_view.blade.php -->
 
 <!-- Include other HTML content -->
+<script>
+    function formatNumber(input) {
+        // Mengambil nilai input
+        let value = input.value;
+        
+        // Menghapus karakter selain digit
+        value = value.replace(/\D/g, '');
+        
+        // Menambahkan titik sebagai pemisah ribuan
+        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+        // Menetapkan kembali nilai input yang telah diformat
+        input.value = value;
+    }
+</script>
 
 {{-- <script>
     var successMessage = @json(session('success'));

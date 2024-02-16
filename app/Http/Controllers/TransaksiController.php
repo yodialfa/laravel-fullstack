@@ -81,6 +81,16 @@ class TransaksiController extends Controller
                 'alamat-pengirim' => 'required|max:255',
             ]);
 
+            // Mengambil nilai dari input dan menghapus titik sebagai pemisah ribuan
+            $beratTransaksi = (float) str_replace('.', '', $request->input('berat'));
+            $jumlahbrg = (float) str_replace('.', '', $request->input('jumlah'));
+            $hargaTrx = (float) str_replace('.', '', $request->input('harga'));
+            // $disc = (float) str_replace('.', '', $request->input('diskon'));
+            $surat = (float) str_replace('.', '', $request->input('biaya_surat'));
+            $asuransi = (float) str_replace('.', '', $request->input('biaya_asuransi'));
+            $total_harga = (float) str_replace('.', '', $request->input('total_harga'));
+
+
             // Check if the customer already exists based on the phone number
             $customer = Customer::where('no_hp', $validatedCustomerData['phone-input-pengirim'])->first();
 
@@ -112,12 +122,12 @@ class TransaksiController extends Controller
                 // 'kotatujuan' => "required_unless:kotatujuan_disabled,true",
                 // 'kectujuan' => "required_unless:kectujuan_disabled,true",
                 'layanan' => "required",
-                'jumlah' => "required|numeric",
-                'berat' => "required|numeric",
+                // 'jumlah' => "required|numeric",
+                // 'berat' => "required|numeric",
                 'diskon' => "required|numeric",
-                'biaya_surat' => "required|numeric",
+                // 'biaya_surat' => "required|numeric",
                 'jenis_barang' => "required|string",
-                'biaya_asuransi' => "required|numeric",
+                // 'biaya_asuransi' => "required|numeric",
             ]);
 
             $transaksiData = [
@@ -138,14 +148,18 @@ class TransaksiController extends Controller
 
                 'IdLayanan' => $validatedData['layanan'],
                 'cara_bayar' => $request->cara_bayar,
-                'jumlah' => $validatedData['jumlah'],
-                'berat' => $validatedData['berat'],
-                'harga' => $request->harga,
+                // 'jumlah' => $validatedData['jumlah'],
+                'jumlah' => $jumlahbrg,
+                // 'berat' => $validatedData['berat'],
+                'berat' => $beratTransaksi,
+                // 'harga' => $request->harga,
+                'harga' => $hargaTrx,
+
                 'diskon' => $validatedData['diskon'],
-                'biaya_surat' => $validatedData['biaya_surat'],
+                'biaya_surat' => $surat,
                 'jenis_barang' => $validatedData['jenis_barang'],
-                'biaya_asuransi' => $validatedData['biaya_asuransi'],
-                'total_harga' => $request->total_harga,
+                'biaya_asuransi' => $asuransi,
+                'total_harga' => $total_harga,
                 'employeeId' => Auth::user()->id,
 
             ];
@@ -183,6 +197,7 @@ class TransaksiController extends Controller
                 'biaya_surat',
                 'jenis_barang',
                 'biaya_asuransi',
+                'total_harga',
             ]);
 
             return view('transaksi.cetak', [
@@ -194,7 +209,7 @@ class TransaksiController extends Controller
 
 
         } catch (\Exception $e) {
-            // Log::error('Error occurred: ' . $e->getMessage());
+            Log::error('Error occurred: ' . $e->getMessage());
             // You might also want to dd or return a response indicating the error.
             dd('An error occurred. Please check the logs for details.');
             // Log::info('check: ' . $transaksi);
