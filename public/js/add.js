@@ -403,7 +403,7 @@ $(document).ready(function () {
     // Ambil nilai dari elemen-elemen yang sesuai dengan event
     let beratTransaksiRaw = parseFloat($('#berat').val().replace(/\./g, '').replace(',', '.'));
     let hargaTrxRaw = parseFloat($('#harga').val().replace(/\./g, '').replace(',', '.'));
-    let disc = parseFloat($('#diskon').val().replace(/\./g, '').replace(',', '.'));
+    // let disc = parseFloat($('#diskon').val().replace(/\./g, '').replace(',', '.'));
     let surat = parseFloat($('#biaya_surat').val().replace(/\./g, '').replace(',', '.'));
     let asuransi = parseFloat($('#biaya_asuransi').val().replace(/\./g, '').replace(',', '.'));
 
