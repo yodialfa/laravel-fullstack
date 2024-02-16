@@ -433,7 +433,7 @@ $(document).ready(function () {
 
     // Hitung total biaya dengan memasukkan biaya surat, asuransi, dan diskon yang telah diformat
     // let total = ongkir - totalDiskon + parseFloat(formattedSurat.replace(/\./g, '').replace(',', '.')) + parseFloat(formattedAsuransi.replace(/\./g, '').replace(',', '.'));
-    let total = ongkir - totalDiskon + formattedSurat + formattedAsuransi;
+    let total = ongkir - totalDiskon + surat + asuransi;
 
     // Format total menggunakan toLocaleString()
     let formattedTotal = total.toLocaleString('id-ID', { minimumFractionDigits: 0 });
