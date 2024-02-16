@@ -399,6 +399,7 @@ $(document).ready(function () {
 
 
   // });
+
   $(elementIDs.map(id => '#' + id).join(', ')).on('change', function () {
     // Ambil nilai dari elemen-elemen yang sesuai dengan event
     let beratTransaksiRaw = parseFloat($('#berat').val().replace(/\./g, '').replace(',', '.'));
@@ -407,25 +408,18 @@ $(document).ready(function () {
     let surat = parseFloat($('#biaya_surat').val().replace(/\./g, '').replace(',', '.'));
     let asuransi = parseFloat($('#biaya_asuransi').val().replace(/\./g, '').replace(',', '.'));
 
-
     console.log("Nilai beratTransaksiRaw:", beratTransaksiRaw);
     console.log("Nilai hargaTrxRaw:", hargaTrxRaw);
     console.log("Nilai disc:", disc);
     console.log("Nilai surat:", surat);
     console.log("Nilai asuransi:", asuransi);
 
-
     // Lakukan perhitungan matematika dengan nilai mentah
     let ongkir = beratTransaksiRaw * hargaTrxRaw;
-
     console.log("Nilai ongkir:", ongkir);
 
     let totalDiskon = ongkir * (disc / 100);
     console.log("Nilai totalDiskon:", totalDiskon);
-
-    // Ubah kembali ke tipe data number
-    totalDiskon = parseFloat(totalDiskon);
-    console.log("Nilai totalDiskon setelah di-parse:", totalDiskon);
 
     let total = ongkir - totalDiskon + surat + asuransi;
     console.log("Nilai total setelah perhitungan:", total);
@@ -435,10 +429,9 @@ $(document).ready(function () {
     console.log("Nilai formattedTotal:", formattedTotal);
 
     // Update nilai total untuk elemen yang sesuai
-
     $('#total_harga').val(formattedTotal);
-    // $('#total_harga').val(total.toFixed(2));
   });
+
 
 
 
