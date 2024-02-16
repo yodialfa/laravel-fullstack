@@ -421,8 +421,17 @@ $(document).ready(function () {
     let totalDiskon = ongkir * (disc / 100);
     console.log("Nilai totalDiskon:", totalDiskon);
 
-    let total = ongkir - totalDiskon + surat + asuransi;
-    console.log("Nilai total setelah perhitungan:", total);
+    // Konversi biaya surat, asuransi, dan diskon menjadi format string
+    let formattedSurat = surat.toLocaleString('id-ID', { minimumFractionDigits: 0 });
+    let formattedAsuransi = asuransi.toLocaleString('id-ID', { minimumFractionDigits: 0 });
+    let formattedDiskon = disc.toLocaleString('id-ID', { minimumFractionDigits: 0 });
+
+    console.log("Biaya surat yang diformat:", formattedSurat);
+    console.log("Biaya asuransi yang diformat:", formattedAsuransi);
+    console.log("Diskon yang diformat:", formattedDiskon);
+
+    // Hitung total biaya dengan memasukkan biaya surat, asuransi, dan diskon yang telah diformat
+    let total = ongkir - totalDiskon + parseFloat(formattedSurat.replace(/\./g, '').replace(',', '.')) + parseFloat(formattedAsuransi.replace(/\./g, '').replace(',', '.'));
 
     // Format total menggunakan toLocaleString()
     let formattedTotal = total.toLocaleString('id-ID', { minimumFractionDigits: 0 });
@@ -431,6 +440,7 @@ $(document).ready(function () {
     // Update nilai total untuk elemen yang sesuai
     $('#total_harga').val(formattedTotal);
   });
+
 
 
 
