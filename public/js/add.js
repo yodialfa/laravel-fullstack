@@ -416,7 +416,7 @@ $(document).ready(function () {
     let total = ongkir - totalDiskon + surat + asuransi;
 
     // Format total menggunakan toLocaleString()
-    let formattedTotal = total.toLocaleString('id-ID', { minimumFractionDigits: 2 });
+    let formattedTotal = total.toLocaleString('id-ID', { minimumFractionDigits: 0 });
 
     // Update nilai total untuk elemen yang sesuai
     $('#total_harga').val(formattedTotal);
