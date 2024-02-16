@@ -403,23 +403,24 @@ $(document).ready(function () {
   $(elementIDs.map(id => '#' + id).join(', ')).on('change', function () {
     // Ambil nilai dari elemen-elemen yang sesuai dengan event
     let beratTransaksiRaw = parseFloat($('#berat').val().replace(/\./g, '').replace(',', '.'));
-    let hargaTrxRaw = parseFloat($('#harga').val().replace(/\./g, '').replace(',', '.'));
+    // let hargaTrxRaw = parseFloat($('#harga').val().replace(/\./g, '').replace(',', '.'));
+    let hargaTrxRaw = parseFloat($('#harga').val()); // Tidak perlu replace karena sudah string
     let disc = parseFloat($('#diskon').val().replace(/\./g, '').replace(',', '.'));
     let surat = parseFloat($('#biaya_surat').val().replace(/\./g, '').replace(',', '.'));
     let asuransi = parseFloat($('#biaya_asuransi').val().replace(/\./g, '').replace(',', '.'));
 
-    console.log("Nilai beratTransaksiRaw:", beratTransaksiRaw);
-    console.log("Nilai hargaTrxRaw:", hargaTrxRaw);
-    console.log("Nilai disc:", disc);
-    console.log("Nilai surat:", surat);
-    console.log("Nilai asuransi:", asuransi);
+    // console.log("Nilai beratTransaksiRaw:", beratTransaksiRaw);
+    // console.log("Nilai hargaTrxRaw:", hargaTrxRaw);
+    // console.log("Nilai disc:", disc);
+    // console.log("Nilai surat:", surat);
+    // console.log("Nilai asuransi:", asuransi);
 
     // Lakukan perhitungan matematika dengan nilai mentah
     let ongkir = beratTransaksiRaw * hargaTrxRaw;
-    console.log("Nilai ongkir:", ongkir);
+    // console.log("Nilai ongkir:", ongkir);
 
     let totalDiskon = ongkir * (disc / 100);
-    console.log("Nilai totalDiskon:", totalDiskon);
+    // console.log("Nilai totalDiskon:", totalDiskon);
 
     // Konversi biaya surat, asuransi, dan diskon menjadi format string
     let formattedSurat = surat.toLocaleString('id-ID', { minimumFractionDigits: 0 });
