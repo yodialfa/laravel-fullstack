@@ -412,17 +412,15 @@ $(document).ready(function () {
     let totalDiskon = ongkir * (disc / 100);
 
     // Format total diskon menggunakan toLocaleString()
-    let formattedTotalDiskon = totalDiskon.toLocaleString('id-ID', { minimumFractionDigits: 2 });
-
 
     let total = ongkir - totalDiskon + surat + asuransi;
 
     // Format total menggunakan toLocaleString()
-    let formattedTotal = total.toLocaleString('id-ID', { minimumFractionDigits: 2 });
+    let formattedTotal = total.toLocaleString('id-ID', { minimumFractionDigits: 0 });
 
 
     // Update nilai total untuk elemen yang sesuai
-    $('#diskon').val(formattedTotalDiskon);
+
     $('#total_harga').val(formattedTotal);
     // $('#total_harga').val(total.toFixed(2));
   });
