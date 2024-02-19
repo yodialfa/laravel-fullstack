@@ -369,58 +369,58 @@ $(document).ready(function () {
   // generate no_resi
   $('#no_resi').val(generateUniqueID());
 
-  // $(elementIDs.map(id => '#' + id).join(', ')).on('change', function () {
-
-  //   // // Ambil nilai dari elemen-elemen yang sesuai dengan event
-  //   let beratTransaksi = parseFloat($('#berat').val().replace(/\./g, ''));
-  //   let hargaTrx = parseFloat($('#harga').val().replace(/\./g, ''));
-  //   let disc = parseFloat($('#diskon').val().replace(/\./g, ''));
-  //   let surat = parseFloat($('#biaya_surat').val().replace(/\./g, ''));
-  //   let asuransi = parseFloat($('#biaya_asuransi').val().replace(/\./g, ''));
-
-  //   // let beratTransaksi = parseFloat($('#berat').val());
-  //   // let hargaTrx = parseFloat($('#harga').val());
-  //   // let disc = parseFloat($('#diskon').val());
-  //   // let surat = parseFloat($('#biaya_surat').val());
-  //   // let asuransi = parseFloat($('#biaya_asuransi').val());
-
-
-  //   var ongkir = beratTransaksi * hargaTrx;
-  //   // console.log(ongkir);
-  //   // var diskon = disc / 100;
-  //   var totalDiskon = ongkir * (disc / 100);
-  //   // console.log(totalDiskon);
-  //   var total = ongkir - totalDiskon + surat + asuransi;
-  //   // console.log(total);
-
-  //   // Update nilai total untuk elemen yang sesuai
-  //   // $('#total_harga').val(total.toFixed(2));
-  //   $('#total_harga').val(total);
-
-
-  // });
-
-
-
   $(elementIDs.map(id => '#' + id).join(', ')).on('change', function () {
-    // Ambil nilai dari elemen-elemen yang sesuai dengan event
-    let beratTransaksiRaw = parseFloat($('#berat').val().replace(/\./g, '').replace(',', '.'));
-    let hargaTrxRaw = parseFloat($('#harga').val().replace(/\./g, '').replace(',', '.'));
-    let disc = parseFloat($('#diskon').val().replace(/\./g, '').replace(',', '.'));
-    let surat = parseFloat($('#biaya_surat').val().replace(/\./g, '').replace(',', '.'));
-    let asuransi = parseFloat($('#biaya_asuransi').val().replace(/\./g, '').replace(',', '.'));
 
-    // Lakukan perhitungan matematika dengan nilai mentah
-    let ongkir = beratTransaksiRaw * hargaTrxRaw;
-    let totalDiskon = ongkir * (disc / 100);
-    let total = ongkir - totalDiskon + surat + asuransi;
+    // // Ambil nilai dari elemen-elemen yang sesuai dengan event
+    // let beratTransaksi = parseFloat($('#berat').val().replace(/\./g, ''));
+    // let hargaTrx = parseFloat($('#harga').val().replace(/\./g, ''));
+    // let disc = parseFloat($('#diskon').val().replace(/\./g, ''));
+    // let surat = parseFloat($('#biaya_surat').val().replace(/\./g, ''));
+    // let asuransi = parseFloat($('#biaya_asuransi').val().replace(/\./g, ''));
 
-    // Format total menggunakan toLocaleString()
-    // let formattedTotal = total.toLocaleString('id-ID', { minimumFractionDigits: 3 });
+    let beratTransaksi = parseFloat($('#berat').val());
+    let hargaTrx = parseFloat($('#harga').val());
+    let disc = parseFloat($('#diskon').val());
+    let surat = parseFloat($('#biaya_surat').val());
+    let asuransi = parseFloat($('#biaya_asuransi').val());
+
+
+    var ongkir = beratTransaksi * hargaTrx;
+    // console.log(ongkir);
+    // var diskon = disc / 100;
+    var totalDiskon = ongkir * (disc / 100);
+    // console.log(totalDiskon);
+    var total = ongkir - totalDiskon + surat + asuransi;
+    // console.log(total);
 
     // Update nilai total untuk elemen yang sesuai
+    // $('#total_harga').val(total.toFixed(2));
     $('#total_harga').val(total);
+
+
   });
+
+
+
+  // $(elementIDs.map(id => '#' + id).join(', ')).on('change', function () {
+  //   // Ambil nilai dari elemen-elemen yang sesuai dengan event
+  //   let beratTransaksiRaw = parseFloat($('#berat').val().replace(/\./g, '').replace(',', '.'));
+  //   let hargaTrxRaw = parseFloat($('#harga').val().replace(/\./g, '').replace(',', '.'));
+  //   let disc = parseFloat($('#diskon').val().replace(/\./g, '').replace(',', '.'));
+  //   let surat = parseFloat($('#biaya_surat').val().replace(/\./g, '').replace(',', '.'));
+  //   let asuransi = parseFloat($('#biaya_asuransi').val().replace(/\./g, '').replace(',', '.'));
+
+  //   // Lakukan perhitungan matematika dengan nilai mentah
+  //   let ongkir = beratTransaksiRaw * hargaTrxRaw;
+  //   let totalDiskon = ongkir * (disc / 100);
+  //   let total = ongkir - totalDiskon + surat + asuransi;
+
+  //   // Format total menggunakan toLocaleString()
+  //   // let formattedTotal = total.toLocaleString('id-ID', { minimumFractionDigits: 3 });
+
+  //   // Update nilai total untuk elemen yang sesuai
+  //   $('#total_harga').val(total.toFixed(2));
+  // });
 
 
 
