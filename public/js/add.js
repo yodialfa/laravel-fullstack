@@ -394,8 +394,8 @@ $(document).ready(function () {
     // console.log(total);
 
     // Update nilai total untuk elemen yang sesuai
-    // $('#total_harga').val(total.toFixed(2));
-    $('#total_harga').val(total);
+    $('#total_harga').val(total.toFixed(2));
+    // $('#total_harga').val(total);
 
 
   });
