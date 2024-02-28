@@ -57,6 +57,7 @@ class CityController extends Controller
         $dataCabang = [
             'id' => $newId,
             'cabang' => $validateKota['namakota'],
+            'alamatCabang' => "On Process",
         ];
 
         City::create($dataKota);
