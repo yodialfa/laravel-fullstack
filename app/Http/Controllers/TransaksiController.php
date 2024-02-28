@@ -85,10 +85,15 @@ class TransaksiController extends Controller
             $beratTransaksi = (float) str_replace('.', '', $request->input('berat'));
             $jumlahbrg = (float) str_replace('.', '', $request->input('jumlah'));
             $hargaTrx = (float) str_replace('.', '', $request->input('harga'));
-            // $disc = (float) str_replace('.', '', $request->input('diskon'));
+            $disc = (float) str_replace('.', '', $request->input('diskon'));
             $surat = (float) str_replace('.', '', $request->input('biaya_surat'));
             $asuransi = (float) str_replace('.', '', $request->input('biaya_asuransi'));
-            $total_harga = (float) str_replace('.', '', $request->input('total_harga'));
+            // $total_harga = (float) str_replace('.', '', $request->input('total_harga'));
+
+            $calc_ongkir = $beratTransaksi  * $hargaTrx;
+            $calc_disc = ($disc / 100) * $calc_ongkir;
+            $total_harga = $calc_ongkir - $calc_disc + $surat + $asuransi;;
+
 
 
             // Check if the customer already exists based on the phone number

@@ -385,12 +385,12 @@ $(document).ready(function () {
     let asuransi = parseFloat($('#biaya_asuransi').val());
 
 
-    var ongkir = beratTransaksi * hargaTrx;
+    const ongkir = beratTransaksi * hargaTrx;
     // console.log(ongkir);
-    // var diskon = disc / 100;
-    var totalDiskon = ongkir * (disc / 100);
+    // const diskon = disc / 100;
+    const totalDiskon = ongkir * (disc / 100);
     // console.log(totalDiskon);
-    var total = ongkir - totalDiskon + surat + asuransi;
+    const total = ongkir - totalDiskon + surat + asuransi;
     // console.log(total);
 
     // Update nilai total untuk elemen yang sesuai
