@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
         // ]);
 
 
-        City::factory(15)->create();
+        City::factory(2)->create();
         // Customer::factory(15)->create();
 
         Karyawan::create([
@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
             'nama' => 'Yodi Alfariz',
             'username' => 'admin',
             'tempat_lahir' => 'Bandung',
-            'email' => 'test@1gmail.com',
+            'email' => 'test@gmail.com',
             'tanggal_lahir' => '1995-02-12',
             'cabang_id' => 1,
             'agen_id' => 1,
@@ -53,9 +53,9 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'username' => 'admin',
-            'role'=> 'admin',
+            'role' => 'admin',
             'password' => bcrypt('admin')
-            
+
         ]);
 
         Karyawan::create([
@@ -71,7 +71,7 @@ class DatabaseSeeder extends Seeder
         ]);
         User::create([
             'username' => 'yodialfariz1',
-            'role'=> 'user',
+            'role' => 'user',
             'password' => bcrypt('aaaaa')
         ]);
 
@@ -89,7 +89,7 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'username' => 'yodialfariz2',
-            'role'=> 'user',
+            'role' => 'user',
             'password' => bcrypt('aaaaa')
         ]);
 
@@ -108,14 +108,14 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'username' => 'yodialfariz4',
-            'role'=> 'user',
+            'role' => 'user',
             'password' => bcrypt('aaaaa')
         ]);
 
         // City::create([
         //     'NamaKota' => 'Bandung'
         // ]);
-        
+
         // City::create([
         //     'NamaKota' => 'Jakarta'
         // ]);
@@ -130,37 +130,37 @@ class DatabaseSeeder extends Seeder
             "NamaKecamatan" => 'Sumur Bandung',
             "IdCities" => '1'
         ]);
-        
+
         District::create([
             "NamaKecamatan" => 'CIb Kaler',
             "IdCities" => '1'
         ]);
-        
+
         District::create([
             "NamaKecamatan" => 'Cibeunying Bandung',
             "IdCities" => '1'
         ]);
-        
+
         District::create([
             "NamaKecamatan" => 'Bojongloa',
             "IdCities" => '1'
         ]);
-        
+
         District::create([
             "NamaKecamatan" => 'Coblong',
             "IdCities" => '1'
         ]);
-        
+
         District::create([
             "NamaKecamatan" => 'Tigaraksa',
             "IdCities" => '2'
         ]);
-        
+
         District::create([
             "NamaKecamatan" => 'Jatiasih',
             "IdCities" => '2'
         ]);
-        
+
         District::create([
             "NamaKecamatan" => 'Pademangan',
             "IdCities" => '2'
@@ -169,7 +169,7 @@ class DatabaseSeeder extends Seeder
         Service::create([
             "NamaLayanan" => "Darat",
         ]);
-        
+
         Service::create([
             "NamaLayanan" => "Laut",
         ]);
@@ -188,31 +188,31 @@ class DatabaseSeeder extends Seeder
         // $faker = Faker::create();
 
         Price::create([
-            'IdKotaAsal' => '1', 
-            'IdKecAsal' => '1', 
-            'IdKotaTujuan' => '2', 
+            'IdKotaAsal' => '1',
+            'IdKecAsal' => '1',
+            'IdKotaTujuan' => '2',
             'IdKectujuan' => '2',
-            'IdLayanan' => '2', 
+            'IdLayanan' => '2',
             'Harga' => '4000'
         ]);
 
         Price::create([
-            'IdKotaAsal' => '1', 
-            'IdKecAsal' => '1', 
-            'IdKotaTujuan' => '2', 
+            'IdKotaAsal' => '1',
+            'IdKecAsal' => '1',
+            'IdKotaTujuan' => '2',
             'IdKectujuan' => '2',
-            'IdLayanan' => '1', 
+            'IdLayanan' => '1',
             'Harga' => '5000'
         ]);
-        
-        
-        
+
+
+
         Price::create([
-            'IdKotaAsal' => '1', 
-            'IdKecAsal' => '1', 
-            'IdKotaTujuan' => '1', 
+            'IdKotaAsal' => '1',
+            'IdKecAsal' => '1',
+            'IdKotaTujuan' => '1',
             'IdKectujuan' => '1',
-            'IdLayanan' => '2', 
+            'IdLayanan' => '2',
             'Harga' => '5000'
         ]);
 
@@ -228,7 +228,7 @@ class DatabaseSeeder extends Seeder
             'cabang_id' => '1',
             'alamatAgen' => "Jl. Suci"
 
-            
+
         ]);
 
         Agen::create([
@@ -236,7 +236,7 @@ class DatabaseSeeder extends Seeder
             'cabang_id' => '1',
             'alamatAgen' => "Jl. Mahmud"
 
-            
+
         ]);
 
         Agen::create([
@@ -244,7 +244,7 @@ class DatabaseSeeder extends Seeder
             'cabang_id' => '2',
             'alamatAgen' => "Jl. Mahmud"
 
-            
+
         ]);
 
         Cabang::create([
@@ -265,11 +265,11 @@ class DatabaseSeeder extends Seeder
         // $user->password = bcrypt('password');
         // $user->role = 'admin'; // Atur peran sebagai admin
         // $user->save();
-        
 
 
 
-        
+
+
         // $faker = Faker::create('id');
         // for ($i=1; $i <= 100; $i++) { 
         //     \DB::table('transaksis')->insert([
@@ -298,15 +298,15 @@ class DatabaseSeeder extends Seeder
         //         'status'=> random_int(1,4),
 
 
-                
+
         //         'created_at'=>date('Y-m-d H:i:s'),
         //         'updated_at'=>date('Y-m-d H:i:s')
         //     ]);
         // }
 
-        
 
-        
+
+
 
     }
 }

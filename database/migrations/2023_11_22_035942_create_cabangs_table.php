@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('cabangs', function (Blueprint $table) {
             $table->id();
             $table->string('cabang', 100);
-            $table->string('alamatCabang');
+            $table->string('alamatCabang')->nullable();
             $table->timestamps();
         });
 
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->id();
             $table->string('agen', 100);
             $table->foreignId('cabang_id');
-            $table->string('alamatAgen');
+            $table->string('alamatAgen')->nullable();
             $table->timestamps();
         });
     }

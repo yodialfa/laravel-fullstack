@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\City;
+use App\Models\Cabang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CityController extends Controller
 {
@@ -42,11 +44,25 @@ class CityController extends Controller
             'namakota' => 'required|unique:Cities',
         ]);
 
+        //mendapatkan id terbesar
+        // Dapatkan nilai terbesar dari kolom ID
+        $maxId = DB::table('cabangs')->max('id');
+        // Tambahkan 1 untuk mendapatkan ID baru
+        $newId = $maxId + 1;
+
         $dataKota = [
+            'id' => $newId,
             'NamaKota' => $validateKota['namakota'],
+        ];
+        $dataCabang = [
+            'id' => $newId,
+            'cabang' => $validateKota['namakota'],
         ];
 
         City::create($dataKota);
+        //tambahkan juga ke cabang
+        Cabang::create($dataCabang);
+
 
         return redirect()->route('kota')->with('success', 'Kota Ditambahkan');
     }
@@ -72,9 +88,13 @@ class CityController extends Controller
         ]);
 
         $cityId = City::findOrFail($id);
+        $cabangId = Cabang::findOrFail($id);
 
         $cityId->update([
             'NamaKota' => $request->namakota,
+        ]);
+        $cabangId->update([
+            'cabang' => $request->namakota,
         ]);
         return redirect()->route('kota')->with(['success' => 'Kota diubah']);
     }
