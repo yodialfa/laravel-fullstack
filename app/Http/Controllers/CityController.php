@@ -44,29 +44,33 @@ class CityController extends Controller
             'namakota' => 'required|unique:Cities',
         ]);
 
-        //mendapatkan id terbesar
         // Dapatkan nilai terbesar dari kolom ID
-        $maxId = DB::table('cabangs')->max('id');
+        $maxId = City::max('id');
         // Tambahkan 1 untuk mendapatkan ID baru
         $newId = $maxId + 1;
 
+        // Buat data kota
         $dataKota = [
             'id' => $newId,
             'NamaKota' => $validateKota['namakota'],
         ];
+
+        // Buat data cabang
         $dataCabang = [
             'id' => $newId,
             'cabang' => $validateKota['namakota'],
             'alamatCabang' => "On Process",
         ];
 
+        // Simpan data kota
         City::create($dataKota);
-        //tambahkan juga ke cabang
-        Cabang::create($dataCabang);
 
+        // Buat data untuk tabel 'cabangs'
+        Cabang::create($dataCabang);
 
         return redirect()->route('kota')->with('success', 'Kota Ditambahkan');
     }
+
 
 
     //menampilkan form view update city

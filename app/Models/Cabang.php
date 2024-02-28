@@ -15,4 +15,9 @@ class Cabang extends Model
     {
         return $this->hasMany(Karyawan::class);
     }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id');
+    }
 }
