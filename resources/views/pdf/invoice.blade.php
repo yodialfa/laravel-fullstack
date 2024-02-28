@@ -150,7 +150,7 @@
         <table class="order-details">
             <thead>
                 <tr>
-                    <th width="50%" colspan="4">
+                    <th width="50%" colspan="3">
                         <h2 class="text-start">{{ $title }}</h2>
                         <span>
 
@@ -158,7 +158,7 @@
                         </span>
                     </th>
                     
-                    <th width="50%" colspan="4" class="text-end company-data">
+                    <th width="50%" colspan="5" class="text-end company-data">
                         
                         <span><img class="barcode" src="data:image/png;base64,{{ base64_encode($barcode) }}" alt="Barcode"></span>
                         <span>{{ $transaksi['no_resi'] }}</span> <br>
@@ -170,8 +170,8 @@
         
             <thead>
                 <tr class="bg-gray">
-                    <th colspan="3">No. Resi : {{ $transaksi['no_resi']  }} </th>
-                    <th width="50%" colspan="3" >{{ $transaksi['tgl'] }}</th>
+                    <th colspan="4">No. : {{ $transaksi['no_resi']  }}    DO/PO : {{ $transaksi['dopo'] }}</th>
+                    <th width="50%" colspan="2" >{{ $transaksi['tgl'] }}</th>
 
                     <th width="50%" colspan="2" class="layanan">{{ $transaksi['layanan'] }}</th>
                 </tr>
@@ -209,16 +209,16 @@
 
                 </tr>
                 <tr>
-                    <td rowspan="2">Alamat :</td>
+                    <td >Alamat :</td>
                     {{-- <td>:</td> --}}
 
-                    <td colspan="3" rowspan="2" style="max-width: 200px; word-wrap: break-word;">{{ $transaksi['alamat-penerima'] }}</td>
+                    <td colspan="3"  style="max-width: 200px; word-wrap: break-word;">{{ $transaksi['alamat-penerima'] }}</td>
     
-                    <td rowspan="2">Alamat</td>
+                    <td >Alamat</td>
                     {{-- <td rowspan="2">:</td> --}}
 
-                    <td colspan="" rowspan="2" style="max-width: 200px; word-wrap: break-word;">{{ $transaksi['alamat-kirim'] }}</td>
-                    <td></td>
+                    <td colspan="3" style="max-width: 200px; word-wrap: break-word;">{{ $transaksi['alamat-kirim'] }}</td>
+
                 </tr>
                 <tr>
 
@@ -246,81 +246,24 @@
             </tbody>
         </table>
 
-            {{-- <table class="destination">
-                <tr>
-                    <td>
-                        <h3>Tujuan :</h3>
-                    </td>
-                    <td>
-                        <h3>Kec :{{ $transaksi['kectujuan'] }}</h3>
-                    </td>
-                    <td>
-                        <h3>Kota :{{ $transaksi['kotatujuan'] }} </h3>
-                    </td>
-                    <td>
-                        <h3>Asal :</h3>
-                    </td>
-                    <td><h3>{{ $transaksi['kecasal'] }}</h3></td>
-                    <td>
-                        <h3>{{ $transaksi['kotaasal'] }}</h3>
-                    </td>
-                </tr>
-            </table> --}}
-
     
         <table class="order-details">
-            {{-- <thead> --}}
-                {{-- <tr>
-                    <th class="no-border text-start heading" colspan="5">
-                        Order Items
-                    </th>
-                </tr>
-                <tr class="bg-blue">
-                    <th>ID</th>
-                    <th>Product</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Total</th>
-                </tr> --}}
-            {{-- </thead> --}}
             <thead>
-                {{-- <tr>
-                    <td width="10%">16</td>
-                    <td>
-                        Mi Note 7
-                    </td>
-                    <td width="10%">$14000</td>
-                    <td width="10%">1</td>
-                    <td width="15%" class="fw-bold">$14000</td>
-                </tr>
-                <tr>
-                    <td width="10%">17</td>
-                    <td>
-                        Vivo V19
-                    </td>
-                    <td width="10%">$699</td>
-                    <td width="10%">1</td>
-                    <td width="15%" class="fw-bold">$699</td>
-                </tr>
-                <tr>
-                    <td colspan="4" class="total-heading">Total Amount - <small>Inc. all vat/tax</small> :</td>
-                    <td colspan="1" class="total-heading">$14699</td>
-                </tr> --}}
                 <tr class="">
                     <td>Harga/kg :</td>
                     {{-- <td>:</td> --}}
-                    <td>Rp. {{ number_format($transaksi['harga'], 0, ',', '.') }}</td>
+                    <td colspan="2"><h4>Rp. {{ number_format($transaksi['harga'], 0, ',', '.') }}</h4></td>
                     <td>Biaya Surat :</td>
-                    <td>Rp. {{ number_format($transaksi['biaya_surat'], 0, ',', '.') }}</td>
+                    <td colspan="2"><h4>Rp. {{ number_format($transaksi['biaya_surat'], 0, ',', '.') }}</h4></td>
                     <td><h4>Total Ongkir :</h4></td>
-                    <td><h4>Rp. {{ number_format($transaksi['total_harga'], 0, ',', '.') }}</h4></td>
+                    <td colspan="2"><h4>Rp. {{ number_format($transaksi['total_harga'], 0, ',', '.') }}</h4></td>
                 </tr>
                 <tr class="no-border">
                     <td>Diskon</td>
                     <td>:</td>
                     <td>{{ $transaksi['diskon'] }} %</td>
                     <td>Asuransi :</td>
-                    <td>Rp. {{ number_format($transaksi['biaya_asuransi'], 0, ',', '.') }}</td>
+                    <td colspan="2">Rp. {{ number_format($transaksi['biaya_asuransi'], 0, ',', '.') }}</td>
                     <td>Petugas :</td>
                     <td colspan="2">{{ $transaksi['user'] }}</td>
                     <td width="30%"></td>
@@ -331,7 +274,7 @@
         <table class="order-details">
             <thead>
                 <tr>
-                    <th width="50%" colspan="4">
+                    <th width="50%" colspan="3">
                         <h2 class="text-start">{{ $title }}</h2>
                         <span>
 
@@ -339,7 +282,7 @@
                         </span>
                     </th>
                     
-                    <th width="50%" colspan="4" class="text-end company-data">
+                    <th width="50%" colspan="5" class="text-end company-data">
                         
                         <span><img class="barcode" src="data:image/png;base64,{{ base64_encode($barcode) }}" alt="Barcode"></span>
                         <span>{{ $transaksi['no_resi'] }}</span> <br>
@@ -351,7 +294,8 @@
         
             <thead>
                 <tr class="bg-gray">
-                    <th colspan="3">No. Resi : {{ $transaksi['no_resi']  }} </th>
+
+                    <th colspan="3">No. : {{ $transaksi['no_resi']  }} DO/PO : {{ $transaksi['dopo'] }}</th>
                     <th width="50%" colspan="3" >{{ $transaksi['tgl'] }}</th>
 
                     <th width="50%" colspan="2" class="layanan">{{ $transaksi['layanan'] }}</th>
@@ -390,16 +334,16 @@
 
                 </tr>
                 <tr>
-                    <td rowspan="2">Alamat :</td>
+                    <td>Alamat :</td>
                     {{-- <td>:</td> --}}
 
-                    <td colspan="3" rowspan="2" style="max-width: 200px; word-wrap: break-word;">{{ $transaksi['alamat-penerima'] }}</td>
+                    <td colspan="3"  style="max-width: 200px; word-wrap: break-word;">{{ $transaksi['alamat-penerima'] }}</td>
     
-                    <td rowspan="2">Alamat</td>
+                    <td>Alamat</td>
                     {{-- <td rowspan="2">:</td> --}}
 
-                    <td colspan="" rowspan="2" style="max-width: 200px; word-wrap: break-word;">{{ $transaksi['alamat-kirim'] }}</td>
-                    <td></td>
+                    <td colspan="3" style="max-width: 200px; word-wrap: break-word;">{{ $transaksi['alamat-kirim'] }}</td>
+                    
                 </tr>
                 <tr>
 
@@ -512,7 +456,7 @@
         <table class="order-details">
             <thead>
                 <tr>
-                    <th width="50%" colspan="4">
+                    <th width="50%" colspan="3">
                         <h2 class="text-start">{{ $title }}</h2>
                         <span>
 
@@ -520,7 +464,7 @@
                         </span>
                     </th>
                     
-                    <th width="50%" colspan="4" class="text-end company-data">
+                    <th width="50%" colspan="5" class="text-end company-data">
                         
                         <span><img class="barcode" src="data:image/png;base64,{{ base64_encode($barcode) }}" alt="Barcode"></span>
                         <span>{{ $transaksi['no_resi'] }}</span> <br>
@@ -532,7 +476,7 @@
         
             <thead>
                 <tr class="bg-gray">
-                    <th colspan="3">No. Resi : {{ $transaksi['no_resi']  }} </th>
+                    <th colspan="3">No. : {{ $transaksi['no_resi']  }} DO/PO : {{ $transaksi['dopo'] }}</th>
                     <th width="50%" colspan="3" >{{ $transaksi['tgl'] }}</th>
 
                     <th width="50%" colspan="2" class="layanan">{{ $transaksi['layanan'] }}</th>
@@ -543,6 +487,7 @@
                     <th colspan="2">Asal : {{ $transaksi['kotaasal'] }}</th>
                     <th colspan="3">{{ $transaksi['kecasal'] }}</th>
                 </tr>
+                
             </thead>
             <tbody class="fs">
                 <tr>
@@ -571,16 +516,16 @@
 
                 </tr>
                 <tr>
-                    <td rowspan="2">Alamat :</td>
+                    <td>Alamat :</td>
                     {{-- <td>:</td> --}}
 
-                    <td colspan="3" rowspan="2" style="max-width: 200px; word-wrap: break-word;">{{ $transaksi['alamat-penerima'] }} </td>
+                    <td colspan="3" style="max-width: 200px; word-wrap: break-word;">{{ $transaksi['alamat-penerima'] }} </td>
     
-                    <td rowspan="2">Alamat</td>
+                    <td >Alamat</td>
                     {{-- <td rowspan="2">:</td> --}}
 
-                    <td colspan="" rowspan="2" style="max-width: 200px; word-wrap: break-word;">{{ $transaksi['alamat-kirim'] }}</td>
-                    <td></td>
+                    <td colspan="3" style="max-width: 200px; word-wrap: break-word;">{{ $transaksi['alamat-kirim'] }}</td>
+                    
                 </tr>
                 <tr>
 

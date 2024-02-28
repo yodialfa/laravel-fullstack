@@ -31,9 +31,9 @@ return new class extends Migration
             $table->integer('berat');
             $table->integer('harga');
             $table->float('diskon');
-            $table->float('biaya_surat');
+            $table->double('biaya_surat');
             $table->string('jenis_barang');
-            $table->float('biaya_asuransi');
+            $table->double('biaya_asuransi');
             $table->bigInteger('total_harga');
             $table->foreignId('employeeId');
             $table->char('status', 10)->default(0);

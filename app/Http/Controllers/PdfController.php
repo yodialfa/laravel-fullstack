@@ -25,6 +25,7 @@ class PdfController extends Controller
 
         $trxData = [
             'no_resi' => $transaksi->no_resi,
+            'dopo' => $transaksi->dopo,
             'phone-input-pengirim' => $transaksi->no_hp_pengirim,
             'nama-pengirim' => $transaksi->nama_pengirim,
             'alamat-kirim' => $transaksi->alamat_pengirim,
@@ -48,7 +49,7 @@ class PdfController extends Controller
             'tgl' => $tanggalFormatted,
         ];
         $data = [
-            'title' => 'CAHAYA NUSANTARA',
+            'title' => 'CAHAYA EXPRESS',
             'transaksi' => $trxData,
         ];
 

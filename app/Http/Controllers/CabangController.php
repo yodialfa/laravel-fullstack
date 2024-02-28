@@ -41,17 +41,19 @@ class CabangController extends Controller
     private function fetchData($ship_id, $addCond)
     {
 
-        
-        $model = DetailShipments::with(['resi','shipment',
-                                        // 'shipment.cabang_id',    
-                                        'resi.karyawan:id,cabang_id,agen_id', 
-                                        'resi.kotaAsal:id,NamaKota',
-                                        'resi.kecAsal:id,NamaKecamatan',
-                                        'resi.kotaTujuan:id,NamaKota',
-                                        'resi.kecTujuan:id,NamaKecamatan',
-                                        'resi.serviceId:id,NamaLayanan',
-                                        'resi.karyawan.agen:id,agen'])
-                ->where('ship_id',$ship_id);
+
+        $model = DetailShipments::with([
+            'resi', 'shipment',
+            // 'shipment.cabang_id',    
+            'resi.karyawan:id,cabang_id,agen_id',
+            'resi.kotaAsal:id,NamaKota',
+            'resi.kecAsal:id,NamaKecamatan',
+            'resi.kotaTujuan:id,NamaKota',
+            'resi.kecTujuan:id,NamaKecamatan',
+            'resi.serviceId:id,NamaLayanan',
+            'resi.karyawan.agen:id,agen'
+        ])
+            ->where('ship_id', $ship_id);
 
         // $checkroles = $model->whereHas('shipment', function ($query) use ($auth) {
         //     $query->where('tujuan', $auth);
@@ -68,6 +70,14 @@ class CabangController extends Controller
                 });
             }
         }
+        //cek
+
+        // $model->whereHas('shipment', function ($query) {
+        //     $query->where('cabang_id', Auth::user()->karyawanuser->cabang_id);
+        // });
+
+        //end
+
         // if (Auth::user()->role !== 'admin') {
         //     if ($addCond == 'asal') {
         //         $model->whereHas('shipment', function ($query) {
@@ -85,7 +95,7 @@ class CabangController extends Controller
         //     }
 
         // } elseif (Auth::user()->role === 'admin') {
-        
+
         //     if ($addCond == 'tujuan') {
         //         // $model->whereHas('shipment', function ($query) {
         //         //     // $query->where('cabang_id', Auth::user()->karyawanuser->cabang_id);
@@ -99,7 +109,7 @@ class CabangController extends Controller
 
         \Log::info($model->toSql());
 
-        
+
 
         // var_dump(DB::getQueryLog());
 
@@ -107,7 +117,7 @@ class CabangController extends Controller
         // return dd($model); 
 
         return $model;
-    
+
 
         // return collect(); // Return an empty collection if conditions are not met
     }
@@ -122,28 +132,29 @@ class CabangController extends Controller
     }
 
     //cek 
-    public function check() {
+    public function check()
+    {
         $auth = Auth::user()->karyawanuser->cabang_id;
         return $auth;
     }
 
     //generate shipment
-    public function loadShipment($ship_id, $statship, $addCond) 
+    public function loadShipment($ship_id, $statship, $addCond)
     {
-        
+
         // if ($request->ajax()) {
 
-            // Mengambil nilai shipment_id dari request
-            // $ship_id = $request->input('shipment_id');
-            $data = $this->fetchData($ship_id, $addCond);
+        // Mengambil nilai shipment_id dari request
+        // $ship_id = $request->input('shipment_id');
+        $data = $this->fetchData($ship_id, $addCond);
 
-            // DB::enableQueryLog();
-            $res = $data->join('transaksis', 'transaksis.no_resi', '=', 'detail_shipments.no_resi')
-                        ->where('transaksis.status', $statship)
-                        ->get();
-                    
+        // DB::enableQueryLog();
+        $res = $data->join('transaksis', 'transaksis.no_resi', '=', 'detail_shipments.no_resi')
+            ->where('transaksis.status', $statship)
+            ->get();
 
-            return $res;
+
+        return $res;
     }
 
     //fungsi generate kedatangan barang dari agen
@@ -159,9 +170,9 @@ class CabangController extends Controller
                 $data = $this->loadShipment($ship_id, $statship, $addCond);
                 return DataTables::of($data)
                     // Add your columns and other DataTables configurations here
-                        ->addColumn('checkbox', '<input type="checkbox" name="resi_checkbox[]" id="{{$no_resi}}" class="resi_checkbox" value="{{$no_resi}}" />')
-                        ->rawColumns(['checkbox','action'])
-                        ->make(true);
+                    ->addColumn('checkbox', '<input type="checkbox" name="resi_checkbox[]" id="{{$no_resi}}" class="resi_checkbox" value="{{$no_resi}}" />')
+                    ->rawColumns(['checkbox', 'action'])
+                    ->make(true);
             }
         } catch (\Exception $e) {
             \Log::error($e->getMessage());
@@ -179,12 +190,12 @@ class CabangController extends Controller
                 // Menambahkan kondisi tambahan
                 $addCond = 'tujuan';
                 $data = $this->loadShipment($ship_id, $statship, $addCond);
-        
+
                 return DataTables::of($data)
                     // Add your columns and other DataTables configurations here
-                        ->addColumn('checkbox', '<input type="checkbox" name="resi_checkbox[]" id="{{$no_resi}}" class="resi_checkbox" value="{{$no_resi}}" />')
-                        ->rawColumns(['checkbox','action'])
-                        ->make(true);
+                    ->addColumn('checkbox', '<input type="checkbox" name="resi_checkbox[]" id="{{$no_resi}}" class="resi_checkbox" value="{{$no_resi}}" />')
+                    ->rawColumns(['checkbox', 'action'])
+                    ->make(true);
             }
         } catch (\Exception $e) {
             \Log::error($e->getMessage());
@@ -192,10 +203,10 @@ class CabangController extends Controller
     }
 
     //update shipment
-    public function updateShipment(Request $request) 
+    public function updateShipment(Request $request)
     {
         try {
-            
+
             // $requestData = $request->$requestData;
             $requestData = json_decode($request->input('data'), true);
 
@@ -206,20 +217,19 @@ class CabangController extends Controller
             foreach ($requestData as $data) {
                 $statuses[] = [
                     'no_resi' => $data['no_resi'],
-                    'status' =>$data['status'],
+                    'status' => $data['status'],
                     'ket' => $data['ket'],
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
                 $noResis[] = $data['no_resi'];
                 $statShip[] = $data['status'];
-
             }
             // insert data status
             Status::insert($statuses);
             // Melakukan update status pada transaksi
-            Transaksi::whereIn('no_resi', $noResis)->update(['status' =>$statShip[0]]);
-             
+            Transaksi::whereIn('no_resi', $noResis)->update(['status' => $statShip[0]]);
+
             // Debugging statements
             Log::info('Received data:', $requestData);
             // return $noResis;
@@ -229,13 +239,12 @@ class CabangController extends Controller
             Log::error($e->getMessage());
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
-        
-    } 
+    }
 
     //update shipment gudang asal
     public function genUpdateShipmentGudangAsal(Request $request)
     {
-        if($request->ajax()){
+        if ($request->ajax()) {
             // $requestData = json_decode($request->input('data'), true);
 
             $this->updateShipment($request);
@@ -260,7 +269,7 @@ class CabangController extends Controller
                 $ship_id = $request->input('shipment_id');
                 // Menggunakan findOrFail untuk mencari rekaman berdasarkan ship_id
                 $shipment = Shipments::where('ship_id', $ship_id)
-                                        ->first();
+                    ->first();
 
 
                 // Pastikan fungsi ini telah didefinisikan dengan benar
@@ -269,9 +278,9 @@ class CabangController extends Controller
                 if ($shipment) {
                     // Update status di tabel Shipments
                     $shipment->update(['status' => 4]);
-    
+
                     \Log::info("Shipment ID: $ship_id");
-    
+
                     return response()->json(['success' => true]);
                 } else {
                     // Handle case when shipment record is not found
@@ -318,56 +327,55 @@ class CabangController extends Controller
         $asal = $request->input('asal');
         $tujuan = $request->input('tujuan');
 
-        $model = Transaksi::with(['kotaAsal:id,NamaKota','kotaTujuan:id,NamaKota','kecAsal:id,NamaKecamatan',
-                                'kecTujuan:id,NamaKecamatan', 'serviceId:id,NamaLayanan', 
-                                'karyawan:id,agen_id,cabang_id', 'karyawan.agen:id,agen'])
-                            ->where('IdKotaAsal', $asal)
-                            ->where('IdKotaTujuan', $tujuan);
+        $model = Transaksi::with([
+            'kotaAsal:id,NamaKota', 'kotaTujuan:id,NamaKota', 'kecAsal:id,NamaKecamatan',
+            'kecTujuan:id,NamaKecamatan', 'serviceId:id,NamaLayanan',
+            'karyawan:id,agen_id,cabang_id', 'karyawan.agen:id,agen'
+        ])
+            ->where('IdKotaAsal', $asal)
+            ->where('IdKotaTujuan', $tujuan);
 
         if (Auth::user()->role !== 'admin') {
             $model->whereHas('karyawan', function ($query) {
                 $query->where('cabang_id', Auth::user()->karyawanuser->cabang_id);
-                });
+            });
             // $model->where('karyawan.cabang_id', Auth::user()->karyawanuser->cabang_id);
-            
+
         }
 
         DB::enableQueryLog();
         return $model;
-
-        
     }
 
     public function loadingData(Request $request, $stat)
     {
         $model = $this->getData($request);
         $data = $model->where('status', $stat)
-                    ->get();
+            ->get();
 
         return $data;
     }
 
 
     //controller laoding shipment
-    public function loadingShipment(Request $request) 
+    public function loadingShipment(Request $request)
     {
         if ($request->ajax()) {
             $stat = 2;
             $data = $this->loadingData($request, $stat);
-                    
+
 
             return DataTables::of($data)
-               // Add your columns and other DataTables configurations here
+                // Add your columns and other DataTables configurations here
                 ->addColumn('checkbox', '<input type="checkbox" name="resi_checkbox[]" id="{{$no_resi}}" class="resi_checkbox" value="{{$no_resi}}" />')
-                ->rawColumns(['checkbox','action'])
+                ->rawColumns(['checkbox', 'action'])
                 ->make(true);
-
         }
     }
 
-    public function updateLoading(Request $request) 
+    public function updateLoading(Request $request)
     {
-        if($request->ajax()){
+        if ($request->ajax()) {
             $requestData = json_decode($request->input('data'), true);
             $tujuan = $request->input('kota_tujuan');
             // $des = City::select('id','NamaKota')
@@ -377,7 +385,7 @@ class CabangController extends Controller
 
             $user = Auth::user()->id;
             $karyawanUser = Karyawan::select('cabang_id', 'agen_id')
-                                    ->where('id', $user)->first();
+                ->where('id', $user)->first();
             $randomCode = Str::random(8);
 
             $cabang = $karyawanUser->cabang_id;
@@ -388,7 +396,7 @@ class CabangController extends Controller
             $shipmentData = [
                 'agen_id' => $agen,
                 'cabang_id' => $cabang,
-                'ship_id' => 'LOAD'.$randomCode,
+                'ship_id' => 'LOAD' . $randomCode,
                 'status' => '2',
                 // 'tujuan' => $des->NamaKota,
                 'tujuan' => Auth::user()->karyawanuser->cabang_id,
@@ -396,17 +404,17 @@ class CabangController extends Controller
 
             //simpan data shipment
             $shipment = Shipments::create($shipmentData);
-            
+
             // Membuat array untuk detail shipment
             $detailShipments = [];
 
-                        
+
             // Memasukkan data ke dalam array
             foreach ($requestData as $resi) {
                 // $detailShipments[] = ['no_resi' => $resi];
                 $detailShipments[] = ['no_resi' => $resi['no_resi']];
             }
-            
+
             // Melakukan saveMany untuk detail shipment
             $shipment->detailShipments()->createMany($detailShipments);
             // return redirect()->route('agen.detail-manivest-data', ['ship_id' => $randomCode])->with('success', 'Manivest dibuat');
@@ -415,13 +423,12 @@ class CabangController extends Controller
             $response = [
                 'success' => true,
                 'message' => 'Data berhasil diupdate.',
-                'redirect' => '/agen/manivest/data/detail/'.$shipmentData['ship_id'],
+                'redirect' => '/agen/manivest/data/detail/' . $shipmentData['ship_id'],
             ];
-            
+
             return response()->json($response);
-            
         }
-    } 
+    }
 
     //menampilkan view loading list
     public function listLoadingView()
@@ -441,11 +448,10 @@ class CabangController extends Controller
             $model = Shipments::with(['agen:id,agen,cabang_id', 'cabang:id,cabang', 'cabangTujuan:id,cabang'])
                 ->whereBetween('created_at', [$start_date, $end_date])
                 ->where('status', $stat_shipid);
-            if ($tujuan == true)
-            {
+            if ($tujuan == true) {
                 $model = $model->with(['kecTujuanPengantaran:id,NamaKecamatan']);
-            } 
-            
+            }
+
 
             if (Auth::user()->role !== 'admin') {
                 if (!in_array($stat_shipid, [4, 5, 6])) {
@@ -458,11 +464,10 @@ class CabangController extends Controller
 
             $data = $model->get();
             return $data;
-            
         }
     }
 
-    
+
     //menampilkan data loading
     public function getLoadingList(Request $request)
     {
@@ -472,7 +477,7 @@ class CabangController extends Controller
         // dd($data);
         // return $data;
         return DataTables::of($data)
-                ->toJson();
+            ->toJson();
     }
 
     //menampilkan data pemberangkatan
@@ -482,7 +487,6 @@ class CabangController extends Controller
         // $load = 'asal';
         $data = $this->fetchLoadingData($request, $stat_shipid);
         return $data;
-        
     }
 
     //turunan data pemberangkatan dengan status 3 (berangkat dari gudang)
@@ -491,7 +495,7 @@ class CabangController extends Controller
         // $load = 'asal';
         $data = $this->getDepList($request, 3);
         return DataTables::of($data)
-                ->toJson();
+            ->toJson();
     }
 
     //turunan data pemberangkatan untuk menampilkan data dengan status 4 (sampai di gdg tujuan)
@@ -500,7 +504,7 @@ class CabangController extends Controller
         // $load = 'tujuan';
         $data = $this->getDepList($request, 4);
         return DataTables::of($data)
-                ->toJson();
+            ->toJson();
     }
 
     //menampilkan view pemberangkatan
@@ -525,14 +529,13 @@ class CabangController extends Controller
         if ($request->ajax()) {
             $stat = 3; //status 3 yaitu barang yang sudah diproses loading
             $data = $this->loadingData($request, $stat);
-                    
+
 
             return DataTables::of($data)
-               // Add your columns and other DataTables configurations here
+                // Add your columns and other DataTables configurations here
                 ->addColumn('checkbox', '<input type="checkbox" name="resi_checkbox[]" id="{{$no_resi}}" class="select-checkbox" value="{{$no_resi}}" />')
-                ->rawColumns(['checkbox','action'])
+                ->rawColumns(['checkbox', 'action'])
                 ->make(true);
-
         }
     }
 
@@ -546,11 +549,11 @@ class CabangController extends Controller
         $kotatujuan = $request->input('tujuan');
         $sopir = $request->input('sopir');
         $nopol = $request->input('nopol');
-        
+
 
         $user = Auth::user()->id;
         $karyawanUser = Karyawan::select('cabang_id', 'agen_id')
-                                ->where('id', $user)->first();
+            ->where('id', $user)->first();
         $randomCode = Str::random(8);
 
         $cabang = $karyawanUser->cabang_id;
@@ -563,28 +566,28 @@ class CabangController extends Controller
         $shipmentData = [
             'agen_id' => $agen,
             'cabang_id' => $kotaasal,
-            'ship_id' => 'RG'.$randomCode,
+            'ship_id' => 'RG' . $randomCode,
             'nopol' => $nopol,
             'pic' => $sopir,
             'status' => '3',
             // 'tujuan' => $des->NamaKota,
             'tujuan' => $kotatujuan,
         ];
-  
+
 
         //simpan data shipment
         $shipment = Shipments::create($shipmentData);
-        
+
         // Membuat array untuk detail shipment
         $detailShipments = [];
 
-                    
+
         // Memasukkan data ke dalam array
         foreach ($requestData as $resi) {
             // $detailShipments[] = ['no_resi' => $resi];
             $detailShipments[] = ['no_resi' => $resi['no_resi']];
         }
-        
+
         // Melakukan saveMany untuk detail shipment
         $shipment->detailShipments()->createMany($detailShipments);
 
@@ -596,12 +599,10 @@ class CabangController extends Controller
         $response = [
             'success' => true,
             'message' => 'Data berhasil diupdate.',
-            'redirect' => '/agen/manivest/data/detail/'.$shipmentData['ship_id'],
+            'redirect' => '/agen/manivest/data/detail/' . $shipmentData['ship_id'],
         ];
-        
+
         return response()->json($response);
-
-
     }
 
     //menampilkan view kedatangan barang
@@ -632,13 +633,13 @@ class CabangController extends Controller
         $load = 'tujuan';
         $data = $this->fetchLoadingData($request, $stat_shipid);
         // if (Auth::user()->role !== 'admin') {
-            
-        
+
+
         // }
         // dd($data);
         // return $data;
         return DataTables::of($data)
-                ->toJson();
+            ->toJson();
     }
 
     public function getSortirPengantaranView()
@@ -649,29 +650,34 @@ class CabangController extends Controller
             'title' => "Pengantaran",
             'kecs' => $kec
         ]);
-
     }
 
     public function loadDataSortirPengantaran(Request $request)
     {
         $cabang = Auth::user()->karyawanuser->cabang_id;
         $kec = $request->input('kec');
-        $data = Transaksi::with('kotaAsal:id,NamaKota','kotaTujuan:id,NamaKota',
-                            'kecAsal:id,NamaKecamatan','kecTujuan:id,NamaKecamatan',
-                            'serviceId:id,NamaLayanan','karyawan:id,agen_id,cabang_id','karyawan.agen:id,agen')
-                            ->where('IdKecTujuan', $kec)
-                            ->where('status', 5);
+        $data = Transaksi::with(
+            'kotaAsal:id,NamaKota',
+            'kotaTujuan:id,NamaKota',
+            'kecAsal:id,NamaKecamatan',
+            'kecTujuan:id,NamaKecamatan',
+            'serviceId:id,NamaLayanan',
+            'karyawan:id,agen_id,cabang_id',
+            'karyawan.agen:id,agen'
+        )
+            ->where('IdKecTujuan', $kec)
+            ->where('status', 5);
         if (Auth::user()->role !== 'admin') {
             $data = $data->where('IdKotaTujuan', $cabang);
         }
 
         $data = $data->get();
-        
+
 
         return DataTables::of($data)
-                        ->addColumn('checkbox', '<input type="checkbox" name="resi_checkbox[]" id="{{$no_resi}}" class="resi_checkbox" value="{{$no_resi}}" />')
-                        ->rawColumns(['checkbox','action'])
-                        ->make(true);
+            ->addColumn('checkbox', '<input type="checkbox" name="resi_checkbox[]" id="{{$no_resi}}" class="resi_checkbox" value="{{$no_resi}}" />')
+            ->rawColumns(['checkbox', 'action'])
+            ->make(true);
         // return $data;
     }
 
@@ -686,13 +692,13 @@ class CabangController extends Controller
         // $kotatujuan = $request->input('tujuan');
         $kotaasal = $kota;
         $kotatujuan = $kota;
-        
+
         $pic = $request->input('pic');
-        
+
 
         $user = Auth::user()->id;
         $karyawanUser = Karyawan::select('cabang_id', 'agen_id')
-                                ->where('id', $user)->first();
+            ->where('id', $user)->first();
         $randomCode = Str::random(8);
 
         // $cabang = $karyawanUser->cabang_id;
@@ -705,28 +711,28 @@ class CabangController extends Controller
         $shipmentData = [
             'agen_id' => $agen,
             'cabang_id' => $kotaasal,
-            'ship_id' => 'SORTIR'.$randomCode,
+            'ship_id' => 'SORTIR' . $randomCode,
             'nopol' => 'SORTIR',
             'pic' => $pic,
             'status' => '5',
             'tujuan' => $kotatujuan,
             'kecTujuan' => $kec,
         ];
-  
+
 
         //simpan data shipment
         $shipment = Shipments::create($shipmentData);
-        
+
         // Membuat array untuk detail shipment
         $detailShipments = [];
 
-                    
+
         // Memasukkan data ke dalam array
         foreach ($requestData as $resi) {
             // $detailShipments[] = ['no_resi' => $resi];
             $detailShipments[] = ['no_resi' => $resi['no_resi']];
         }
-        
+
         // Melakukan saveMany untuk detail shipment
         $shipment->detailShipments()->createMany($detailShipments);
 
@@ -738,7 +744,7 @@ class CabangController extends Controller
         $response = [
             'success' => true,
             'message' => 'Data berhasil diupdate.',
-            'redirect' => '/agen/manivest/data/detail/'.$shipmentData['ship_id'],
+            'redirect' => '/agen/manivest/data/detail/' . $shipmentData['ship_id'],
         ];
 
         return response()->json($response);
@@ -757,12 +763,12 @@ class CabangController extends Controller
         $sortir = true;
         $data = $this->fetchLoadingData($request, $stat_shipid, $sortir);
         // if (Auth::user()->role !== 'admin') {
-            
+
         // }
         // dd($data);
         // return $data;
         return DataTables::of($data)
-                ->toJson();
+            ->toJson();
     }
 
     public function pengantaranView()
@@ -782,29 +788,35 @@ class CabangController extends Controller
         $data = $this->fetchLoadingData($request, $stat_shipid, $tujuan);
 
         return DataTables::of($data)
-                ->toJson();
+            ->toJson();
     }
 
     public function loadDataPengantaran(Request $request)
     {
         $cabang = Auth::user()->karyawanuser->cabang_id;
         $kec = $request->input('kec');
-        $data = Transaksi::with('kotaAsal:id,NamaKota','kotaTujuan:id,NamaKota',
-                            'kecAsal:id,NamaKecamatan','kecTujuan:id,NamaKecamatan',
-                            'serviceId:id,NamaLayanan','karyawan:id,agen_id,cabang_id','karyawan.agen:id,agen')
-                            ->where('IdKecTujuan', $kec)
-                            ->where('status',6);
+        $data = Transaksi::with(
+            'kotaAsal:id,NamaKota',
+            'kotaTujuan:id,NamaKota',
+            'kecAsal:id,NamaKecamatan',
+            'kecTujuan:id,NamaKecamatan',
+            'serviceId:id,NamaLayanan',
+            'karyawan:id,agen_id,cabang_id',
+            'karyawan.agen:id,agen'
+        )
+            ->where('IdKecTujuan', $kec)
+            ->where('status', 6);
         if (Auth::user()->role !== 'admin') {
             $data = $data->where('IdKotaTujuan', $cabang);
         }
 
         $data = $data->get();
-        
+
 
         return DataTables::of($data)
-                        ->addColumn('checkbox', '<input type="checkbox" name="resi_checkbox[]" id="{{$no_resi}}" class="resi_checkbox" value="{{$no_resi}}" />')
-                        ->rawColumns(['checkbox','action'])
-                        ->make(true);
+            ->addColumn('checkbox', '<input type="checkbox" name="resi_checkbox[]" id="{{$no_resi}}" class="resi_checkbox" value="{{$no_resi}}" />')
+            ->rawColumns(['checkbox', 'action'])
+            ->make(true);
         // return $data;
     }
 
@@ -819,13 +831,13 @@ class CabangController extends Controller
         // $kotatujuan = $request->input('tujuan');
         $kotaasal = $kota;
         $kotatujuan = $kota;
-        
+
         $pic = $request->input('pic');
-        
+
 
         $user = Auth::user()->id;
         $karyawanUser = Karyawan::select('cabang_id', 'agen_id')
-                                ->where('id', $user)->first();
+            ->where('id', $user)->first();
         $randomCode = Str::random(8);
 
         // $cabang = $karyawanUser->cabang_id;
@@ -838,37 +850,37 @@ class CabangController extends Controller
         $shipmentData = [
             'agen_id' => $agen,
             'cabang_id' => $kotaasal,
-            'ship_id' => 'ANTAR'.$randomCode,
+            'ship_id' => 'ANTAR' . $randomCode,
             'nopol' => 'ANTAR',
             'pic' => $pic,
             'status' => '6',
             'tujuan' => $kotatujuan,
             'kecTujuan' => $kec,
         ];
-  
+
 
         //simpan data shipment
         $shipment = Shipments::create($shipmentData);
-        
+
         // Membuat array untuk detail shipment
         $detailShipments = [];
 
-                    
+
         // Memasukkan data ke dalam array
         foreach ($requestData as $resi) {
             // $detailShipments[] = ['no_resi' => $resi];
             $detailShipments[] = ['no_resi' => $resi['no_resi']];
         }
-        
+
         // Melakukan saveMany untuk detail shipment
         $shipment->detailShipments()->createMany($detailShipments);
 
         $response = [
             'success' => true,
             'message' => 'Data berhasil diupdate.',
-            'redirect' => '/agen/manivest/data/detail/'.$shipmentData['ship_id'],
+            'redirect' => '/agen/manivest/data/detail/' . $shipmentData['ship_id'],
         ];
-        
+
         return response()->json($response);
     }
 
@@ -877,8 +889,6 @@ class CabangController extends Controller
         return view('cabang.datapengantaran', [
             'title' => 'List Penganraran'
         ]);
-
-        
     }
 
     public function loadListPengantaran(Request $request)
@@ -888,10 +898,8 @@ class CabangController extends Controller
         $data = $this->fetchLoadingData($request, $stat_shipid, $tujuan);
 
         return DataTables::of($data)
-                ->toJson();
+            ->toJson();
     }
-
-    
 }
 
 
@@ -917,4 +925,3 @@ class CabangController extends Controller
         //         'alamat_customer' => $validatedCustomerData['alamat-pengirim'],
         //     ]);
         // }
-

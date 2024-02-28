@@ -270,36 +270,24 @@
                 @enderror
             </div>
 
+            {{-- <div class="mb-6">
+                <label for="total_harga" class="proc block mb-2 text-sm font-medium text-gray-900 dark:text-white">Total Bayar</label>
+                <input type="text" id="total_harga" name="total_harga" onkeyup="formatNumber(this)"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('total_harga') is-invalid @enderror" placeholder="" required value="{{ old('total_harga') }} " readonly>
+                @error('total_harga') 
+                <div>
+                    {{ $message }}
+                </div>
+                @enderror
+            </div> --}}
             <div class="mb-6">
                 <label for="total_harga" class="proc block mb-2 text-sm font-medium text-gray-900 dark:text-white">Total Bayar</label>
-                <input type="text" id="total_harga" name="total_harga"   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('total_harga') is-invalid @enderror" placeholder="" required value="{{ old('total_harga') }} " readonly>
-                @error('total_harga')
+                <input type="text" id="total_harga" name="total_harga" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('total_harga') is-invalid @enderror" placeholder="" required value="{{ old('total_harga') }} " readonly>
+                @error('total_harga') 
                 <div>
                     {{ $message }}
                 </div>
                 @enderror
             </div>
-{{-- 
-            <div class="mb-6">
-                <label for="tanggal_lahir" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                <input type="date" name="tanggal_lahir" id="tanggal_lahir" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('tanggal_lahir') is-invalid @enderror" placeholder="" required >
-                @error('tanggal_lahir')
-                <div>
-                    {{ $message }}
-                </div>
-            @enderror
-            </div> 
-
-            <div class="mb-6">
-                <label for="alamat" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alamat</label>
-                <input type="text" name="alamat" id="alamat" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('alamat') is-invalid @enderror" placeholder="Alamat Lengkap" required >
-                @error('alamat')
-                <div>
-                    {{ $message }}
-                </div>
-            @enderror
-            </div> 
-            --}}
 
             <div class="flex items-center justify-center gap-3">
                 <button onclick="submitForm()" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 flex">Submit</button>
