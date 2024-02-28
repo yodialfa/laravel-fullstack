@@ -98,11 +98,21 @@
                 @endforeach
             </select>
 
+            
+
             <select name="selectAgen" id="selectAgen">
                 {{-- <option value="" selected>--Pilih Kota--</option>
                 @foreach ($agens as $agen)
                     <option value="{{ $agen->id }}">{{ $agen->agen }}</option>
                 @endforeach --}}
+            </select>
+
+            <select name="selectRole" id="selectRole">
+
+                <option value="admin">Admin</option>
+                <option value="cabang">Cabang</option>
+                <option value="agen">Agen</option>
+                
             </select>
 
             <div class="mb-6">

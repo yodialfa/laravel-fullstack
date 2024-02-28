@@ -48,6 +48,7 @@ class RegisterController extends Controller
             'tanggal_lahir' => 'required|date',
             'selectCabang' => 'required',
             'selectAgen' => 'required',
+            'selectRole' => 'required',
             'alamat' => 'required|max:255',
             'password' => 'required|min:5|max:255',
         ]);
@@ -56,6 +57,7 @@ class RegisterController extends Controller
 
         $userData = [
             'username' => $validatedData['username'],
+            'role' => $validatedData['selectRole'],
             'password' => bcrypt($validatedData['password']),
         ];
 

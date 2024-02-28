@@ -120,7 +120,8 @@
                             <h1>{{ optional($karyawan->user)->username ?? 'N/A' }}</h1>
                             {{-- <h1>{{ $karyawan->user->username }}</h1> --}}
                         </td>
-                        <td class="px-4 py-4">
+                        <td></td>
+                        {{-- <td class="px-4 py-4">
                             <h1>{{ $karyawan->user->role }}</h1>
                         </td>
                         @if ($karyawan->user->role === 'admin')
@@ -129,7 +130,7 @@
                             </td>
                             <td>
                             </td>
-                        @else
+                        @else --}}
                             
                             <td class="px-4 py-4 text-right">
                                 <a href="{{ route('karyawan.update', $karyawan->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
@@ -153,7 +154,7 @@
                                
                                 
                             </td>
-                        @endif
+                        {{-- @endif --}}
                     </tr>
                     @endforeach
 
