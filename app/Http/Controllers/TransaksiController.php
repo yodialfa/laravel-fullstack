@@ -90,9 +90,18 @@ class TransaksiController extends Controller
             $asuransi = (float) str_replace('.', '', $request->input('biaya_asuransi'));
             // $total_harga = (float) str_replace('.', '', $request->input('total_harga'));
 
-            $calc_ongkir = $beratTransaksi  * $hargaTrx;
+            // $calc_ongkir = $beratTransaksi  * $hargaTrx;
             $calc_disc = ($disc / 100) * $calc_ongkir;
-            $total_harga = $calc_ongkir - $calc_disc + $surat + $asuransi;;
+            if ($disc != 0) {
+                $harga = $hargaTrx * $calc_disc;
+                $calc_ongkir = $beratTransaksi * $harga;
+                $total_harga = $calc_ongkir - $calc_disc + $surat + $asuransi;
+            } else {
+                $calc_ongkir = $beratTransaksi * $hargaTrx;
+                $total_harga = $calc_ongkir + $surat + $asuransi;
+            }
+
+
 
 
 

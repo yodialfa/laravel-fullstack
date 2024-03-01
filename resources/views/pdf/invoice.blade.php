@@ -170,7 +170,8 @@
         
             <thead>
                 <tr class="bg-gray">
-                    <th colspan="4">No. : {{ $transaksi['no_resi']  }}    DO/PO : {{ $transaksi['dopo'] }}</th>
+                    <th colspan="2">{{ $transaksi['no_resi']  }}   </th>
+                    <th colspan="2">DO/PO : {{ $transaksi['dopo'] }}</th>
                     <th width="50%" colspan="2" >{{ $transaksi['tgl'] }}</th>
 
                     <th width="50%" colspan="2" class="layanan">{{ $transaksi['layanan'] }}</th>
@@ -294,9 +295,9 @@
         
             <thead>
                 <tr class="bg-gray">
-
-                    <th colspan="3">No. : {{ $transaksi['no_resi']  }} DO/PO : {{ $transaksi['dopo'] }}</th>
-                    <th width="50%" colspan="3" >{{ $transaksi['tgl'] }}</th>
+                    <th colspan="2">{{ $transaksi['no_resi']  }}   </th>
+                    <th colspan="2">DO/PO : {{ $transaksi['dopo'] }}</th>
+                    <th width="50%" colspan="2" >{{ $transaksi['tgl'] }}</th>
 
                     <th width="50%" colspan="2" class="layanan">{{ $transaksi['layanan'] }}</th>
                 </tr>
@@ -476,8 +477,9 @@
         
             <thead>
                 <tr class="bg-gray">
-                    <th colspan="3">No. : {{ $transaksi['no_resi']  }} DO/PO : {{ $transaksi['dopo'] }}</th>
-                    <th width="50%" colspan="3" >{{ $transaksi['tgl'] }}</th>
+                    <th colspan="2">{{ $transaksi['no_resi']  }}   </th>
+                    <th colspan="2">DO/PO : {{ $transaksi['dopo'] }}</th>
+                    <th width="50%" colspan="2" >{{ $transaksi['tgl'] }}</th>
 
                     <th width="50%" colspan="2" class="layanan">{{ $transaksi['layanan'] }}</th>
                 </tr>
