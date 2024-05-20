@@ -91,15 +91,34 @@ class TransaksiController extends Controller
             // $total_harga = (float) str_replace('.', '', $request->input('total_harga'));
 
             // $calc_ongkir = $beratTransaksi  * $hargaTrx;
-            $calc_disc = ($disc / 100) * $calc_ongkir;
+            // $calc_disc = ($disc / 100) * $calc_ongkir;
+            // $calc_ongkir = $beratTransaksi * $hargaTrx;
+            // if ($disc != 0) {
+            //     $harga = $hargaTrx * $calc_disc;
+            //     $calc_ongkir = $beratTransaksi * $harga;
+            //     $total_harga = $calc_ongkir - $calc_disc + $surat + $asuransi;
+            // } else {
+            //     $calc_ongkir = $beratTransaksi * $hargaTrx;
+            //     $total_harga = $calc_ongkir + $surat + $asuransi;
+            // }
+
+
+            // Sekarang Anda dapat menggunakan $calc_ongkir dalam kondisi berikut
+
             if ($disc != 0) {
-                $harga = $hargaTrx * $calc_disc;
-                $calc_ongkir = $beratTransaksi * $harga;
-                $total_harga = $calc_ongkir - $calc_disc + $surat + $asuransi;
+                $real_disc = (100 - $disc);
+                $calc_disc =  $hargaTrx * ($real_disc / 100);
+
+                $calc_ongkir = $beratTransaksi * $calc_disc;
+
+                // $calc_ongkir_disc = $beratTransaksi * $calc_disc;
+
+                $total_harga = $calc_ongkir  + $surat + $asuransi;
             } else {
                 $calc_ongkir = $beratTransaksi * $hargaTrx;
                 $total_harga = $calc_ongkir + $surat + $asuransi;
             }
+
 
 
 

@@ -49,7 +49,7 @@ class PdfController extends Controller
             'tgl' => $tanggalFormatted,
         ];
         $data = [
-            'title' => 'CAHAYA EXPRESS',
+            'title' => 'CV. SEHATI JAYA',
             'transaksi' => $trxData,
         ];
 

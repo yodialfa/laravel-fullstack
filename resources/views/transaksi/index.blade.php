@@ -241,6 +241,12 @@
             </div>
 
             <div class="mb-6">
+                <label for="harga_disc" class="proc block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga per kg setelah diskon</label>
+                <input type="text" id="harga_disc" name="harga_disc" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('harga') is-invalid @enderror"" placeholder="" required value="{{ old('harga_disc') }}" readonly>
+
+            </div>
+
+            <div class="mb-6">
                 <label for="biaya_surat" class="proc block mb-2 text-sm font-medium text-gray-900 dark:text-white">Biaya Surat</label>
                 <input type="text" id="biaya_surat" name="biaya_surat"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('biaya_surat') is-invalid @enderror"" placeholder="" required value="{{ old('biaya_surat') }}">
                 @error('biaya_surat')

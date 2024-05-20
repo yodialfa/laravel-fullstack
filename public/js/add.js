@@ -350,6 +350,7 @@ $(document).ready(function () {
   var beratTransaksi = $('#jumlah');
   var jumlahTransaksi = $('#berat');
   var diskonTransaksi = $('#diskon');
+  var harga_disc = $('#harga_disc');
   var bySurat = $('#biaya_surat');
   var byAsuransi = $('#biaya_asuransi');
   var total = $('#total_harga');
@@ -366,6 +367,7 @@ $(document).ready(function () {
   byAsuransi.val(0);
   total.val(0);
 
+
   // generate no_resi
   $('#no_resi').val(generateUniqueID());
 
@@ -381,6 +383,7 @@ $(document).ready(function () {
     let beratTransaksi = parseFloat($('#berat').val());
     let hargaTrx = parseFloat($('#harga').val());
     let disc = parseFloat($('#diskon').val());
+    let harga_disc = parseFloat($('#harga_disc').val());
     let surat = parseFloat($('#biaya_surat').val());
     let asuransi = parseFloat($('#biaya_asuransi').val());
 
