@@ -254,7 +254,7 @@
                     <td>Harga/kg :</td>
                     {{-- <td>:</td> --}}
                     <td colspan="2"><h4>Rp. {{ number_format($transaksi['harga'], 0, ',', '.') }}</h4></td>
-                    <td>Biaya Surat :</td>
+                    <td>PPN :</td>
                     <td colspan="2"><h4>Rp. {{ number_format($transaksi['biaya_surat'], 0, ',', '.') }}</h4></td>
                     <td><h4>Total Ongkir :</h4></td>
                     <td colspan="2"><h4>Rp. {{ number_format($transaksi['total_harga'], 0, ',', '.') }}</h4></td>
@@ -436,7 +436,7 @@
                     <td>Harga/kg :</td>
                     {{-- <td>:</td> --}}
                     <td>Rp. {{ number_format($transaksi['harga'], 0, ',', '.') }}</td>
-                    <td>Biaya Surat :</td>
+                    <td>PPN :</td>
                     <td>Rp. {{ number_format($transaksi['biaya_surat'], 0, ',', '.') }}</td>
                     <td><h4>Total Ongkir :</h4></td>
                     <td><h4>Rp. {{ number_format($transaksi['total_harga'], 0, ',', '.') }}</h4></td>
@@ -619,7 +619,7 @@
                     <td>Harga/kg :</td>
                     {{-- <td>:</td> --}}
                     <td>Rp. {{ number_format($transaksi['harga'], 0, ',', '.') }}</td>
-                    <td>Biaya Surat :</td>
+                    <td>PPN  :</td>
                     <td>Rp. {{ number_format($transaksi['biaya_surat'], 0, ',', '.') }}</td>
                     <td><h4>Total Ongkir :</h4></td>
                     <td><h4>Rp. {{ number_format($transaksi['total_harga'], 0, ',', '.') }}</h4></td>
